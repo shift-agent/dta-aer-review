@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decor To Adore &amp; Alabama Event Rentals — Commitments &amp; Path Forward</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#2F4D6A; --navy-dk:#22394F; --ink:#15202B; --body:#4B5E71;
+    --muted:#8A97A5; --paper:#FDF9F5; --warm:#F5EFE7; --white:#fff;
+    --sage:#8FB58A; --olive:#6F8A5C; --gold:#D9B25F;
+    --line:rgba(21,32,43,.12); --amber:#B8862A; --red:#B3261E;
+    --accent:#1E40AF;
+    --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+    --sans:"Montserrat",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--body);
+    font-family:var(--sans); font-size:15px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .wrap { width:min(920px, calc(100% - 3rem)); margin-inline:auto; }
+  header.mast { background:var(--navy-dk); color:#fff; padding:2.4rem 0 2rem; }
+  header.mast .num { display:block; font-size:.62rem; letter-spacing:.2em; text-transform:uppercase;
+    color:rgba(255,255,255,.6); margin-bottom:.5rem; }
+  header.mast h1 { font-family:var(--serif); font-weight:400; font-size:2.3rem; margin:0 0 .5rem; }
+  header.mast p { margin:0; color:rgba(255,255,255,.84); max-width:64ch; }
+  main { padding:2.2rem 0 4rem; }
+  .lede { font-size:1.02rem; color:var(--ink); max-width:68ch; }
+
+  /* reviewed-today chips */
+  .rev { display:flex; flex-wrap:wrap; gap:.5rem; margin:1.4rem 0 2rem; }
+  .revchip { display:inline-flex; align-items:center; gap:.5rem; font-size:.82rem; font-weight:500;
+    color:var(--ink); background:var(--white); border:1px solid var(--line); padding:.5rem .8rem; cursor:pointer; }
+  .revchip input { width:15px; height:15px; accent-color:var(--olive); }
+  .revchip.on { border-color:var(--olive); background:color-mix(in srgb,var(--olive) 8%, #fff); }
+
+  h2.sec { font-family:var(--serif); font-weight:400; font-size:1.5rem; color:var(--ink); margin:0 0 .3rem; }
+  .sec-note { font-size:.9rem; color:var(--body); margin:0 0 1.3rem; }
+
+  /* toolbar */
+  .bar { display:flex; flex-wrap:wrap; gap:.6rem; align-items:center; margin:0 0 1.4rem; }
+  .btn { font:inherit; font-size:.82rem; font-weight:600; padding:.6rem 1rem; cursor:pointer;
+    border:1px solid var(--line); background:var(--white); color:var(--ink); text-decoration:none; display:inline-flex; align-items:center; gap:.45rem; }
+  .btn:hover { border-color:var(--navy); }
+  .btn--primary { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .btn--primary:hover { filter:brightness(1.08); }
+  .bar .saved { font-size:.76rem; color:var(--muted); margin-left:auto; }
+  .bar .saved b { color:var(--olive); }
+
+  /* milestone cards */
+  .miles { display:grid; gap:1rem; }
+  .mile { background:var(--white); border:1px solid var(--line); border-left:3px solid var(--gold); padding:1.1rem 1.2rem; }
+  .mile.done { border-left-color:var(--olive); }
+  .mile__top { display:flex; align-items:flex-start; gap:.7rem; }
+  .mile__ck { width:20px; height:20px; margin-top:.15rem; accent-color:var(--olive); flex:0 0 auto; cursor:pointer; }
+  .mile__h { flex:1; }
+  .mile__h h3 { font-family:var(--serif); font-weight:400; font-size:1.28rem; color:var(--ink); margin:0 0 .15rem; }
+  .mile__h .ph { font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); font-weight:600; }
+  .mile__h p { margin:.4rem 0 0; font-size:.9rem; }
+  .mile__meta { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; margin:.9rem 0 .2rem; }
+  .fld label { display:block; font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); font-weight:600; margin-bottom:.3rem; }
+  .fld select, .fld input, .mile textarea { width:100%; font:inherit; font-size:.86rem; color:var(--ink);
+    background:var(--paper); border:1px solid var(--line); padding:.5rem .6rem; }
+  .fld select:focus, .fld input:focus, .mile textarea:focus { outline:none; border-color:var(--accent); background:#fff; }
+  .mile textarea { margin-top:.7rem; min-height:64px; resize:vertical; }
+  @media (max-width:640px){ .mile__meta { grid-template-columns:1fr; } }
+
+  .aeo { background:var(--warm); border:1px solid var(--line); padding:1rem 1.2rem; margin-top:1.6rem; font-size:.88rem; }
+  .aeo b { color:var(--ink); }
+  footer { border-top:1px solid var(--line); margin-top:2.4rem; padding-top:1.2rem; font-size:.8rem; color:var(--muted); }
+</style>
+<link rel="stylesheet" href="assets/present.css">
+</head>
+<body>
+
+<header class="mast"><div class="wrap">
+  <span class="num">05 · Commitments</span>
+  <h1>What we agree to — and by when</h1>
+  <p>A shared checklist of what we reviewed and the commitments each side is making. Add notes, set an
+     approximate target for each milestone, then save a copy so we're both working from the same plan.</p>
+</div></header>
+
+<main><div class="wrap">
+  <p class="lede">Nothing here is billed or binding until we both say so — it's the working agreement.
+     Your notes and timelines save in this browser automatically; use <strong>Save file</strong> to hand
+     me a copy (or keep one for yourself), and <strong>Load file</strong> to pick up where we left off.</p>
+
+  <h2 class="sec">What we walked today</h2>
+  <p class="sec-note">Tick each stop you're comfortable we covered.</p>
+  <div class="rev" id="rev">
+    <label class="revchip"><input type="checkbox" data-rev="scope"> Scope &amp; Solutions</label>
+    <label class="revchip"><input type="checkbox" data-rev="design"> Design Review</label>
+    <label class="revchip"><input type="checkbox" data-rev="simplitory"> Simplitory (inventory)</label>
+    <label class="revchip"><input type="checkbox" data-rev="suite"> SimpleSuite (enhancements)</label>
+  </div>
+
+  <div class="bar">
+    <button class="btn btn--primary" id="save">▼ Save file</button>
+    <button class="btn" id="load">▲ Load file</button>
+    <input type="file" id="file" accept="application/json" hidden>
+    <button class="btn" id="reset">Reset</button>
+    <span class="saved" id="saved"></span>
+  </div>
+
+  <h2 class="sec">Milestones &amp; deliverables</h2>
+  <p class="sec-note">Owner, an approximate target, and any notes or conditions for each.</p>
+  <div class="miles" id="miles"></div>
+
+  <div class="aeo">
+    <b>On that last one — SEO &amp; AEO, briefly.</b> SEO is being found on Google; <b>AEO</b>
+    (answer-engine optimization) is being the source an AI assistant quotes when someone asks it for a
+    rental. Both lean on the same groundwork we're already building — clean product data, real photos,
+    and structured descriptions — so the catalog you're cleaning up now is exactly what makes you
+    visible later. Phase 3 turns that into managed, measurable reach.
+  </div>
+
+  <footer>Commitments &middot; DTA / AER &middot; a working agreement, saved locally in your browser.</footer>
+</div></main>
+
+<script>
+(function(){
+  var KEY = 'dta_aer_commitments_v1';
+  var MILESTONES = [
+    { id:'inventory', title:'Inventory Clean Up', phase:'Foundation',
+      desc:'Fold Current RMS size-rows into browsable products, set back-office groups aside, and build the prioritized photo shoot list. Sellable-catalog coverage moves from 14.7% toward 19.1% as the zero-photo groups clear.' },
+    { id:'dta', title:'Design &amp; Launch — Decor To Adore', phase:'Phase 1',
+      desc:'Publish the ready categories on the DTA storefront: browse-first shop, product pages, and quote requests flowing straight into Current RMS.' },
+    { id:'aer', title:'Design &amp; Launch — Alabama Event Rentals', phase:'Phase 1 · 2',
+      desc:'The AER storefront on the same shared inventory with its own brand skin — live once its ready categories are photographed.' },
+    { id:'phase3', title:'Follow-up — Phase 3: SEO / AEO &amp; visibility', phase:'Phase 3',
+      desc:'After launch: search &amp; answer-engine optimization, structured data, and the visibility work that makes the catalog easier to find, quote, and manage.' }
+  ];
+  var OWNERS = ['— set owner —','RedShift','Client','Both'];
+
+  var milesEl = document.getElementById('miles');
+  MILESTONES.forEach(function(m){
+    var card = document.createElement('div');
+    card.className = 'mile'; card.dataset.id = m.id;
+    var opts = OWNERS.map(function(o){ return '<option>'+o+'</option>'; }).join('');
+    card.innerHTML =
+      '<div class="mile__top">'+
+        '<input type="checkbox" class="mile__ck" data-f="agreed" aria-label="Agreed">'+
+        '<div class="mile__h"><span class="ph">'+m.phase+'</span><h3>'+m.title+'</h3><p>'+m.desc+'</p></div>'+
+      '</div>'+
+      '<div class="mile__meta">'+
+        '<div class="fld"><label>Owner</label><select data-f="owner">'+opts+'</select></div>'+
+        '<div class="fld"><label>Approx. target</label><input type="text" data-f="timeline" placeholder="e.g. 2 weeks · Aug · after launch"></div>'+
+      '</div>'+
+      '<textarea data-f="notes" placeholder="Notes, conditions, what &lsquo;done&rsquo; looks like…"></textarea>';
+    milesEl.appendChild(card);
+  });
+
+  function collect(){
+    var data = { project:'DTA / AER', savedAt:new Date().toISOString(), reviewed:{}, milestones:[] };
+    document.querySelectorAll('[data-rev]').forEach(function(c){ data.reviewed[c.dataset.rev] = c.checked; });
+    document.querySelectorAll('.mile').forEach(function(card){
+      data.milestones.push({
+        id: card.dataset.id,
+        agreed: card.querySelector('[data-f=agreed]').checked,
+        owner: card.querySelector('[data-f=owner]').value,
+        timeline: card.querySelector('[data-f=timeline]').value,
+        notes: card.querySelector('[data-f=notes]').value
+      });
+    });
+    return data;
+  }
+  function apply(data){
+    if(!data) return;
+    if(data.reviewed) document.querySelectorAll('[data-rev]').forEach(function(c){
+      c.checked = !!data.reviewed[c.dataset.rev]; c.closest('.revchip').classList.toggle('on', c.checked);
+    });
+    (data.milestones||[]).forEach(function(m){
+      var card = document.querySelector('.mile[data-id="'+m.id+'"]'); if(!card) return;
+      card.querySelector('[data-f=agreed]').checked = !!m.agreed;
+      card.querySelector('[data-f=owner]').value = m.owner || OWNERS[0];
+      card.querySelector('[data-f=timeline]').value = m.timeline || '';
+      card.querySelector('[data-f=notes]').value = m.notes || '';
+      card.classList.toggle('done', !!m.agreed);
+    });
+  }
+  function flash(msg){ var s=document.getElementById('saved'); s.innerHTML = msg; }
+
+  function persist(){
+    try { localStorage.setItem(KEY, JSON.stringify(collect())); } catch(e){}
+    flash('<b>Saved</b> in this browser');
+  }
+
+  // load from localStorage on open
+  try { var raw = localStorage.getItem(KEY); if(raw) apply(JSON.parse(raw)); } catch(e){}
+
+  // live: autosave + toggle visual state
+  document.addEventListener('input', function(e){
+    if(e.target.closest('.mile')){
+      var card = e.target.closest('.mile');
+      card.classList.toggle('done', card.querySelector('[data-f=agreed]').checked);
+    }
+    if(e.target.matches('[data-rev]')) e.target.closest('.revchip').classList.toggle('on', e.target.checked);
+    persist();
+  });
+
+  // save to file
+  document.getElementById('save').addEventListener('click', function(){
+    var blob = new Blob([JSON.stringify(collect(), null, 2)], {type:'application/json'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'commitments-dta-aer.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+    flash('<b>Downloaded</b> commitments-dta-aer.json');
+  });
+  // load from file
+  document.getElementById('load').addEventListener('click', function(){ document.getElementById('file').click(); });
+  document.getElementById('file').addEventListener('change', function(e){
+    var f = e.target.files[0]; if(!f) return;
+    var r = new FileReader();
+    r.onload = function(){ try { apply(JSON.parse(r.result)); persist(); flash('<b>Loaded</b> '+f.name); }
+      catch(err){ flash('Could not read that file'); } };
+    r.readAsText(f);
+  });
+  // reset
+  document.getElementById('reset').addEventListener('click', function(){
+    if(!confirm('Clear all notes, owners and timelines on this page?')) return;
+    try { localStorage.removeItem(KEY); } catch(e){}
+    apply({ reviewed:{}, milestones: MILESTONES.map(function(m){ return {id:m.id, agreed:false, owner:OWNERS[0], timeline:'', notes:''}; }) });
+    flash('Reset');
+  });
+})();
+</script>
+<script src="assets/js/present.js?v=2"></script>
+</body>
+</html>

@@ -22,7 +22,8 @@
     { label: 'Scope & Solutions', href: 'scope.html'      },
     { label: 'Design Review',     href: 'dta/index.html'  },
     { label: 'Simplitory',        href: 'simplitory.html' },
-    { label: 'SimpleSuite',       href: 'simplesuite.html' }
+    { label: 'SimpleSuite',       href: 'simplesuite.html' },
+    { label: 'Commitments',      href: 'commitments.html' }
   ];
 
   // Which step a page belongs to. First match wins; -1 = not in the deck.
@@ -33,6 +34,7 @@
     if ( /(^|\/)shop\.html$/.test( path ) )            return 1;
     if ( /(^|\/)(simplitory|wizard|photos|source|products|storefront|settings|sync|quotes|cart|categories|brands|csv-setup|google-setup)\.html$/.test( path ) ) return 2;
     if ( /(^|\/)simplesuite\.html$/.test( path ) )     return 3;
+    if ( /(^|\/)commitments\.html$/.test( path ) )    return 4;
     return -1; // status.html (full report) + index.html (architecture map) — reachable, not deck steps
   }
 
