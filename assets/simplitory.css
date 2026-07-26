@@ -222,8 +222,8 @@
 .sy .home { max-width: 800px; margin: 8px auto 0; }
 .sy .home-hero { text-align: center; margin: 6px 0 26px; }
 .sy .home-hero__i { display: inline-flex; align-items: center; justify-content: center;
-  width: 54px; height: 54px; color: var(--sy-accent); margin-bottom: 16px; }
-.sy .home-hero__i svg { width: 48px; height: 48px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  width: 56px; height: 56px; color: var(--sy-ink); margin-bottom: 16px; }
+.sy .home-hero__i svg { width: 52px; height: 52px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; shape-rendering: geometricPrecision; }
 .sy .home-hero h1 { font-size: 1.5rem; font-weight: 800; color: var(--sy-ink); margin: 0 0 6px; letter-spacing: -.01em; }
 .sy .home-hero p { font-size: .9rem; color: var(--sy-muted); margin: 0; }
 .sy .quad--home { max-width: 760px; margin: 0 auto; }

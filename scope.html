@@ -16,6 +16,40 @@
     --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
     --sans:"Montserrat",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
   }
+
+  /* coverage calculator + product-group fold (added for scope walk) */
+  .covcalc { margin-top:1.1rem; }
+  .covcalc__lead { font-size:.94rem; }
+  .covcalc__note { font-size:.82rem; color:var(--body); margin:.9rem 0 0; max-width:70ch; }
+  .covscen { display:grid; gap:1px; grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    background:var(--line); border:1px solid var(--line); margin:1rem 0 .2rem; }
+  .cs { background:var(--white); padding:1rem 1.1rem; }
+  .cs b { display:block; font-family:var(--serif); font-size:2rem; font-weight:400; color:var(--navy); line-height:1; }
+  .cs.cs--up b { color:var(--olive); }
+  .cs span { display:block; font-size:.8rem; color:var(--ink); margin-top:.35rem; font-weight:600; }
+  .cs small { display:block; font-size:.72rem; color:var(--body); font-weight:400; margin-top:.2rem; }
+  .covcalc table { width:100%; border-collapse:collapse; font-size:.88rem; margin-top:1rem; }
+  .covcalc th { text-align:left; font-size:.64rem; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; padding:0 .7rem .5rem 0; border-bottom:1px solid var(--line); }
+  .covcalc td { padding:.62rem .7rem .62rem 0; border-bottom:1px solid var(--line); vertical-align:top; }
+  .covcalc td.n { text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .covcalc tr.zero td { color:var(--red); } .covcalc tr.zero td:first-child { font-weight:600; }
+  .covcalc tr.low td { color:var(--amber); }
+  .covcalc td.bar { width:130px; padding-right:0; }
+  .covcalc td.bar span { display:block; height:6px; background:var(--sage); }
+  .covcalc tr.zero td.bar span { background:rgba(179,38,30,.28); }
+  .covcalc tr.low td.bar span { background:var(--gold); }
+  .covcalc .tag { font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted);
+    border:1px solid var(--line); padding:1px 5px; margin-left:.4rem; vertical-align:middle; }
+  details.fold { border:1px solid var(--line); background:var(--white); margin-top:1.2rem; }
+  details.fold > summary { cursor:pointer; padding:.9rem 1.1rem; list-style:none; font-weight:600;
+    font-size:.78rem; letter-spacing:.04em; text-transform:uppercase; color:var(--ink);
+    display:flex; justify-content:space-between; align-items:center; }
+  details.fold > summary::-webkit-details-marker { display:none; }
+  details.fold > summary::after { content:"+"; font-size:1.1rem; line-height:1; color:var(--muted); }
+  details.fold[open] > summary::after { content:"\2212"; }
+  details.fold > summary:hover { background:var(--warm); }
+  details.fold .foldbody { padding:0 1.1rem 1.1rem; }
   * { box-sizing:border-box; }
   body { margin:0; background:var(--paper); color:var(--body);
     font-family:var(--sans); font-size:15px; line-height:1.65; }
@@ -155,6 +189,85 @@
     displayed on the storefront — back-office groups like cleaning, fees, labor and delivery, plus
     anything you choose to keep private — so they never need a photograph. The real photography task
     is only the categories you actually put in front of customers, which is smaller than the raw 85%.
+  </div>
+  <div class="covcalc">
+    <p class="covcalc__lead"><strong>And it changes the number.</strong> Today <b>379</b> of
+      <b>2,572</b> grouped products carry a sellable photo &mdash; <b>14.7%</b>. But that denominator
+      isn't fixed; it depends on which groups you actually show customers.</p>
+    <div class="covscen">
+      <div class="cs"><b>14.7%</b><span>All 55 groups<small>379 / 2,572 products</small></span></div>
+      <div class="cs cs--up"><b>16.2%</b><span>Excluding back-office<small>drop 8 groups &middot; 238 products &rarr; 379 / 2,334</small></span></div>
+      <div class="cs cs--up"><b>19.1%</b><span>Excluding every 0%-coverage group<small>drop 24 groups &middot; 587 products &rarr; 379 / 1,985</small></span></div>
+    </div>
+    <p class="covcalc__note">Back-office groups (Cleaning, Fees, Infrastructure, Services, Coat&nbsp;Check,
+      Bags, Labor, Travel) never reach the storefront, so they shouldn't count against coverage &mdash;
+      excluding those eight alone lifts it to <strong>16.2%</strong>. Set aside every group that still
+      has no photograph at all and the sellable catalog already stands at <strong>19.1%</strong>.</p>
+    <details class="fold">
+      <summary>All 55 product groups, worst coverage first</summary>
+      <div class="foldbody">
+        <table>
+          <thead><tr><th>Product group</th><th class="n">Products</th><th class="n">With photo</th><th class="n">Coverage</th><th></th></tr></thead>
+          <tbody>
+<tr class="zero"><td>Cleaning <span class="tag">back-office</span></td><td class="n">115</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Fees <span class="tag">back-office</span></td><td class="n">79</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Stage</td><td class="n">77</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Dance Floor</td><td class="n">44</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Tent</td><td class="n">41</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Tables</td><td class="n">39</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Decor</td><td class="n">34</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Infrastructure <span class="tag">back-office</span></td><td class="n">28</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Sequin</td><td class="n">23</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Chair Cover</td><td class="n">19</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Skirts</td><td class="n">19</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Spandex</td><td class="n">19</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Rosey</td><td class="n">13</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Organza</td><td class="n">10</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Services <span class="tag">back-office</span></td><td class="n">7</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Coat Check Accommodations <span class="tag">back-office</span></td><td class="n">4</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Burlap</td><td class="n">4</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Bengaline</td><td class="n">2</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Plastic</td><td class="n">2</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Bags <span class="tag">back-office</span></td><td class="n">2</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Satin Stripe</td><td class="n">2</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Labor <span class="tag">back-office</span></td><td class="n">2</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Travel <span class="tag">back-office</span></td><td class="n">1</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Tensil</td><td class="n">1</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="low"><td>Runners</td><td class="n">135</td><td class="n">1</td><td class="n">1%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="low"><td>Sashes</td><td class="n">111</td><td class="n">1</td><td class="n">1%</td><td class="bar"><span style="width:0.9%"></span></td></tr>
+<tr class="low"><td>China</td><td class="n">71</td><td class="n">2</td><td class="n">3%</td><td class="bar"><span style="width:2.8%"></span></td></tr>
+<tr class="low"><td>Equipment</td><td class="n">33</td><td class="n">1</td><td class="n">3%</td><td class="bar"><span style="width:3.0%"></span></td></tr>
+<tr class="low"><td>Furniture</td><td class="n">77</td><td class="n">5</td><td class="n">6%</td><td class="bar"><span style="width:6.5%"></span></td></tr>
+<tr class="low"><td>Heating and Cooling</td><td class="n">12</td><td class="n">1</td><td class="n">8%</td><td class="bar"><span style="width:8.3%"></span></td></tr>
+<tr class="low"><td>Napkins</td><td class="n">171</td><td class="n">15</td><td class="n">9%</td><td class="bar"><span style="width:8.8%"></span></td></tr>
+<tr class="low"><td>Bars & Shelving</td><td class="n">27</td><td class="n">3</td><td class="n">11%</td><td class="bar"><span style="width:11.1%"></span></td></tr>
+<tr class="low"><td>Specialty</td><td class="n">358</td><td class="n">40</td><td class="n">11%</td><td class="bar"><span style="width:11.2%"></span></td></tr>
+<tr class="low"><td>Satin</td><td class="n">50</td><td class="n">6</td><td class="n">12%</td><td class="bar"><span style="width:12.0%"></span></td></tr>
+<tr class="low"><td>Catering Equipment</td><td class="n">56</td><td class="n">7</td><td class="n">12%</td><td class="bar"><span style="width:12.5%"></span></td></tr>
+<tr class="low"><td>Barware</td><td class="n">7</td><td class="n">1</td><td class="n">14%</td><td class="bar"><span style="width:14.3%"></span></td></tr>
+<tr class="low"><td>Pintuck</td><td class="n">41</td><td class="n">7</td><td class="n">17%</td><td class="bar"><span style="width:17.1%"></span></td></tr>
+<tr class="low"><td>Drapery</td><td class="n">98</td><td class="n">18</td><td class="n">18%</td><td class="bar"><span style="width:18.4%"></span></td></tr>
+<tr class="low"><td>Petal Taffeta</td><td class="n">5</td><td class="n">1</td><td class="n">20%</td><td class="bar"><span style="width:20.0%"></span></td></tr>
+<tr class="low"><td>Serving Ware</td><td class="n">61</td><td class="n">13</td><td class="n">21%</td><td class="bar"><span style="width:21.3%"></span></td></tr>
+<tr class="low"><td>Polyester</td><td class="n">166</td><td class="n">39</td><td class="n">23%</td><td class="bar"><span style="width:23.5%"></span></td></tr>
+<tr class="mid"><td>Conventions/Meetings/Events</td><td class="n">15</td><td class="n">4</td><td class="n">27%</td><td class="bar"><span style="width:26.7%"></span></td></tr>
+<tr class="mid"><td>Chairs</td><td class="n">79</td><td class="n">25</td><td class="n">32%</td><td class="bar"><span style="width:31.6%"></span></td></tr>
+<tr class="mid"><td>Lamour Satin</td><td class="n">46</td><td class="n">15</td><td class="n">33%</td><td class="bar"><span style="width:32.6%"></span></td></tr>
+<tr class="mid"><td>Lighting</td><td class="n">93</td><td class="n">31</td><td class="n">33%</td><td class="bar"><span style="width:33.3%"></span></td></tr>
+<tr class="mid"><td>Dupioni</td><td class="n">67</td><td class="n">26</td><td class="n">39%</td><td class="bar"><span style="width:38.8%"></span></td></tr>
+<tr class="mid"><td>Chargers</td><td class="n">28</td><td class="n">12</td><td class="n">43%</td><td class="bar"><span style="width:42.9%"></span></td></tr>
+<tr class="mid"><td>Carpet</td><td class="n">14</td><td class="n">7</td><td class="n">50%</td><td class="bar"><span style="width:50.0%"></span></td></tr>
+<tr class="mid"><td>Serving Pieces</td><td class="n">8</td><td class="n">4</td><td class="n">50%</td><td class="bar"><span style="width:50.0%"></span></td></tr>
+<tr class="mid"><td>Damask</td><td class="n">6</td><td class="n">3</td><td class="n">50%</td><td class="bar"><span style="width:50.0%"></span></td></tr>
+<tr class="mid"><td>Glassware</td><td class="n">50</td><td class="n">28</td><td class="n">56%</td><td class="bar"><span style="width:56.0%"></span></td></tr>
+<tr class="mid"><td>Crinkle</td><td class="n">24</td><td class="n">14</td><td class="n">58%</td><td class="bar"><span style="width:58.3%"></span></td></tr>
+<tr class="ok"><td>Flatware</td><td class="n">61</td><td class="n">38</td><td class="n">62%</td><td class="bar"><span style="width:62.3%"></span></td></tr>
+<tr class="ok"><td>Table Service</td><td class="n">11</td><td class="n">7</td><td class="n">64%</td><td class="bar"><span style="width:63.6%"></span></td></tr>
+<tr class="ok"><td>Pinched Taffeta</td><td class="n">4</td><td class="n">4</td><td class="n">100%</td><td class="bar"><span style="width:100.0%"></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
   </div>
 </section>
 
