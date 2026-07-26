@@ -42,7 +42,6 @@
   var NAV = [
     { sec:'Catalog' },
     { key:'start',      label:'Start',      href:'simplitory.html', icon:I.overview },
-    { key:'wizards',    label:'Wizards',    href:'source.html',     icon:I.wand },
     { key:'products',   label:'Products',   href:'products.html',   icon:I.products },
     { key:'quotes',     label:'Quotes',     href:'quotes.html',     icon:I.quotes, pro:true },
     { key:'cart',       label:'Cart',       href:'cart.html',       icon:I.cart, pro:true },

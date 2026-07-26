@@ -305,7 +305,7 @@ body.show-sections [data-ssla]::before { opacity: 1; }
 .band .hero__media { background-image: var(--proto-band-scrim), var(--proto-band-photo); }
 .band .hero__body, .band .hero__body p { color: #fff; }
 .band .hero__body p { color: rgba(255,255,255,.88); }
-.band__h { font-size: var(--shell-h2-size) !important; }
+.band__h { font-size: var(--shell-h2-size) !important; white-space: nowrap; max-width: none !important; }
 .band .herobtns { margin-top: 1.6rem; }
 
 
