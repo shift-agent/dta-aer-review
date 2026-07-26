@@ -1,0 +1,387 @@
+[
+ {
+  "id": 16,
+  "name": "Bengaline",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 24,
+  "name": "Burlap",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 20,
+  "name": "Chair Cover",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 9,
+  "name": "Crinkle",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 23,
+  "name": "Damask",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 26,
+  "name": "Drapery",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 10,
+  "name": "Dupioni",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 8,
+  "name": "Lamour Satin",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 6,
+  "name": "Napkins",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 15,
+  "name": "Organza",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 13,
+  "name": "Petal Taffeta",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 11,
+  "name": "Pinched Taffeta",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 12,
+  "name": "Pintuck",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 1,
+  "name": "Polyester",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 14,
+  "name": "Rosey",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 7,
+  "name": "Runners",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 5,
+  "name": "Sashes",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 2,
+  "name": "Satin",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 17,
+  "name": "Satin Stripe",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 18,
+  "name": "Sequin",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 30,
+  "name": "Skirts",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 29,
+  "name": "Spandex",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 31,
+  "name": "Tensil",
+  "fabric": true,
+  "category": "Linens",
+  "mapped": true
+ },
+ {
+  "id": 28,
+  "name": "Bags",
+  "fabric": false,
+  "category": "Bags",
+  "mapped": false
+ },
+ {
+  "id": 55,
+  "name": "Bars & Shelving",
+  "fabric": false,
+  "category": "Bars & Shelving",
+  "mapped": false
+ },
+ {
+  "id": 45,
+  "name": "Barware",
+  "fabric": false,
+  "category": "Glassware",
+  "mapped": true
+ },
+ {
+  "id": 36,
+  "name": "Carpet",
+  "fabric": false,
+  "category": "Flooring",
+  "mapped": true
+ },
+ {
+  "id": 44,
+  "name": "Catering Equipment",
+  "fabric": false,
+  "category": "Catering",
+  "mapped": true
+ },
+ {
+  "id": 3,
+  "name": "Chairs",
+  "fabric": false,
+  "category": "Seating",
+  "mapped": true
+ },
+ {
+  "id": 34,
+  "name": "Chargers",
+  "fabric": false,
+  "category": "Chargers",
+  "mapped": false
+ },
+ {
+  "id": 42,
+  "name": "China",
+  "fabric": false,
+  "category": "China",
+  "mapped": false
+ },
+ {
+  "id": 25,
+  "name": "Cleaning",
+  "fabric": false,
+  "category": "Cleaning",
+  "mapped": false
+ },
+ {
+  "id": 50,
+  "name": "Coat Check Accommodations",
+  "fabric": false,
+  "category": "Coat Check Accommodations",
+  "mapped": false
+ },
+ {
+  "id": 51,
+  "name": "Conventions/Meetings/Events",
+  "fabric": false,
+  "category": "Conventions/Meetings/Events",
+  "mapped": false
+ },
+ {
+  "id": 40,
+  "name": "Dance Floor",
+  "fabric": false,
+  "category": "Dance Floor",
+  "mapped": false
+ },
+ {
+  "id": 48,
+  "name": "Decor",
+  "fabric": false,
+  "category": "Decor",
+  "mapped": false
+ },
+ {
+  "id": 53,
+  "name": "Equipment",
+  "fabric": false,
+  "category": "Equipment",
+  "mapped": false
+ },
+ {
+  "id": 27,
+  "name": "Fees",
+  "fabric": false,
+  "category": "Fees",
+  "mapped": false
+ },
+ {
+  "id": 33,
+  "name": "Flatware",
+  "fabric": false,
+  "category": "Flatware",
+  "mapped": false
+ },
+ {
+  "id": 32,
+  "name": "Furniture",
+  "fabric": false,
+  "category": "Furniture",
+  "mapped": false
+ },
+ {
+  "id": 39,
+  "name": "Glassware",
+  "fabric": false,
+  "category": "Glassware",
+  "mapped": false
+ },
+ {
+  "id": 49,
+  "name": "Heating and Cooling",
+  "fabric": false,
+  "category": "Heating and Cooling",
+  "mapped": false
+ },
+ {
+  "id": 52,
+  "name": "Infrastructure",
+  "fabric": false,
+  "category": "Infrastructure",
+  "mapped": false
+ },
+ {
+  "id": 56,
+  "name": "Labor",
+  "fabric": false,
+  "category": "Labor",
+  "mapped": false
+ },
+ {
+  "id": 35,
+  "name": "Lighting",
+  "fabric": false,
+  "category": "Lighting",
+  "mapped": false
+ },
+ {
+  "id": 41,
+  "name": "Plastic",
+  "fabric": false,
+  "category": "Plastic",
+  "mapped": false
+ },
+ {
+  "id": 54,
+  "name": "Services",
+  "fabric": false,
+  "category": "Services",
+  "mapped": false
+ },
+ {
+  "id": 37,
+  "name": "Serving Pieces",
+  "fabric": false,
+  "category": "Catering",
+  "mapped": true
+ },
+ {
+  "id": 43,
+  "name": "Serving Ware",
+  "fabric": false,
+  "category": "Catering",
+  "mapped": true
+ },
+ {
+  "id": 21,
+  "name": "Specialty",
+  "fabric": false,
+  "category": "Specialty",
+  "mapped": false
+ },
+ {
+  "id": 38,
+  "name": "Stage",
+  "fabric": false,
+  "category": "Staging",
+  "mapped": true
+ },
+ {
+  "id": 47,
+  "name": "Table Service",
+  "fabric": false,
+  "category": "Catering",
+  "mapped": true
+ },
+ {
+  "id": 4,
+  "name": "Tables",
+  "fabric": false,
+  "category": "Tables",
+  "mapped": false
+ },
+ {
+  "id": 46,
+  "name": "Tent",
+  "fabric": false,
+  "category": "Structures",
+  "mapped": true
+ },
+ {
+  "id": 22,
+  "name": "Travel",
+  "fabric": false,
+  "category": "Travel",
+  "mapped": false
+ }
+]

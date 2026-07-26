@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connect a CSV — Simplitory</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/simplitory.css">
+<link rel="stylesheet" href="assets/present.css">
+</head>
+<body class="sy">
+
+<template id="present-extras">
+  <a href="source.html">Source</a>
+  <span class="sep">/</span>
+  <a href="csv-setup.html">Connect a CSV</a>
+  <span class="sep">/</span>
+  <a href="products.html">Products</a>
+</template>
+
+<div class="app">
+    <aside class="sb" id="sb" data-sidebar></aside>
+  <main class="main">
+    <div class="topbar"><button class="burger" id="burger" aria-label="Menu" aria-expanded="false">☰</button>
+      <strong>Simplitory</strong>
+      <span class="tierctx">Plan: <b data-tier-label>Basic</b> <button class="tglt" data-tier-toggle>Unlock Pro</button></span>
+    </div>
+    <p class="crumbs"><b>Simplitory</b> · Data · Source · <b>Connect a CSV</b></p>
+    <h1 class="h">Connect a CSV</h1>
+    <p class="hsub">Upload a spreadsheet, map the columns, import. What you map decides what this source can back.</p>
+
+    <div data-csv-wizard></div>
+  </main>
+</div>
+<div class="scrim" id="scrim"></div>
+
+<script src="assets/data/products-export.js"></script>
+<script src="assets/js/connectors.js"></script>
+<script src="assets/js/csv-setup.js"></script>
+<script src="assets/js/sidebar.js"></script>
+<script src="assets/js/simplitory.js"></script>
+<script src="assets/js/present.js"></script>
+</body>
+</html>

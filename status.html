@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decor To Adore &amp; Alabama Event Rentals — Project Status</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#2F4D6A; --navy-dk:#22394F; --ink:#15202B; --body:#4B5E71;
+    --muted:#8A97A5; --paper:#FDF9F5; --warm:#F5EFE7; --white:#fff;
+    --sage:#8FB58A; --olive:#6F8A5C; --gold:#D9B25F;
+    --line:rgba(21,32,43,.12); --amber:#B8862A; --red:#B3261E;
+    --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+    --sans:"Montserrat",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--body);
+    font-family:var(--sans); font-size:15px; line-height:1.65; }
+  .wrap { width:min(880px, calc(100% - 3rem)); margin-inline:auto; }
+
+  header.mast { background:var(--navy); color:#fff; padding:3.5rem 0 3rem; }
+  header.mast .eyebrow { font-size:.68rem; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--gold); margin:0 0 1.1rem; }
+  header.mast h1 { font-family:var(--serif); font-weight:400; font-size:clamp(2.1rem,5vw,3.2rem);
+    line-height:1.12; margin:0 0 .8rem; color:#fff; }
+  header.mast p { margin:0; color:rgba(255,255,255,.84); max-width:60ch; }
+  header.mast .meta { margin-top:1.8rem; font-size:.78rem; color:rgba(255,255,255,.62);
+    letter-spacing:.04em; }
+
+  main { padding-block:3rem 4rem; }
+  section { margin-bottom:3.2rem; }
+  h2 { font-family:var(--serif); font-weight:400; font-size:clamp(1.5rem,3vw,2.1rem);
+    color:var(--ink); line-height:1.2; margin:0 0 .3rem; }
+  h2 .num { font-family:var(--sans); font-size:.6rem; letter-spacing:.2em; color:var(--navy);
+    display:block; text-transform:uppercase; margin-bottom:.55rem; font-weight:600; }
+  h3 { font-family:var(--serif); font-weight:400; font-size:1.25rem; color:var(--ink);
+    margin:2rem 0 .5rem; }
+  p { max-width:70ch; }
+  .lede { font-size:1.05rem; color:var(--ink); max-width:66ch; }
+  a { color:var(--navy); }
+
+  .rule { border:0; border-top:1px solid var(--line); margin:0 0 1.6rem; }
+
+  .headlines { display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); }
+  .hl { background:var(--white); border:1px solid var(--line); padding:1.4rem 1.3rem; }
+  .hl h4 { font-family:var(--sans); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--navy); margin:0 0 .6rem; font-weight:600; }
+  .hl p { margin:0; font-size:.92rem; }
+
+  table { width:100%; border-collapse:collapse; font-size:.88rem; margin-top:1rem; }
+  th { text-align:left; font-size:.64rem; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; padding:0 .7rem .55rem 0; border-bottom:1px solid var(--line); }
+  td { padding:.62rem .7rem .62rem 0; border-bottom:1px solid var(--line); vertical-align:top; }
+  td.n { text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; }
+  tr.zero td { color:var(--red); }
+  tr.zero td:first-child { font-weight:600; }
+  tr.low td { color:var(--amber); }
+  td.bar { width:130px; padding-right:0; }
+  td.bar span { display:block; height:6px; background:var(--sage); }
+  tr.zero td.bar span { background:rgba(179,38,30,.28); }
+  tr.low td.bar span { background:var(--gold); }
+  .tag { font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted);
+    border:1px solid var(--line); padding:.1rem .35rem; margin-left:.4rem; white-space:nowrap; }
+
+  .stats { display:grid; gap:1px; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    background:var(--line); border:1px solid var(--line); margin:1.4rem 0; }
+  .stat { background:var(--white); padding:1.2rem 1.1rem; }
+  .stat b { display:block; font-family:var(--serif); font-size:2.1rem; font-weight:400;
+    color:var(--navy); line-height:1; margin-bottom:.4rem; }
+  .stat span { font-size:.75rem; color:var(--body); line-height:1.4; display:block; }
+
+  .note { background:var(--warm); border-left:3px solid var(--gold); padding:1.1rem 1.2rem;
+    margin:1.5rem 0; font-size:.9rem; }
+  .note strong { color:var(--ink); }
+  .note.flag { border-left-color:var(--red); }
+
+  details.fold { border:1px solid var(--line); background:var(--white); margin-top:1.2rem; }
+  details.fold > summary { cursor:pointer; padding:.9rem 1.1rem; list-style:none;
+    font-size:.76rem; letter-spacing:.12em; text-transform:uppercase; font-weight:600;
+    color:var(--navy); display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+  details.fold > summary::-webkit-details-marker { display:none; }
+  details.fold > summary::after { content:"+"; font-size:1.1rem; line-height:1; color:var(--muted); }
+  details.fold[open] > summary::after { content:"\2212"; }
+  details.fold > summary:hover { background:var(--warm); }
+  details.fold .foldbody { padding:0 1.1rem 1.1rem; }
+  details.fold table { margin-top:0; }
+  .print-only { display:none; }
+
+  ul.ticks { list-style:none; padding:0; margin:1rem 0; }
+  ul.ticks li { position:relative; padding-left:1.4rem; margin-bottom:.5rem; max-width:70ch; }
+  ul.ticks li::before { content:""; position:absolute; left:0; top:.62em; width:7px; height:7px;
+    background:var(--sage); }
+  ul.ticks li.gap::before { background:var(--gold); }
+
+  ol.path { list-style:none; counter-reset:step; padding:0; margin:1.4rem 0 0; }
+  ol.path li { counter-increment:step; position:relative; padding-left:3rem;
+    padding-bottom:1.8rem; border-left:1px solid var(--line); margin-left:1rem; }
+  ol.path li:last-child { border-left-color:transparent; padding-bottom:0; }
+  ol.path li::before { content:counter(step); position:absolute; left:-1rem; top:0;
+    width:2rem; height:2rem; background:var(--navy); color:#fff; display:grid; place-items:center;
+    font-size:.8rem; font-weight:600; }
+  ol.path h4 { font-family:var(--serif); font-weight:400; font-size:1.2rem; color:var(--ink);
+    margin:.15rem 0 .35rem; }
+  ol.path p { margin:0 0 .5rem; font-size:.92rem; }
+  .gate { font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--amber);
+    font-weight:600; }
+  .gate.us { color:var(--olive); }
+
+  footer { border-top:1px solid var(--line); padding:2rem 0 3rem; font-size:.78rem;
+    color:var(--muted); }
+
+  @media print {
+    /* A collapsed <details> does not print, and display:block !important does
+       NOT override the UA's hiding of its content (verified with pdftotext).
+       So the table is emitted twice from the same rows: the disclosure for
+       screen, a plain copy for print. Deterministic, and no reliance on a
+       beforeprint handler firing. */
+    details.fold { display:none; }
+    .print-only { display:block !important; }
+    body { background:#fff; font-size:11.5px; }
+    header.mast { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    section { break-inside:avoid; }
+    .stats, table, ol.path li { break-inside:avoid; }
+  }
+</style>
+<link rel="stylesheet" href="assets/present.css">
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <p class="eyebrow">Decor To Adore &middot; Alabama Event Rentals</p>
+    <h1>Project status and the path to launch</h1>
+    <p>A plain-language summary of where the website project stands today, what is
+       already built, what is genuinely still missing, and what we need from you to
+       finish it.</p>
+    <p class="meta">Prepared by Simpliment &middot; 24 July 2026</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section>
+  <h2><span class="num">01</span>Where things stand</h2>
+  <hr class="rule">
+  <div class="headlines">
+    <div class="hl">
+      <h4>Your data is healthy</h4>
+      <p>The worry that Current RMS was changing or losing product IDs turned out to have
+         a simple, harmless explanation. Nothing is corrupted. Nothing needs rebuilding.</p>
+    </div>
+    <div class="hl">
+      <h4>The hard part is done</h4>
+      <p>Current RMS lists every size as a separate product. The system already groups
+         those into single browsable products with selectable options.</p>
+    </div>
+    <div class="hl">
+      <h4>Photography is the constraint</h4>
+      <p>85% of your catalog has no photograph at all, and some of what is there
+         is not sellable imagery. This gates launch more than any code does.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">02</span>The product ID concern — resolved</h2>
+  <hr class="rule">
+  <ul class="ticks">
+    <li><strong>The worry:</strong> product references stopped matching, suggesting Current RMS
+        was altering IDs.</li>
+    <li><strong>The finding:</strong> Current RMS is not changing anything. We tested it directly
+        against your live account.</li>
+    <li><strong>The cause:</strong> the website's local copy was stale. Your team keeps adding
+        products — we saw new items added the very day we looked.</li>
+    <li><strong>After a refresh: 99.6% matched immediately.</strong> Two genuine exceptions
+        remained, both already flagged for review.</li>
+  </ul>
+  <div class="note">
+    <strong>What this means:</strong> no data loss and no rebuild. It also tells us the
+    website needs to refresh itself from Current RMS <em>automatically</em> rather than
+    relying on a manual export. That is a known, contained piece of work, and it removes
+    this whole category of problem permanently.
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">03</span>Your catalog as it stands today</h2>
+  <hr class="rule">
+  <p>We pulled your complete live catalog and grouped it the way a customer would see it.</p>
+  <div class="stats">
+    <div class="stat"><b>3,889</b><span>Listings in Current RMS</span></div>
+    <div class="stat"><b>2,572</b><span>Products once sizes are grouped</span></div>
+    <div class="stat"><b>55</b><span>Product groups</span></div>
+    <div class="stat"><b>1,174</b><span>Base products with size variations</span></div>
+  </div>
+  <ul class="ticks">
+    <li><strong>Grouping</strong> turns nine near-identical "Pintuck – Blush" listings into one
+        product with a size selector.</li>
+    <li class="gap"><strong>Working today for specialty linen only</strong> — needs extending to
+        the rest of the catalog.</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="num">04</span>What is already built</h2>
+  <hr class="rule">
+  <p>This is real, reusable value in the project today — not a starting point.</p>
+  <ul class="ticks">
+    <li><strong>Live connection to Current RMS.</strong> The website reads your full product
+        catalog and product groups directly.</li>
+    <li><strong>Management screens inside WordPress.</strong> Your team can configure the
+        connection, map Current RMS groups to website categories, run imports and browse the
+        synced catalog — without touching code.</li>
+    <li><strong>Automatic product structuring.</strong> The hard one, and it works: sizes
+        collapse into one product with selectable options. Proven on specialty linen.</li>
+    <li><strong>Quote capture.</strong> A working connection that sends website enquiries into
+        Current RMS as contacts and opportunities.</li>
+    <li><strong>Design and storefront.</strong> Both brands are designed and built as working
+        pages — home, collections, product, events, about, contact and quote — running on your
+        real catalog data, including live search across all 2,572 products.</li>
+  </ul>
+</section>
+
+<section id="gaps">
+  <h2><span class="num">05</span>The real gap: photography and content in Current RMS</h2>
+  <hr class="rule">
+  <p class="lede">The section we most need you to read. Every number is measured from your live
+     catalog, not estimated.</p>
+
+  <div class="stats">
+    <div class="stat"><b>15%</b><span>Products with any image at all<br>(379 of 2,572)</span></div>
+    <div class="stat"><b>85%</b><span>Products with no image<br>(2,193 products)</span></div>
+    <div class="stat"><b>24</b><span>Product groups with zero photography<br>(of 55)</span></div>
+    <div class="stat"><b>587</b><span>Products in those groups</span></div>
+  </div>
+
+  <div class="note flag">
+    <strong>An important correction.</strong> An earlier version of this summary reported
+    photo coverage as a flat 15%, and named eight categories as having no
+    photography. Both were too generous. Having reviewed the images themselves:
+    <ul class="ticks" style="margin:.7rem 0 0">
+      <li class="gap"><strong>24 groups have no photography, not eight</strong> —
+          eight was simply the largest eight. 16 of those 24 are
+          customer-facing categories covering 349 products.</li>
+      <li class="gap"><strong>Not every "image" is a product photograph.</strong> At least
+          22 are CAD floor-plan drawings and similar artwork, and 8 are
+          low-resolution warehouse reference shots. Both pass an automated "has an image"
+          check and neither can be shown to a customer.</li>
+      <li class="gap"><strong>Realistic sellable coverage is 153–310
+          products, or 6%–12% of the catalog</strong> — not
+          15%. A short human review pass will settle the exact number.</li>
+    </ul>
+  </div>
+
+  <h3>Image quality, where images exist</h3>
+  <table>
+    <thead><tr><th>Quality band</th><th class="n">Products</th><th>What it means</th></tr></thead>
+    <tbody>
+      <tr><td>Good (800px or larger)</td><td class="n">163</td><td>Ready to publish</td></tr>
+      <tr><td>Usable (400–799px)</td><td class="n">169</td><td>Publishable, will not enlarge well</td></tr>
+      <tr class="low"><td>Small (200–399px)</td><td class="n">39</td><td>Too small for a product page</td></tr>
+      <tr class="zero"><td>Reference only (under 200px)</td><td class="n">8</td><td>Warehouse thumbnails — not sellable</td></tr>
+      <tr class="zero"><td>Not a product photo</td><td class="n">22</td><td>CAD floor-plan drawings and similar</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Catalog tidiness — records that would reach your customers</h3>
+  <p>The website shows whatever Current RMS holds — so back-office record-keeping becomes
+     customer-visible. All small, all quick to fix at source:</p>
+  <table>
+    <thead><tr><th>Issue</th><th class="n">Records</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>Duplicate <code>(copy …)</code> records</td><td class="n">8</td><td>Atara Chair – Emerald (copy 20220322132658)</td></tr>
+      <tr><td>Operator notes inside the product name</td><td class="n">17</td><td>Ghost Bar Stool *chairs are counter height…</td></tr>
+      <tr><td>Internal pack or case quantity in the name</td><td class="n">40</td><td>Gold Rim – White Wine Glass 14 oz (25)</td></tr>
+      <tr><td>Name starts with a stray unit — the size was lost</td><td class="n">28</td><td>oz Highball Glass (36)</td></tr>
+    </tbody>
+  </table>
+  <ul class="ticks">
+    <li><strong>Back-office groups are showing as shop categories</strong> — <em>Cleaning</em>,
+        <em>Fees</em>, <em>Labor</em>, <em>Travel</em>. Group mapping publishes everything by
+        default.</li>
+    <li><strong>Fix:</strong> an "exclude from storefront" setting — decided once, stays
+        decided.</li>
+    <li class="gap"><strong>This shrinks the photography task.</strong> Not every category will be
+        shown publicly — the back-office groups above, plus anything you choose to keep private,
+        never need a photograph. The real shoot list is only the customer-facing categories, not the
+        whole catalog.</li>
+  </ul>
+
+  <h3>Coverage by product group</h3>
+  <ul class="ticks">
+    <li><strong>Publishable now:</strong> Table Service (64%), Flatware (62%), Crinkle (58%), Glassware (56%), Carpet (50%), Chargers (43%), Dupioni (39%), Lighting (33%), Lamour Satin (33%), Chairs (32%).</li>
+    <li class="gap"><strong>Blocked on photography:</strong> 16 customer-facing
+        groups, 349 products — largest are Stage (77), Dance Floor (44), Tent (41), Tables (39), Decor (34).</li>
+  </ul>
+  <details class="fold">
+    <summary>All 55 product groups, worst coverage first</summary>
+    <div class="foldbody">
+      <table>
+        <thead><tr><th>Product group</th><th class="n">Products</th><th class="n">With photo</th><th class="n">Coverage</th><th></th></tr></thead>
+        <tbody>
+<tr class="zero"><td>Cleaning <span class="tag">back-office</span></td><td class="n">115</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Fees <span class="tag">back-office</span></td><td class="n">79</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Stage</td><td class="n">77</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Dance Floor</td><td class="n">44</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Tent</td><td class="n">41</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Tables</td><td class="n">39</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Decor</td><td class="n">34</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Infrastructure <span class="tag">back-office</span></td><td class="n">28</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Sequin</td><td class="n">23</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Chair Cover</td><td class="n">19</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Skirts</td><td class="n">19</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Spandex</td><td class="n">19</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Rosey</td><td class="n">13</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Organza</td><td class="n">10</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Services <span class="tag">back-office</span></td><td class="n">7</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Coat Check Accommodations <span class="tag">back-office</span></td><td class="n">4</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Burlap</td><td class="n">4</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Bengaline</td><td class="n">2</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Plastic</td><td class="n">2</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Bags <span class="tag">back-office</span></td><td class="n">2</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Satin Stripe</td><td class="n">2</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Labor <span class="tag">back-office</span></td><td class="n">2</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Travel <span class="tag">back-office</span></td><td class="n">1</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Tensil</td><td class="n">1</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="low"><td>Runners</td><td class="n">135</td><td class="n">1</td><td class="n">1%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="low"><td>Sashes</td><td class="n">111</td><td class="n">1</td><td class="n">1%</td><td class="bar"><span style="width:0.9%"></span></td></tr>
+<tr class="low"><td>China</td><td class="n">71</td><td class="n">2</td><td class="n">3%</td><td class="bar"><span style="width:2.8%"></span></td></tr>
+<tr class="low"><td>Equipment</td><td class="n">33</td><td class="n">1</td><td class="n">3%</td><td class="bar"><span style="width:3.0%"></span></td></tr>
+<tr class="low"><td>Furniture</td><td class="n">77</td><td class="n">5</td><td class="n">6%</td><td class="bar"><span style="width:6.5%"></span></td></tr>
+<tr class="low"><td>Heating and Cooling</td><td class="n">12</td><td class="n">1</td><td class="n">8%</td><td class="bar"><span style="width:8.3%"></span></td></tr>
+<tr class="low"><td>Napkins</td><td class="n">171</td><td class="n">15</td><td class="n">9%</td><td class="bar"><span style="width:8.8%"></span></td></tr>
+<tr class="low"><td>Bars & Shelving</td><td class="n">27</td><td class="n">3</td><td class="n">11%</td><td class="bar"><span style="width:11.1%"></span></td></tr>
+<tr class="low"><td>Specialty</td><td class="n">358</td><td class="n">40</td><td class="n">11%</td><td class="bar"><span style="width:11.2%"></span></td></tr>
+<tr class="low"><td>Satin</td><td class="n">50</td><td class="n">6</td><td class="n">12%</td><td class="bar"><span style="width:12.0%"></span></td></tr>
+<tr class="low"><td>Catering Equipment</td><td class="n">56</td><td class="n">7</td><td class="n">12%</td><td class="bar"><span style="width:12.5%"></span></td></tr>
+<tr class="low"><td>Barware</td><td class="n">7</td><td class="n">1</td><td class="n">14%</td><td class="bar"><span style="width:14.3%"></span></td></tr>
+<tr class="low"><td>Pintuck</td><td class="n">41</td><td class="n">7</td><td class="n">17%</td><td class="bar"><span style="width:17.1%"></span></td></tr>
+<tr class="low"><td>Drapery</td><td class="n">98</td><td class="n">18</td><td class="n">18%</td><td class="bar"><span style="width:18.4%"></span></td></tr>
+<tr class="low"><td>Petal Taffeta</td><td class="n">5</td><td class="n">1</td><td class="n">20%</td><td class="bar"><span style="width:20.0%"></span></td></tr>
+<tr class="low"><td>Serving Ware</td><td class="n">61</td><td class="n">13</td><td class="n">21%</td><td class="bar"><span style="width:21.3%"></span></td></tr>
+<tr class="low"><td>Polyester</td><td class="n">166</td><td class="n">39</td><td class="n">23%</td><td class="bar"><span style="width:23.5%"></span></td></tr>
+<tr class="mid"><td>Conventions/Meetings/Events</td><td class="n">15</td><td class="n">4</td><td class="n">27%</td><td class="bar"><span style="width:26.7%"></span></td></tr>
+<tr class="mid"><td>Chairs</td><td class="n">79</td><td class="n">25</td><td class="n">32%</td><td class="bar"><span style="width:31.6%"></span></td></tr>
+<tr class="mid"><td>Lamour Satin</td><td class="n">46</td><td class="n">15</td><td class="n">33%</td><td class="bar"><span style="width:32.6%"></span></td></tr>
+<tr class="mid"><td>Lighting</td><td class="n">93</td><td class="n">31</td><td class="n">33%</td><td class="bar"><span style="width:33.3%"></span></td></tr>
+<tr class="mid"><td>Dupioni</td><td class="n">67</td><td class="n">26</td><td class="n">39%</td><td class="bar"><span style="width:38.8%"></span></td></tr>
+<tr class="mid"><td>Chargers</td><td class="n">28</td><td class="n">12</td><td class="n">43%</td><td class="bar"><span style="width:42.9%"></span></td></tr>
+<tr class="mid"><td>Carpet</td><td class="n">14</td><td class="n">7</td><td class="n">50%</td><td class="bar"><span style="width:50.0%"></span></td></tr>
+<tr class="mid"><td>Serving Pieces</td><td class="n">8</td><td class="n">4</td><td class="n">50%</td><td class="bar"><span style="width:50.0%"></span></td></tr>
+<tr class="mid"><td>Damask</td><td class="n">6</td><td class="n">3</td><td class="n">50%</td><td class="bar"><span style="width:50.0%"></span></td></tr>
+<tr class="mid"><td>Glassware</td><td class="n">50</td><td class="n">28</td><td class="n">56%</td><td class="bar"><span style="width:56.0%"></span></td></tr>
+<tr class="mid"><td>Crinkle</td><td class="n">24</td><td class="n">14</td><td class="n">58%</td><td class="bar"><span style="width:58.3%"></span></td></tr>
+<tr class="ok"><td>Flatware</td><td class="n">61</td><td class="n">38</td><td class="n">62%</td><td class="bar"><span style="width:62.3%"></span></td></tr>
+<tr class="ok"><td>Table Service</td><td class="n">11</td><td class="n">7</td><td class="n">64%</td><td class="bar"><span style="width:63.6%"></span></td></tr>
+<tr class="ok"><td>Pinched Taffeta</td><td class="n">4</td><td class="n">4</td><td class="n">100%</td><td class="bar"><span style="width:100.0%"></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <div class="print-only">
+    <h3>All 55 product groups, worst coverage first</h3>
+    <table>
+      <thead><tr><th>Product group</th><th class="n">Products</th><th class="n">With photo</th><th class="n">Coverage</th><th></th></tr></thead>
+      <tbody>
+<tr class="zero"><td>Cleaning <span class="tag">back-office</span></td><td class="n">115</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Fees <span class="tag">back-office</span></td><td class="n">79</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Stage</td><td class="n">77</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Dance Floor</td><td class="n">44</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Tent</td><td class="n">41</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Tables</td><td class="n">39</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Decor</td><td class="n">34</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Infrastructure <span class="tag">back-office</span></td><td class="n">28</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Sequin</td><td class="n">23</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Chair Cover</td><td class="n">19</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Skirts</td><td class="n">19</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Spandex</td><td class="n">19</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Rosey</td><td class="n">13</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Organza</td><td class="n">10</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Services <span class="tag">back-office</span></td><td class="n">7</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Coat Check Accommodations <span class="tag">back-office</span></td><td class="n">4</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Burlap</td><td class="n">4</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Bengaline</td><td class="n">2</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Plastic</td><td class="n">2</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Bags <span class="tag">back-office</span></td><td class="n">2</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Satin Stripe</td><td class="n">2</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Labor <span class="tag">back-office</span></td><td class="n">2</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Travel <span class="tag">back-office</span></td><td class="n">1</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="zero"><td>Tensil</td><td class="n">1</td><td class="n">0</td><td class="n">0%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="low"><td>Runners</td><td class="n">135</td><td class="n">1</td><td class="n">1%</td><td class="bar"><span style="width:0.8%"></span></td></tr>
+<tr class="low"><td>Sashes</td><td class="n">111</td><td class="n">1</td><td class="n">1%</td><td class="bar"><span style="width:0.9%"></span></td></tr>
+<tr class="low"><td>China</td><td class="n">71</td><td class="n">2</td><td class="n">3%</td><td class="bar"><span style="width:2.8%"></span></td></tr>
+<tr class="low"><td>Equipment</td><td class="n">33</td><td class="n">1</td><td class="n">3%</td><td class="bar"><span style="width:3.0%"></span></td></tr>
+<tr class="low"><td>Furniture</td><td class="n">77</td><td class="n">5</td><td class="n">6%</td><td class="bar"><span style="width:6.5%"></span></td></tr>
+<tr class="low"><td>Heating and Cooling</td><td class="n">12</td><td class="n">1</td><td class="n">8%</td><td class="bar"><span style="width:8.3%"></span></td></tr>
+<tr class="low"><td>Napkins</td><td class="n">171</td><td class="n">15</td><td class="n">9%</td><td class="bar"><span style="width:8.8%"></span></td></tr>
+<tr class="low"><td>Bars & Shelving</td><td class="n">27</td><td class="n">3</td><td class="n">11%</td><td class="bar"><span style="width:11.1%"></span></td></tr>
+<tr class="low"><td>Specialty</td><td class="n">358</td><td class="n">40</td><td class="n">11%</td><td class="bar"><span style="width:11.2%"></span></td></tr>
+<tr class="low"><td>Satin</td><td class="n">50</td><td class="n">6</td><td class="n">12%</td><td class="bar"><span style="width:12.0%"></span></td></tr>
+<tr class="low"><td>Catering Equipment</td><td class="n">56</td><td class="n">7</td><td class="n">12%</td><td class="bar"><span style="width:12.5%"></span></td></tr>
+<tr class="low"><td>Barware</td><td class="n">7</td><td class="n">1</td><td class="n">14%</td><td class="bar"><span style="width:14.3%"></span></td></tr>
+<tr class="low"><td>Pintuck</td><td class="n">41</td><td class="n">7</td><td class="n">17%</td><td class="bar"><span style="width:17.1%"></span></td></tr>
+<tr class="low"><td>Drapery</td><td class="n">98</td><td class="n">18</td><td class="n">18%</td><td class="bar"><span style="width:18.4%"></span></td></tr>
+<tr class="low"><td>Petal Taffeta</td><td class="n">5</td><td class="n">1</td><td class="n">20%</td><td class="bar"><span style="width:20.0%"></span></td></tr>
+<tr class="low"><td>Serving Ware</td><td class="n">61</td><td class="n">13</td><td class="n">21%</td><td class="bar"><span style="width:21.3%"></span></td></tr>
+<tr class="low"><td>Polyester</td><td class="n">166</td><td class="n">39</td><td class="n">23%</td><td class="bar"><span style="width:23.5%"></span></td></tr>
+<tr class="mid"><td>Conventions/Meetings/Events</td><td class="n">15</td><td class="n">4</td><td class="n">27%</td><td class="bar"><span style="width:26.7%"></span></td></tr>
+<tr class="mid"><td>Chairs</td><td class="n">79</td><td class="n">25</td><td class="n">32%</td><td class="bar"><span style="width:31.6%"></span></td></tr>
+<tr class="mid"><td>Lamour Satin</td><td class="n">46</td><td class="n">15</td><td class="n">33%</td><td class="bar"><span style="width:32.6%"></span></td></tr>
+<tr class="mid"><td>Lighting</td><td class="n">93</td><td class="n">31</td><td class="n">33%</td><td class="bar"><span style="width:33.3%"></span></td></tr>
+<tr class="mid"><td>Dupioni</td><td class="n">67</td><td class="n">26</td><td class="n">39%</td><td class="bar"><span style="width:38.8%"></span></td></tr>
+<tr class="mid"><td>Chargers</td><td class="n">28</td><td class="n">12</td><td class="n">43%</td><td class="bar"><span style="width:42.9%"></span></td></tr>
+<tr class="mid"><td>Carpet</td><td class="n">14</td><td class="n">7</td><td class="n">50%</td><td class="bar"><span style="width:50.0%"></span></td></tr>
+<tr class="mid"><td>Serving Pieces</td><td class="n">8</td><td class="n">4</td><td class="n">50%</td><td class="bar"><span style="width:50.0%"></span></td></tr>
+<tr class="mid"><td>Damask</td><td class="n">6</td><td class="n">3</td><td class="n">50%</td><td class="bar"><span style="width:50.0%"></span></td></tr>
+<tr class="mid"><td>Glassware</td><td class="n">50</td><td class="n">28</td><td class="n">56%</td><td class="bar"><span style="width:56.0%"></span></td></tr>
+<tr class="mid"><td>Crinkle</td><td class="n">24</td><td class="n">14</td><td class="n">58%</td><td class="bar"><span style="width:58.3%"></span></td></tr>
+<tr class="ok"><td>Flatware</td><td class="n">61</td><td class="n">38</td><td class="n">62%</td><td class="bar"><span style="width:62.3%"></span></td></tr>
+<tr class="ok"><td>Table Service</td><td class="n">11</td><td class="n">7</td><td class="n">64%</td><td class="bar"><span style="width:63.6%"></span></td></tr>
+<tr class="ok"><td>Pinched Taffeta</td><td class="n">4</td><td class="n">4</td><td class="n">100%</td><td class="bar"><span style="width:100.0%"></span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">06</span>What remains to launch</h2>
+  <hr class="rule">
+  <table>
+    <thead><tr><th>Work</th><th>Where it stands</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Extend product structuring to the full catalog</strong></td>
+          <td>Proven on specialty linen; needs extending to the remaining groups. The largest
+              single piece of build work.</td></tr>
+      <tr><td><strong>Product photography</strong></td>
+          <td>The biggest constraint. Needs a decision from you — see section 5.</td></tr>
+      <tr><td><strong>Finish the storefront</strong></td>
+          <td>Designed and built as working pages; needs wiring to the live catalog and the
+              quote journey.</td></tr>
+      <tr><td><strong>Automatic catalog refresh</strong></td>
+          <td>Not yet built. This is the permanent fix for the ID issue in section 2.</td></tr>
+      <tr><td><strong>Improve quote capture</strong></td>
+          <td>Works today, but enquiries need manual re-entry. Should arrive as itemised,
+              priced lines ready to action.</td></tr>
+      <tr><td><strong>Data tidy-up, testing and launch</strong></td>
+          <td>Including the naming issues in section 5.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="path">
+  <h2><span class="num">07</span>The path to the finish line</h2>
+  <hr class="rule">
+  <p>Every step names who it waits on. <span class="gate">You</span> = decides the schedule.
+     <span class="gate us">Us</span> = runs without blocking you.</p>
+  <ol class="path">
+    <li>
+      <span class="gate">Waiting on you</span>
+      <h4>Agree what "finished" means</h4>
+      <p>A short written definition of the launch scope: which site or sites, which pages,
+         what a customer can do, and what has to be true before we call it live. This is the
+         single thing that has been missing, and it is what has caused this project to stall
+         before.</p>
+    </li>
+    <li>
+      <span class="gate">Waiting on you</span>
+      <h4>Settle the decisions in section 8</h4>
+      <p>One brand or two; browsing only or browsing plus quotes; how photography is handled;
+         where your team edits; and the definition of done. We would expect this to take days,
+         not weeks.</p>
+    </li>
+    <li>
+      <span class="gate us">Our work</span>
+      <h4>Publish what is already photographed</h4>
+      <p>Using the coverage table in section 5, we launch the categories that are ready —
+         Flatware, Glassware, Crinkle, Dupioni, Chairs, Lighting and the linen ranges — rather
+         than waiting for the whole catalog. Your site goes live with a real, browsable
+         collection instead of sitting behind a photography backlog.</p>
+    </li>
+    <li>
+      <span class="gate us">Our work</span>
+      <h4>Extend product structuring to the rest of the catalog</h4>
+      <p>The largest build item, and the one that turns the remaining groups into properly
+         browsable products.</p>
+    </li>
+    <li>
+      <span class="gate us">Our work</span>
+      <h4>Automatic refresh and improved quote capture</h4>
+      <p>The website keeps itself current from Current RMS, and enquiries arrive as itemised,
+         priced opportunities rather than something to re-key.</p>
+    </li>
+    <li>
+      <span class="gate">Together</span>
+      <h4>Photography, category by category</h4>
+      <p>We give you a shoot list ranked by what unblocks the most product, and each batch you
+         shoot goes live as it arrives. This runs alongside everything above rather than
+         holding it up.</p>
+    </li>
+    <li>
+      <span class="gate us">Our work</span>
+      <h4>Testing, tidy-up and launch</h4>
+      <p>Catalog accuracy, the quote journey end to end, mobile, speed, then the switch-over
+         and redirects.</p>
+    </li>
+  </ol>
+  <div class="note">
+    <strong>On dates.</strong> We have deliberately not put dates in this document. Committing
+    to a timeline before scope is agreed is what caused difficulty here previously, and we are
+    not going to repeat it. Once the decisions in section 8 are settled we will give you a
+    phased plan with dates we intend to hold ourselves to, and a regular demonstration of
+    working progress so you can see it moving.
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">08</span>Decisions we need from you</h2>
+  <hr class="rule">
+  <table>
+    <thead><tr><th>Decision</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td><strong>One brand or two at launch?</strong><br>Decor To Adore only, or Decor To
+              Adore <em>and</em> Alabama Event Rentals together</td>
+          <td>The single biggest factor in scope. Our recommendation is Decor To Adore first —
+              see the note below.</td></tr>
+      <tr><td><strong>Browsing only, or browsing plus quote requests?</strong></td>
+          <td>Determines how much of the customer journey we build for launch.</td></tr>
+      <tr><td><strong>How do we handle photography?</strong></td>
+          <td>Phase the launch by category, work to a prioritised shoot list, or re-use
+              existing imagery. See section 5.</td></tr>
+      <tr><td><strong>What does "finished" look like to you?</strong></td>
+          <td>We want your definition of a successful launch agreed in writing before we
+              commit to dates.</td></tr>
+      <tr><td><strong>Tidy the catalog at source, or filter it on the website?</strong></td>
+          <td>The duplicate and note-in-the-name records in section 5. Fixing them in Current
+              RMS also improves your own back-office views.</td></tr>
+      <tr><td><strong>Where does your team edit product content?</strong><br>Current RMS only, or
+              Current RMS for the business and the website for the website</td>
+          <td>This is the decision with the longest tail — it sets where your team works every
+              week for years. See the note below.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <strong>On where your team edits.</strong> We have confirmed with your Current RMS account
+    that the connection can write back, not only read. That means we have a genuine choice, so
+    it is worth making deliberately rather than by accident.
+    <br><br>
+    <strong>Our recommendation: split it by the kind of information, not by the system.</strong>
+    <ul class="ticks" style="margin:.7rem 0 0">
+      <li><strong>Current RMS stays where the business is run.</strong> What exists, quantities,
+          sizes, rates, availability. Nothing changes about how your team works day to day, and
+          nothing can appear on the website that you cannot actually supply.</li>
+      <li><strong>The website owns how things are presented.</strong> Photographs, descriptions,
+          which categories are published, which brand a product belongs to, how sizes are grouped
+          into one product. Current RMS has nowhere to put most of this, and the parts it does
+          have — photographs and tags — are the parts that have not kept up.</li>
+      <li class="gap"><strong>Two things get written back to Current RMS</strong> so the benefit
+          is not trapped in the website: brand markings, and photographs. Your own back-office
+          views improve as a side effect of the website work.</li>
+    </ul>
+    <br>
+    What we would <em>not</em> recommend is editing the same field in both places. That is where
+    these integrations go wrong: two people edit, nobody agrees who wins, and a scheduled sync
+    quietly undoes someone's afternoon. One field, one home.
+  </div>
+
+  <div class="note">
+    <strong>On running both brands from one catalog.</strong> This is achievable and the shared
+    inventory approach is sound. One thing to be aware of: <strong>Current RMS currently holds
+    no information about which brand a product belongs to</strong> — there is no existing
+    marking we can read. So before both brands can run from one catalog, someone who knows the
+    business needs to decide which products belong to Decor To Adore, which to Alabama Event
+    Rentals, and which to both. Applying those markings afterwards is quick and we can automate
+    it; the decisions themselves need your team.
+    <br><br>
+    <strong>Our recommendation: launch Decor To Adore first.</strong> It gets a working site in
+    front of your customers soonest, proves the whole pipeline end to end, and means the
+    Alabama Event Rentals rollout is a repeat of something already working rather than an
+    experiment.
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>Prepared by Simpliment &middot; 24 July 2026. Catalog and photography figures are computed
+     directly from a full pull of your live Current RMS account, not estimated.</p>
+  <p>Housekeeping: the Current RMS access credentials used during this project have been shared
+     across several files and systems. We would recommend issuing a fresh API key as routine
+     security practice; we are happy to handle the changeover. We also found credentials for a
+     second, now-closed Current RMS account still sitting in the project files — worth clearing
+     out at the same time.</p>
+</footer>
+
+<script src="assets/js/present.js"></script>
+</body>
+</html>

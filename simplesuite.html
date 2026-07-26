@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SimpleSuite — what else it does</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/present.css">
+<style>
+  :root {
+    --navy:#2F4D6A; --ink:#15202B; --body:#4B5E71; --muted:#8A97A5;
+    --paper:#FDF9F5; --warm:#F5EFE7; --line:rgba(21,32,43,.12);
+    --sage:#8FB58A; --gold:#D9B25F;
+    --serif:"Cormorant Garamond",Georgia,serif;
+    --sans:"Montserrat",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--body); font-family:var(--sans);
+    font-size:15px; line-height:1.65; }
+  .wrap { width:min(1000px, calc(100% - 3rem)); margin-inline:auto; }
+  a { color:var(--navy); }
+
+  header.mast { background:var(--navy); color:#fff; padding:3.2rem 0 2.8rem; }
+  header.mast .eyebrow { font-size:.68rem; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--gold); margin:0 0 1rem; }
+  header.mast h1 { font-family:var(--serif); font-weight:400; font-size:clamp(2rem,4.5vw,3rem);
+    line-height:1.14; margin:0 0 .7rem; }
+  header.mast p { margin:0; color:rgba(255,255,255,.84); max-width:62ch; }
+
+  main { padding-block:3rem 4rem; }
+  section { margin-bottom:3rem; }
+  h2 { font-family:var(--serif); font-weight:400; font-size:clamp(1.4rem,3vw,2rem);
+    color:var(--ink); margin:0 0 .3rem; line-height:1.2; }
+  h2 .num { font-family:var(--sans); font-size:.6rem; letter-spacing:.2em; color:var(--navy);
+    display:block; text-transform:uppercase; margin-bottom:.55rem; font-weight:600; }
+  hr.rule { border:0; border-top:1px solid var(--line); margin:0 0 1.5rem; }
+  p { max-width:72ch; }
+  .lede { font-size:1.05rem; color:var(--ink); max-width:66ch; }
+
+  .links { display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    margin:1.6rem 0 0; }
+  .linkcard { display:block; background:#fff; border:1px solid var(--line); padding:1.5rem 1.4rem;
+    text-decoration:none; color:inherit; transition:border-color .18s, transform .18s; }
+  .linkcard, .linkcard * { text-decoration:none; }
+  .linkcard:hover { border-color:var(--navy); transform:translateY(-2px); }
+  .linkcard h3 { font-family:var(--serif); font-weight:400; font-size:1.4rem; color:var(--ink);
+    margin:0 0 .4rem; }
+  .linkcard p { margin:0 0 .8rem; font-size:.9rem; }
+  .linkcard .go { font-size:.68rem; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--navy); font-weight:600; }
+  .linkcard .url { display:block; margin-top:.5rem; font-size:.72rem; color:var(--muted);
+    word-break:break-all; }
+
+  .mods { display:grid; gap:1px; grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    background:var(--line); border:1px solid var(--line); margin-top:1.5rem; }
+  .mods--3 { grid-template-columns:repeat(3,1fr); }
+  @media (max-width:640px){ .mods--3 { grid-template-columns:1fr; } }
+  .mod { background:#fff; padding:1.1rem 1.1rem 1.2rem; }
+  .mod b { display:block; font-family:var(--serif); font-weight:400; font-size:1.2rem;
+    color:var(--ink); margin-bottom:.25rem; }
+  .mod span { font-size:.82rem; display:block; }
+  .mod.on { border-left:3px solid var(--sage); }
+  .mod.later { opacity:.62; }
+  .mod .flag { display:inline-block; margin-top:.55rem; font-size:.6rem; letter-spacing:.14em;
+    text-transform:uppercase; font-weight:600; color:var(--sage); }
+  .mod.later .flag { color:var(--muted); }
+
+  .note { background:var(--warm); border-left:3px solid var(--gold); padding:1.1rem 1.2rem;
+    margin:1.6rem 0; font-size:.9rem; max-width:none; }
+  .note strong { color:var(--ink); }
+
+  .offer { background:var(--navy); color:#fff; padding:1.9rem 2rem 2rem; border-top:3px solid var(--gold); }
+  .offer__eyebrow { font-size:.66rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold);
+    font-weight:600; margin:0 0 .6rem; }
+  .offer h3 { font-family:var(--serif); font-weight:400; font-size:clamp(1.4rem,3vw,1.9rem); color:#fff;
+    margin:0 0 .6rem; line-height:1.2; }
+  .offer p { margin:0; color:rgba(255,255,255,.88); max-width:76ch; font-size:.95rem; }
+  .offer strong { color:#fff; }
+
+  footer { border-top:1px solid var(--line); padding:2rem 0 3rem; font-size:.78rem; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <p class="eyebrow">Step 5</p>
+    <h1>The website is one part of a suite</h1>
+    <p>Everything you have seen so far — the storefront, the Current RMS sync, the photo
+       console — runs on SimpleSuite. The same platform carries a good deal more, and it is
+       there when you want it rather than a second project when you do.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section>
+  <h2><span class="num">Explore live</span>See it for yourself</h2>
+  <hr class="rule">
+  <p class="lede">Two places worth opening in the meeting rather than describing.</p>
+  <div class="links">
+    <a class="linkcard" href="https://simpliment.co/" target="_blank" rel="noopener">
+      <h3>SimpleSuite</h3>
+      <p>The platform itself — what the suite is, which modules exist, and how they fit
+         together.</p>
+      <span class="go">Open simpliment.co &rarr;</span>
+      <span class="url">https://simpliment.co/</span>
+    </a>
+    <a class="linkcard" href="https://simpliment.co/features/" target="_blank" rel="noopener">
+      <h3>&ldquo;Can I&hellip;?&rdquo; feature explorer</h3>
+      <p>Every capability across the whole suite, filterable. The honest answer to
+         &ldquo;can it do&nbsp;X?&rdquo; — searched live rather than promised.</p>
+      <span class="go">Open the features filter &rarr;</span>
+      <span class="url">https://simpliment.co/features/</span>
+    </a>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">In this project</span>What you are already using</h2>
+  <hr class="rule">
+  <p>Your build is not a bespoke one-off. It is assembled from modules that are already
+     running on other sites, which is why the storefront came together as quickly as it did.</p>
+  <div class="mods mods--3">
+    <div class="mod on"><b>Launch</b><span>The site itself — sections, presets, both brand
+      designs.</span><span class="flag">In this build</span></div>
+    <div class="mod on"><b>Theme</b><span>Header, footer, navigation and the brand token
+      system behind both palettes.</span><span class="flag">In this build</span></div>
+    <div class="mod on"><b>Identity</b><span>Accounts and permissions — who on your team can
+      change what.</span><span class="flag">In this build</span></div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">Available</span>What you could turn on later</h2>
+  <hr class="rule">
+  <p>Nothing here is needed to launch. It is listed so you know the ceiling, and so you do not
+     buy a separate tool for something the platform already does.</p>
+  <div class="mods">
+    <div class="mod on"><b>Events</b><span>Bookings, calendars and consultation
+      scheduling.</span><span class="flag">Available</span></div>
+    <div class="mod on"><b>Simplitory</b><span>Inventory sync from your rental system, product
+      grouping and the photo console.</span><span class="flag">Available</span></div>
+    <div class="mod on"><b>Pulse</b><span>A complete marketing analysis &amp; decision tool —
+      analyze what's happening, determine what's working, and act on it.</span><span class="flag">Available</span></div>
+    <div class="mod on"><b>Visibility</b><span>Search &amp; answer-engine visibility (SEO &amp; AEO)
+      so couples, planners and the AI they ask all find you.</span><span class="flag">Available</span></div>
+  </div>
+  <div class="note">
+    <strong>Why this matters for the schedule.</strong> Each of these is a setting rather than
+    a build. If you decide in six months you want one of them, that is a configuration
+    conversation — not a new project, a new agency, or a new website.
+  </div>
+</section>
+
+<section>
+  <div class="offer">
+    <p class="offer__eyebrow">Your arrangement</p>
+    <h3>The full suite for a year — with nothing at risk</h3>
+    <p>You have the complete <strong>Professional SimpleSuite</strong> — every module here —
+       <strong>free for twelve months</strong>. Keep it or not, <strong>your website keeps working
+       either way</strong>. If you choose not to continue, you simply lose access to these tools;
+       the site, your catalog and everything your customers see stay exactly as they are.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>Prepared by Simpliment. The two links above are live sites — open them, do not take our
+     word for the capability list.</p>
+</footer>
+
+<script src="assets/js/present.js"></script>
+</body>
+</html>

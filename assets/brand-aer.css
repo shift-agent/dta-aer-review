@@ -1,0 +1,111 @@
+/* ============================================================
+   SSLA PRESET — ALABAMA EVENT RENTALS   preset_slug: alabama-event-rentals
+   Captured from their live Squarespace site: Fjalla One +
+   Libre Franklin, monochrome, full-bleed photography, square
+   grid, right-aligned nav. Stark, industrial, photo-led.
+
+   --shell-* names are ss-launch's real token vocabulary, so this
+   converts directly into a preset manifest.json "palette" object.
+   ============================================================ */
+
+:root {
+  /* ---- SSLA palette (manifest keys in comments) ---- */
+  --shell-bg:                 #F5F7F8;   /* staging --aer-white */   /* surface-light */
+  --shell-surface-light:      #FFFFFF;
+  --shell-surface-warm:       #E9EDF0;   /* surface-warm  */
+  --shell-surface-card:       #E4E9ED;   /* surface-card  */
+  --shell-surface-dark:       #111315;   /* staging --aer-coal */   /* surface-dark  */
+  --shell-text-dark:          #111315;   /* staging --aer-coal */   /* text-dark     */
+  --shell-text-body:          #313841;   /* staging --aer-metal */   /* text-body     */
+  --shell-text-muted:         #6B747D;   /* text-muted    */
+  --shell-text-inverted:      #FFFFFF;
+  --shell-accent:             #9F8654;   /* staging --aer-accent (brass) */   /* accent        : coral, used sparingly */
+  --shell-accent-hover:       #7B6640;   /* staging --aer-accent-2 */
+  --shell-accent-2:           #49525C;   /* staging --aer-iron */
+  --shell-accent-3:           #9CA5AD;   /* staging --aer-smoke */
+  --shell-accent-on-dark:     #C4A76B;
+  --shell-hairline:           rgba(17,19,21,.14);
+  --shell-hairline-on-dark:   rgba(255,255,255,.16);
+  --shell-text-on-dark:       rgba(255,255,255,.82);
+  --shell-text-on-dark-muted: rgba(255,255,255,.58);
+
+  /* ---- SSLA type system ---- */
+  --shell-font-family-heading: "Fjalla One", "Arial Narrow", sans-serif;
+  --shell-font-family-body:    "Libre Franklin", Arial, sans-serif;
+  --shell-h1-size:             clamp(2.6rem, 7vw, 5.2rem);
+  --shell-h1-letter-spacing:   .01em;
+  --shell-h2-size:             clamp(1.5rem, 3vw, 2.1rem);
+  --shell-h2-letter-spacing:   .01em;
+  --shell-eyebrow-size:        .68rem;
+  --shell-eyebrow-letter-spacing: .16em;
+
+  /* ---- SSLA layout ---- */
+  --shell-content-max-width:        1280px;
+  --shell-text-max-width:           44ch;
+  --shell-section-padding-y-standard: clamp(3.5rem, 7vw, 6rem);
+  --shell-section-padding-y-compact:  clamp(2.5rem, 5vw, 3.5rem);
+  --shell-grid-gap-standard:         1.25rem;
+  --shell-card-padding:              .85rem;
+
+  /* ---- prototype-only (no SSLA equivalent) ---- */
+  --proto-font-script: "Libre Franklin", sans-serif;
+  --proto-script-display: none;
+  --proto-fs-body: .95rem;  --proto-fs-small: .78rem;  --proto-fs-lead: 1.05rem;
+  --proto-fs-nav: .74rem;   --proto-fs-chip: .70rem;   --proto-fs-card: 1rem;
+  --proto-fs-brand: 1.35rem;--proto-fs-script: 1rem;
+  --proto-fw-body: 400;     --proto-fw-heading: 400;   --proto-fw-card: 400;
+  --proto-tt-heading: uppercase; --proto-tt-brand: uppercase; --proto-tt-nav: uppercase;
+  --proto-tt-card: uppercase;    --proto-ls-brand: .06em;     --proto-ls-card: .02em;
+  --proto-lh-heading: 1.02;
+  --proto-gutter: 2rem;     --proto-radius: 0;          /* squared, no rounding */
+  --proto-nav-gap: 1.9rem;  --proto-chrome-h: 74px;
+  --proto-chrome-bg: rgba(255,255,255,.95);
+  --proto-btn-pad: .7rem 1.4rem;
+  --proto-chip-pad: .5rem .95rem;
+  --proto-btn-bg: var(--shell-text-dark); --proto-btn-fg: #fff; --proto-btn-bdr: var(--shell-text-dark);
+  --proto-card-min: 230px;  --proto-card-ratio: 1 / 1;   /* square */
+  --proto-card-bdr: none;
+  --proto-card-zoom: 1.07;
+  --proto-ease: cubic-bezier(.2,.7,.3,1);
+  --proto-flag-bg: var(--shell-accent); --proto-flag-fg: #fff;
+  --proto-strip-bg: var(--shell-surface-dark); --proto-strip-fg: #fff;
+  /* g-cta banner: photo behind, the strip colour laid over it as the tint */
+  /* events page only: faint photography under the section colour */
+  --proto-bgmedia-photo:   url("img/site/bg-services.jpg");
+  --proto-pagehead-tint:   rgba(233,237,240,.90);   /* light ground, dark text */
+  --proto-strip-tint:      rgba(17,19,21,.95);      /* coal ground, white text */
+  --proto-strip-fg-muted: var(--shell-text-on-dark);
+
+  /* hero — hero-fullbleed: text over a darkened photograph */
+  --proto-hero-h: 78vh;
+  --proto-hero-pad: 0;
+  --proto-hero-align: end;
+  --proto-hero-fg: #FFFFFF;
+  --proto-hero-fg-muted: rgba(255,255,255,.82);
+  --proto-eyebrow-fg: var(--shell-accent);
+  --proto-hero-scrim: linear-gradient(180deg, rgba(0,0,0,.20) 0%, rgba(0,0,0,.74) 100%);
+  --proto-hero-img: linear-gradient(115deg, #4a4a4a 0%, #2a2a2a 45%, #141414 100%);
+  --proto-font-card: "Fjalla One", "Arial Narrow", sans-serif;
+
+  /* ---- multi-page additions ---- */
+  --proto-hero-photo: url("img/site/bg-event.jpg");
+  --proto-band-photo: url("img/site/bg-tablescape.jpg");
+  --proto-search-w: 780px;
+  --proto-search-bg: #fff;
+  --proto-search-bdr: 1px solid rgba(29,29,29,.16);
+  --proto-search-ring: rgba(240,82,61,.25);
+  --proto-detail-cols: 1fr 1fr;
+  --proto-hero-measure: 44ch;
+  --proto-band-scrim: linear-gradient(0deg, rgba(0,0,0,.72), rgba(0,0,0,.48));
+  --proto-hero-h1-measure: 18ch;
+  --proto-search-pad: .95rem 1.15rem;
+  --proto-quote-style: normal;
+  /* two-tone headline (custom-css consumes this) */
+  --proto-h1-accent: #9F8654;            /* staging --aer-accent (brass) */
+  --proto-h1-accent-on-dark: #C4A76B;
+  --proto-h1-em-style: normal;
+  --proto-photo-tint: rgba(17,19,21,.18);   /* staging --aer-coal, 18% */
+}
+
+.hero__body { padding-bottom: clamp(2.5rem, 6vw, 4.5rem); 
+}

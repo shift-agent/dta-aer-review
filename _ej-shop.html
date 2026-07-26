@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>try{localStorage.setItem("simplitory_source","snapshot")}catch(e){}</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shop the Collection &middot; Decor To Adore</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Gilda+Display&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/brand-dta.css">
+<link rel="stylesheet" href="assets/present.css">
+<style>
+  /* Browse-first shopper. Consumes the brand's --shell-* tokens so it
+     restyles per brand exactly like the rest of the storefront. */
+  body { background: var(--shell-bg); }
+  .shopwrap { width: min(1200px, calc(100% - 2 * var(--proto-gutter))); margin: 0 auto; padding: 2.4rem 0 4rem; }
+
+  .shophead { max-width: 60ch; margin-bottom: 2rem; }
+  .shophead .eyebrow { margin-bottom: .8rem; }
+  .shophead h1 { font-family: var(--shell-font-family-heading); font-weight: var(--proto-fw-heading);
+    font-size: clamp(2rem, 4.5vw, 3.1rem); color: var(--shell-text-dark); line-height: 1.1; margin: 0 0 .6rem; }
+  .shoplede { font-size: var(--proto-fs-lead); color: var(--shell-text-body); margin: 0; }
+
+  /* ── shop control bar: view toggle + LIVE search + filter (anchored popup) ── */
+  .shopbar { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; position: relative; margin: 0 0 1.8rem; }
+
+  .viewtoggle { display: inline-flex; border: 1px solid var(--shell-hairline); background: var(--shell-surface-light); }
+  .viewtoggle .vt { font: inherit; font-size: var(--proto-fs-small); cursor: pointer; border: 0;
+    background: transparent; color: var(--shell-text-body); padding: .6rem 1rem; white-space: nowrap; }
+  .viewtoggle .vt.is-on { background: var(--shell-accent); color: var(--shell-text-inverted); }
+
+  .shopsearch { display: flex; align-items: center; gap: .4rem; flex: 1 1 240px; min-width: 190px;
+    border: 1px solid var(--shell-hairline); background: var(--shell-surface-light); padding: .1rem .9rem; }
+  .shopsearch__i { width: 18px; height: 18px; flex: 0 0 18px; fill: none; stroke: var(--shell-text-muted);
+    stroke-width: 1.7; stroke-linecap: round; }
+  .shopsearch input { flex: 1; min-width: 0; font: inherit; font-size: var(--proto-fs-small);
+    border: 0; background: transparent; color: var(--shell-text-dark); padding: .62rem .2rem; outline: none; }
+
+  .filterwrap { position: relative; }
+  .filtbtn { display: inline-flex; align-items: center; gap: .45rem; font: inherit; font-size: var(--proto-fs-small);
+    cursor: pointer; border: 1px solid var(--shell-hairline); background: var(--shell-surface-light);
+    color: var(--shell-text-body); padding: .6rem 1rem; white-space: nowrap; }
+  .filtbtn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6;
+    stroke-linecap: round; stroke-linejoin: round; }
+  .filtbtn:hover, .filtbtn.is-open, .filtbtn.is-active { border-color: var(--shell-accent); color: var(--shell-accent); }
+  .filtbtn em { font-style: normal; color: var(--shell-accent); font-weight: 700; }
+
+  /* the filter opens as a popup anchored under the button (not down the page) */
+  .filterpop { position: absolute; top: calc(100% + 8px); right: 0; z-index: 30;
+    width: min(360px, 88vw); background: var(--shell-surface-light); border: 1px solid var(--shell-hairline);
+    box-shadow: 0 12px 34px rgba(0,0,0,.16); padding: 1.2rem 1.3rem; }
+  .filterpop--wide { width: min(460px, 90vw); }
+  .filterpop[hidden] { display: none; }
+  .filterpop__sec { margin-bottom: 1.1rem; }
+  .filterpop__sec:last-child { margin-bottom: 0; }
+  .filterpop__sec .wizlbl { margin-bottom: .55rem; }
+
+  /* inline event-date field for the listing control row */
+  .datefld--inline { display: flex; align-items: center; gap: .5rem; white-space: nowrap; }
+  .datefld--inline span { margin: 0; }
+
+  .shophead--tight { margin-bottom: 1rem; }
+  .shophead--tight h1 { margin-bottom: 0; }
+
+  /* ── category grid ── */
+  .catgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.4rem; width: 100%; }
+
+  /* ── entry sections (event chooser / browse) ── */
+  .entrysec { margin: 0 0 2.4rem; }
+  .entrysec__h { font-size: .66rem; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--shell-text-muted); font-weight: 500; margin: 0 0 1rem; }
+
+  .evrow { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+  .evcard { display: flex; flex-direction: column; align-items: flex-start; gap: .3rem; text-align: left;
+    cursor: pointer; padding: 1.2rem 1.2rem 1.3rem; background: var(--shell-surface-light);
+    border: 1px solid var(--shell-hairline); transition: border-color .18s, transform .18s; font: inherit; }
+  .evcard:hover { border-color: var(--shell-accent); transform: translateY(-2px); }
+  .evcard__i { width: 30px; height: 30px; margin-bottom: .5rem; }
+  .evcard__i svg { width: 30px; height: 30px; fill: none; stroke: var(--shell-accent);
+    stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .evcard b { font-family: var(--shell-font-family-heading); font-weight: var(--proto-fw-heading);
+    font-size: 1.2rem; color: var(--shell-text-dark); line-height: 1.15; }
+  .evcard span { font-size: var(--proto-fs-small); color: var(--shell-text-muted); }
+
+  .catgrid--needs { margin-bottom: 2.4rem; }
+  .catgrid--needs .catcard__m { aspect-ratio: 4 / 3; }
+
+  /* ── add-ons rail ── */
+  .addons { display: flex; flex-wrap: wrap; gap: .6rem; }
+  .addon { font: inherit; font-size: var(--proto-fs-chip); letter-spacing: .03em; cursor: pointer;
+    padding: .6rem 1.1rem; border: 1px solid var(--shell-hairline); background: var(--shell-surface-light);
+    color: var(--shell-text-body); transition: all .15s; }
+  .addon::before { content: "+ "; color: var(--shell-accent); font-weight: 600; }
+  .addon:hover { border-color: var(--shell-accent); color: var(--shell-accent); }
+
+  /* ── category cards (grid defined above) ── */
+  .catcard { display: block; text-decoration: none; color: inherit;
+    border: 1px solid var(--shell-hairline); background: var(--shell-surface-light); overflow: hidden;
+    transition: border-color .18s, transform .18s; }
+  .catcard:hover { border-color: var(--shell-accent); transform: translateY(-2px); }
+  .catcard__m { aspect-ratio: 16 / 10; background: var(--shell-surface-card); position: relative; overflow: hidden; }
+  .catcard__m img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--proto-ease); }
+  .catcard:hover .catcard__m img { transform: scale(1.05); }
+  .catcard__m .ph { position: absolute; inset: 0; display: grid; place-items: center;
+    font-family: var(--shell-font-family-heading); font-size: 3rem; color: var(--shell-text-muted); opacity: .4; }
+  .catcard__b { padding: 1.1rem 1.2rem 1.3rem; }
+  .catcard__b h3 { font-family: var(--shell-font-family-heading); font-weight: var(--proto-fw-heading);
+    font-size: 1.5rem; color: var(--shell-text-dark); margin: 0 0 .25rem; }
+  .catcard__b p { font-size: var(--proto-fs-small); color: var(--shell-text-body); margin: 0 0 .6rem; }
+  .catcard__n { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--shell-accent); font-weight: 500; }
+
+  /* ── wizard ── */
+  .crumb { font-size: .78rem; color: var(--shell-text-muted); margin-bottom: 1.4rem; }
+  .crumb a { color: var(--shell-accent); } .crumb b { color: var(--shell-text-dark); }
+  .crumb span { margin: 0 .4rem; color: var(--shell-hairline); }
+  .wizrow { display: grid; gap: 1.4rem; margin-bottom: 1.2rem; }
+  .wizlbl { display: block; font-size: .66rem; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--shell-text-muted); font-weight: 500; margin-bottom: .6rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .chip { font-family: var(--shell-font-family-body); font-size: var(--proto-fs-chip);
+    letter-spacing: .04em; padding: .5rem 1rem; border: 1px solid var(--shell-hairline);
+    background: var(--shell-surface-light); color: var(--shell-text-body); cursor: pointer; transition: all .15s; }
+  .chip em { font-style: normal; opacity: .5; margin-left: .3rem; font-size: .85em; }
+  .chip:hover { border-color: var(--shell-accent); color: var(--shell-accent); }
+  .chip.is-on { background: var(--shell-accent); color: var(--shell-text-inverted); border-color: var(--shell-accent); }
+  .chip.is-on em { opacity: .7; }
+
+  .ctrlrow { display: flex; align-items: center; gap: 1.6rem; flex-wrap: wrap;
+    padding: 1rem 0 1.2rem; border-top: 1px solid var(--shell-hairline);
+    border-bottom: 1px solid var(--shell-hairline); margin-bottom: 1.4rem; }
+  .datefld span { display: block; font-size: .62rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--shell-text-muted); margin-bottom: .3rem; }
+  .datefld input { font: inherit; padding: .5rem .6rem; border: 1px solid var(--shell-hairline);
+    background: var(--shell-surface-light); color: var(--shell-text-dark); accent-color: var(--shell-accent); }
+  .popfld { font-size: var(--proto-fs-small); color: var(--shell-text-body); display: flex; align-items: center; gap: .5rem; cursor: pointer; }
+  .popfld input { accent-color: var(--shell-accent); width: 16px; height: 16px; }
+  .modelnote { font-size: .72rem; color: var(--shell-text-muted); max-width: 42ch; line-height: 1.4; margin-left: auto; }
+  .modelnote b { color: var(--shell-text-body); }
+
+  .rescount { font-size: var(--proto-fs-small); color: var(--shell-text-muted); margin: 0 0 1.2rem; }
+  .rescount b { color: var(--shell-accent); }
+
+  /* ── result cards ── */
+  .resgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1.3rem; }
+  .rc { border: 1px solid var(--shell-hairline); background: var(--shell-surface-light); overflow: hidden; }
+  .rc.is-out { opacity: .62; }
+  .rc__link { text-decoration: none; color: inherit; display: block; }
+  .rc__m { position: relative; aspect-ratio: 3 / 4; background: var(--shell-surface-card); overflow: hidden; }
+  .rc__m img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--proto-ease); }
+  .rc:hover .rc__m img { transform: scale(1.05); }
+  .rc__m .ph { position: absolute; inset: 0; display: grid; place-items: center;
+    font-family: var(--shell-font-family-heading); font-size: 2rem; color: var(--shell-text-muted); opacity: .5; }
+  .pop { position: absolute; top: .5rem; left: .5rem; font-size: .58rem; letter-spacing: .1em; text-transform: uppercase;
+    font-weight: 600; padding: .28rem .5rem; background: var(--shell-accent); color: var(--shell-text-inverted); }
+  .pop.mid { background: var(--shell-surface-dark); }
+  .avail { position: absolute; bottom: .5rem; left: .5rem; font-size: .6rem; letter-spacing: .06em;
+    font-weight: 600; padding: .28rem .5rem; }
+  .avail.yes { background: rgba(23,134,79,.94); color: #fff; }
+  .avail.no  { background: rgba(179,38,30,.94); color: #fff; }
+  .rc__b { padding: .8rem .85rem 1rem; }
+  .rc__b h4 { font-family: var(--proto-font-card); font-size: var(--proto-fs-card); font-weight: var(--proto-fw-card);
+    color: var(--shell-text-dark); margin: 0 0 .25rem; line-height: 1.3; }
+  .rc__meta { font-size: var(--proto-fs-small); color: var(--shell-text-muted); margin: 0 0 .5rem; }
+  .minis { display: flex; gap: .3rem; }
+  .minis .mini { width: 18px; height: 18px; background-size: cover; background-position: center;
+    border: 1px solid var(--shell-hairline); }
+  .resempty { color: var(--shell-text-muted); padding: 2rem 0; }
+
+  /* ── "completes the look" pairings strip (order co-occurrence, modelled) ── */
+  .pairstrip { margin: 2.4rem 0 0; padding-top: 1.7rem; border-top: 1px solid var(--shell-hairline); }
+  .pairstrip__h { font-family: var(--shell-font-family-heading); font-weight: var(--proto-fw-heading);
+    font-size: 1.35rem; color: var(--shell-text-dark); margin: 0 0 .25rem; }
+  .pairstrip__sub { font-size: .72rem; color: var(--shell-text-muted); margin: 0 0 1.15rem; }
+  .pairstrip__sub b { color: var(--shell-text-body); }
+  .pairstrip__row { display: grid; grid-template-columns: repeat(auto-fill, minmax(158px, 1fr)); gap: 1rem; }
+  .pairmini { display: block; text-decoration: none; color: inherit; overflow: hidden;
+    border: 1px solid var(--shell-hairline); background: var(--shell-surface-light);
+    transition: border-color .18s, transform .18s; }
+  .pairmini:hover { border-color: var(--shell-accent); transform: translateY(-2px); }
+  .pairmini__m { aspect-ratio: 4 / 3; background: var(--shell-surface-card); overflow: hidden; }
+  .pairmini__m img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--proto-ease); }
+  .pairmini:hover .pairmini__m img { transform: scale(1.05); }
+  .pairmini__b { padding: .6rem .7rem .75rem; }
+  .pairmini__b b { display: block; font-family: var(--proto-font-card); font-size: var(--proto-fs-card);
+    font-weight: var(--proto-fw-card); color: var(--shell-text-dark); line-height: 1.25;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pairmini__b span { font-size: .68rem; color: var(--shell-text-muted); }
+
+  @media (max-width: 700px) {
+    .ctrlrow { gap: 1rem; } .modelnote { margin-left: 0; flex-basis: 100%; }
+  }
+</style>
+</head>
+<body data-brand="dta" data-base="" data-pbase="dta/" class="">
+
+<template id="present-extras">
+  <span>Shop</span>
+  <span class="sep">/</span>
+  <a href="dta/collections.html">Old collections</a>
+</template>
+
+<header class="chrome" data-ssla="chrome (theme)"><div class="wrap chrome__inner">
+  <a class="brandmark" href="dta/index.html"><img src="assets/img/site/logo-dta.png" alt="Decor To Adore" style="height:50px;width:auto"></a>
+  <nav class="nav"><a href="shop.html" class="is-active">Shop</a><a href="dta/events.html">Events</a><a href="dta/about.html">About</a><a href="dta/contact.html">Contact</a></nav>
+  <a class="btn quotepill" href="dta/quote.html">Quote<span data-quote-count class="is-empty"></span></a>
+</div></header>
+
+<main class="shopwrap"><div data-shop></div></main>
+
+<script src="assets/js/connectors.js"></script>
+<script src="assets/data/products.js"></script>
+<script src="assets/data/rentfreq.js"></script>
+<script src="assets/data/avail.js"></script>
+<script src="assets/js/pairings.js"></script>
+<script src="assets/js/shop.js"></script>
+<script src="assets/js/present.js"></script>
+</body>
+</html>

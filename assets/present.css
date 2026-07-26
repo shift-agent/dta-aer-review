@@ -1,0 +1,141 @@
+/* ============================================================
+   PRESENTATION LAYER — the top nav that walks the client meeting.
+
+   Deliberately NOT brand-styled: it is the frame around the work,
+   not part of it. Neutral dark bar so both brand palettes read
+   correctly underneath it, and so nobody mistakes it for the site.
+
+   Injected by assets/js/present.js on every deck page, so the
+   running order lives in ONE place.
+   ============================================================ */
+
+:root { --present-h: 52px; }
+
+body.has-present { padding-top: var(--present-h); }
+
+.presentbar {
+  position: fixed; inset: 0 0 auto 0; z-index: 9000;
+  max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain;
+  height: var(--present-h);
+  display: flex; align-items: stretch; gap: 0;
+  background: #10141A; color: #E8EDF3;
+  font: 500 12px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 1px 14px rgba(0,0,0,.28);
+  -webkit-font-smoothing: antialiased;
+}
+
+.presentbar__mark {
+  display: flex; align-items: center; gap: .55rem; flex: 0 1 auto; min-width: 0; overflow: hidden;
+  padding: 0 1.1rem 0 1.25rem; white-space: nowrap;
+  border-right: 1px solid rgba(255,255,255,.10);
+  color: #fff; letter-spacing: .01em;
+}
+.presentbar__mark b { font-weight: 600; }
+.presentbar__mark span { color: rgba(232,237,243,.5); font-weight: 400; }
+
+.presentbar__steps { display: flex; align-items: stretch; flex: 0 0 auto; }
+.presentbar::-webkit-scrollbar { display: none; }
+.presentbar__steps::-webkit-scrollbar { display: none; }
+
+.pstep {
+  display: flex; align-items: center; gap: .6rem;
+  padding: 0 1.15rem; white-space: nowrap;
+  color: rgba(232,237,243,.62);
+  border-right: 1px solid rgba(255,255,255,.07);
+  transition: background .16s, color .16s;
+}
+.pstep:hover { background: rgba(255,255,255,.06); color: #fff; }
+.pstep__n {
+  display: grid; place-items: center;
+  width: 20px; height: 20px; flex: 0 0 20px;
+  border: 1px solid rgba(255,255,255,.24);
+  font-size: 10.5px; font-weight: 600; letter-spacing: 0;
+  color: rgba(232,237,243,.72);
+}
+.pstep.is-current { background: #fff; color: #10141A; }
+.pstep.is-current .pstep__n { background: #10141A; border-color: #10141A; color: #fff; }
+.pstep.is-done .pstep__n { border-color: rgba(255,255,255,.5); color: #fff; }
+
+.presentbar__extras {
+  display: flex; align-items: center; justify-content: flex-end; gap: .9rem;
+  flex: 1 1 auto; min-width: 0; overflow: hidden;
+  padding: 0 1.1rem; white-space: nowrap;
+  border-left: 1px solid rgba(255,255,255,.10);
+  font-size: 11.5px;
+}
+.presentbar__extras a { color: #F0B27A; }
+
+/* Section-label overlay switch — a state, so it gets a switch, not a link. */
+.psw {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: none; border: 0; padding: .35rem .1rem; margin: 0;
+  color: rgba(232,237,243,.62); cursor: pointer;
+  font: inherit; font-size: 11.5px;
+}
+.psw:hover { color: #fff; }
+.psw__track {
+  width: 26px; height: 14px; flex: 0 0 26px;
+  border: 1px solid rgba(255,255,255,.28); border-radius: 999px;
+  display: block; position: relative; transition: background .16s, border-color .16s;
+}
+.psw__dot {
+  position: absolute; top: 1px; left: 1px; width: 10px; height: 10px;
+  border-radius: 999px; background: rgba(232,237,243,.55);
+  transition: transform .16s, background .16s;
+}
+.psw[aria-pressed="true"] { color: #fff; }
+.psw[aria-pressed="true"] .psw__track { background: #F0B27A; border-color: #F0B27A; }
+.psw[aria-pressed="true"] .psw__dot { transform: translateX(12px); background: #10141A; }
+.presentbar__extras a:hover { text-decoration: underline; }
+.presentbar__extras .sep { color: rgba(255,255,255,.22); }
+
+.presentbar__move { display: flex; align-items: stretch; border-left: 1px solid rgba(255,255,255,.10); }
+.presentbar__move a {
+  display: grid; place-items: center; width: 40px;
+  color: rgba(232,237,243,.7); font-size: 15px;
+  border-left: 1px solid rgba(255,255,255,.07);
+  transition: background .16s, color .16s;
+}
+.presentbar__move a:hover { background: rgba(255,255,255,.09); color: #fff; }
+.presentbar__move a[aria-disabled="true"] { opacity: .25; pointer-events: none; }
+
+.presentbar a { text-decoration: none; }
+
+/* The prototype's own dev bar is folded into the presentation bar. */
+.protobar { display: none !important; }
+
+/* Sticky site chrome has to clear the presentation bar. */
+body.has-present .chrome { top: var(--present-h); }
+
+@media (max-width: 1400px) {
+  /* extras are clipped from the left, so drop the non-link label first
+     rather than let it break mid-word */
+  .presentbar__extras > span:not(.sep) { display: none; }
+  .presentbar__extras > .sep:first-of-type { display: none; }
+}
+
+@media (max-width: 1280px) {
+  .presentbar__mark span { display: none; }
+}
+
+@media (max-width: 1040px) {
+  .presentbar__extras { display: none; }
+  .pstep { padding: 0 .8rem; }
+}
+
+/* On a phone the bar cannot show five steps and a wordmark. Drop the mark,
+   tighten the steps, and let the bar scroll WITHIN itself — a fixed element
+   wider than the viewport does not scroll the document, but it does make the
+   page look broken in any capture. */
+@media (max-width: 720px) {
+  .presentbar__mark { display: none; }
+  .presentbar__move { position: sticky; right: 0; background: #10141A; }
+  .pstep { padding: 0 .7rem; font-size: 11.5px; }
+  .pstep__n { width: 18px; height: 18px; flex-basis: 18px; }
+}
+
+@media print {
+  .presentbar { display: none; }
+  body.has-present { padding-top: 0; }
+}

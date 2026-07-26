@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decor To Adore &amp; Alabama Event Rentals — Project Scope &amp; Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#2F4D6A; --navy-dk:#22394F; --ink:#15202B; --body:#4B5E71;
+    --muted:#8A97A5; --paper:#FDF9F5; --warm:#F5EFE7; --white:#fff;
+    --sage:#8FB58A; --olive:#6F8A5C; --gold:#D9B25F;
+    --line:rgba(21,32,43,.12); --amber:#B8862A; --red:#B3261E;
+    --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+    --sans:"Montserrat",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--body);
+    font-family:var(--sans); font-size:15px; line-height:1.65; }
+  .wrap { width:min(920px, calc(100% - 3rem)); margin-inline:auto; }
+
+  header.mast { background:var(--navy); color:#fff; padding:3.5rem 0 3rem; }
+  header.mast .eyebrow { font-size:.68rem; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--gold); margin:0 0 1.1rem; }
+  header.mast h1 { font-family:var(--serif); font-weight:400; font-size:clamp(2.1rem,5vw,3.2rem);
+    line-height:1.12; margin:0 0 .8rem; color:#fff; }
+  header.mast p { margin:0; color:rgba(255,255,255,.84); max-width:62ch; }
+  header.mast .meta { margin-top:1.8rem; font-size:.78rem; color:rgba(255,255,255,.62); letter-spacing:.04em; }
+
+  main { padding-block:3rem 4rem; }
+  section { margin-bottom:3.2rem; }
+  h2 { font-family:var(--serif); font-weight:400; font-size:clamp(1.5rem,3vw,2.1rem);
+    color:var(--ink); line-height:1.2; margin:0 0 .3rem; }
+  h2 .num { font-family:var(--sans); font-size:.6rem; letter-spacing:.2em; color:var(--navy);
+    display:block; text-transform:uppercase; margin-bottom:.55rem; font-weight:600; }
+  h3 { font-family:var(--serif); font-weight:400; font-size:1.25rem; color:var(--ink); margin:2rem 0 .5rem; }
+  p { max-width:70ch; }
+  .lede { font-size:1.05rem; color:var(--ink); max-width:66ch; }
+  a { color:var(--navy); }
+  .rule { border:0; border-top:1px solid var(--line); margin:0 0 1.6rem; }
+
+  /* agenda — the five buttons, spelled out */
+  .agenda { display:grid; gap:1px; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    background:var(--line); border:1px solid var(--line); margin:1.6rem 0 0; }
+  .ag { background:var(--white); padding:1rem 1.1rem; }
+  .ag b { display:block; font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; color:var(--navy); margin-bottom:.35rem; }
+  .ag span { font-size:.86rem; color:var(--ink); display:block; font-family:var(--serif); font-size:1.05rem; }
+  .ag small { display:block; font-size:.78rem; color:var(--body); margin-top:.2rem; }
+
+  .headlines { display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); }
+  .hl { background:var(--white); border:1px solid var(--line); padding:1.4rem 1.3rem; }
+  .hl.flag { border-left:3px solid var(--gold); }
+  .hl h4 { font-family:var(--sans); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--navy); margin:0 0 .6rem; font-weight:600; }
+  .hl.flag h4 { color:var(--amber); }
+  .hl p { margin:0; font-size:.92rem; }
+
+  .stats { display:grid; gap:1px; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    background:var(--line); border:1px solid var(--line); margin:1.6rem 0; }
+  .stat { background:var(--white); padding:1.2rem 1.1rem; }
+  .stat b { display:block; font-family:var(--serif); font-size:2.1rem; font-weight:400;
+    color:var(--navy); line-height:1; margin-bottom:.4rem; }
+  .stat span { font-size:.75rem; color:var(--body); line-height:1.4; display:block; }
+
+  .note { background:var(--warm); border-left:3px solid var(--gold); padding:1.1rem 1.2rem;
+    margin:1.5rem 0; font-size:.9rem; }
+  .note strong { color:var(--ink); }
+
+  /* phase columns */
+  .phases { display:grid; gap:1.2rem; grid-template-columns:1fr 1fr; margin-top:1.5rem; }
+  @media (max-width:720px){ .phases { grid-template-columns:1fr; } }
+  .phase { background:var(--white); border:1px solid var(--line); padding:1.5rem 1.5rem 1.7rem; }
+  .phase.p1 { border-top:3px solid var(--sage); }
+  .phase.p2 { border-top:3px solid var(--navy); }
+  .phase .pk { font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; font-weight:600; color:var(--olive); }
+  .phase.p2 .pk { color:var(--navy); }
+  .phase h3 { margin:.35rem 0 .2rem; font-size:1.45rem; }
+  .phase .goal { font-size:.92rem; color:var(--ink); margin:0 0 1rem; }
+  ul.ticks { list-style:none; padding:0; margin:0; }
+  ul.ticks li { position:relative; padding-left:1.4rem; margin-bottom:.55rem; font-size:.9rem; max-width:none; }
+  ul.ticks li::before { content:""; position:absolute; left:0; top:.55em; width:7px; height:7px; background:var(--sage); }
+  .phase.p2 ul.ticks li::before { background:var(--navy); }
+  .phase .out { margin-top:1rem; padding-top:.9rem; border-top:1px solid var(--line); font-size:.86rem; color:var(--body); }
+  .phase .out strong { color:var(--ink); }
+
+  footer { border-top:1px solid var(--line); padding:2rem 0 3rem; font-size:.78rem; color:var(--muted); }
+  footer a.big { display:inline-block; margin-top:.4rem; font-size:.86rem; }
+</style>
+<link rel="stylesheet" href="assets/present.css">
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <p class="eyebrow">Decor To Adore &middot; Alabama Event Rentals</p>
+    <h1>Project scope &amp; solutions</h1>
+    <p>Where the project stands in one page, and a clear commitment to what we deploy in
+       Phase&nbsp;1 and Phase&nbsp;2 — so the conversation is about launching, not re-scoping.</p>
+    <p class="meta">Prepared by Simpliment &middot; For Monday's review, 27 July 2026</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section>
+  <h2><span class="num">Today's walk</span>Four stops, in order</h2>
+  <hr class="rule">
+  <p>A short, deliberate meeting. Each of the four stops is a button along the top of every screen —
+     this first one covers both where we are and what we deploy.</p>
+  <div class="agenda">
+    <div class="ag"><b>1 · Now &amp; commit</b><span>Scope &amp; Solutions</span><small>Where we are + Phase&nbsp;1 &amp; 2.</small></div>
+    <div class="ag"><b>2 · Show</b><span>Design Review</span><small>Walk the real designs.</small></div>
+    <div class="ag"><b>3 · Manage</b><span>Simplitory</span><small>Inventory, now vs later.</small></div>
+    <div class="ag"><b>4 · Extend</b><span>SimpleSuite</span><small>The enhancements.</small></div>
+  </div>
+</section>
+
+<section id="scope">
+  <h2><span class="num">01 · Project Scope</span>Where we are</h2>
+  <hr class="rule">
+  <p class="lede">The short version: the risky, uncertain parts are behind us. What's left is a
+     decision about <em>what to launch first</em> and <em>how you'll manage it</em>.</p>
+  <div class="headlines">
+    <div class="hl">
+      <h4>Your data is healthy</h4>
+      <p>The Current RMS ID worry had a simple, harmless cause — a stale local copy. After a
+         refresh, 99.6% matched. Nothing corrupted, nothing to rebuild.</p>
+    </div>
+    <div class="hl">
+      <h4>The hard part works</h4>
+      <p>Current RMS lists every size separately. The system already folds those into one
+         browsable product with selectable options.</p>
+    </div>
+    <div class="hl">
+      <h4>Both sites are designed</h4>
+      <p>Decor To Adore and Alabama Event Rentals are built as working pages on your real
+         catalog — home, shop, product, quote — with live search across all products.</p>
+    </div>
+    <div class="hl flag">
+      <h4>One real constraint</h4>
+      <p>~85% of the catalog has no sellable photograph. This gates launch far more than any
+         code does — which is exactly why we phase it.</p>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>3,889</b><span>Current RMS listings&hellip;</span></div>
+    <div class="stat"><b>2,572</b><span>&hellip;grouped into products</span></div>
+    <div class="stat"><b>2</b><span>Brands, one shared inventory</span></div>
+    <div class="stat"><b>~15%</b><span>Photographed today</span></div>
+  </div>
+  <div class="note">
+    <strong>And not every category is shown publicly.</strong> Some categories will never be
+    displayed on the storefront — back-office groups like cleaning, fees, labor and delivery, plus
+    anything you choose to keep private — so they never need a photograph. The real photography task
+    is only the categories you actually put in front of customers, which is smaller than the raw 85%.
+  </div>
+</section>
+
+<section id="solutions">
+  <h2><span class="num">02 · Solutions</span>What we deploy — Phase 1 &amp; Phase 2</h2>
+  <hr class="rule">
+  <p class="lede">Rather than wait for the whole catalog, we launch what's ready now and grow it.
+     Two phases, each with a clear finish line.</p>
+
+  <div class="phases">
+    <div class="phase p1">
+      <span class="pk">Phase 1 · Launch what's ready</span>
+      <h3>A real site, in front of customers</h3>
+      <p class="goal">Decor To Adore live on the collection that's already photographed — not held
+         behind the photography backlog.</p>
+      <ul class="ticks">
+        <li>Publish the ready categories — Flatware, Glassware, Dupioni, Chairs, Lighting and the
+            linen ranges.</li>
+        <li>Browse-first storefront + <strong>quote requests</strong> into Current RMS.</li>
+        <li>Live Current RMS connection, product grouping, brand tagging.</li>
+        <li>Managed in <strong>Simplitory</strong> inside WordPress — no code.</li>
+        <li>Back-office groups (Cleaning, Fees, Labor) excluded from the storefront.</li>
+      </ul>
+      <p class="out"><strong>Outcome:</strong> a browsable, on-brand site your customers can use —
+         proving the whole pipeline end to end.</p>
+    </div>
+
+    <div class="phase p2">
+      <span class="pk">Phase 2 · Extend &amp; scale</span>
+      <h3>Full catalog, second brand, automation</h3>
+      <p class="goal">Repeat the working pipeline across everything, and take the manual steps out.</p>
+      <ul class="ticks">
+        <li>Extend product structuring to the <strong>full catalog</strong>.</li>
+        <li>Add <strong>Alabama Event Rentals</strong> from the shared inventory.</li>
+        <li><strong>Automatic refresh</strong> — the permanent fix for the ID issue.</li>
+        <li>Itemised, priced <strong>quote → opportunity</strong>, no re-keying.</li>
+        <li>Photography filled <strong>category by category</strong>, live as it lands.</li>
+        <li>SimpleSuite enhancements layered in (step 5).</li>
+      </ul>
+      <p class="out"><strong>Outcome:</strong> both brands, the complete catalog, and a site that
+         keeps itself current.</p>
+    </div>
+  </div>
+
+  <div class="note" style="border-left-color:var(--navy)">
+    <strong>Phase 3 · Grow — after launch.</strong> With the site live and the catalog complete,
+    the SimpleSuite tools turn it into a growth engine — marketing analysis and decisions (Pulse),
+    search &amp; answer-engine visibility (SEO &amp; AEO), and event bookings. Not part of the launch
+    scope; the conversation for once you're live and confident.
+  </div>
+
+  <div class="note">
+    <strong>On dates.</strong> We're not committing to a timeline before scope is agreed — that's
+    what stalled this before. Agree Phase&nbsp;1 today and we return a phased plan with dates we'll
+    hold ourselves to, plus a regular demo of working progress. The full measured status report
+    stays available as the detail behind this page.
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>Prepared by Simpliment &middot; 27 July 2026. Catalog and photography figures are computed from
+     a full pull of your live Current RMS account, not estimated.</p>
+  <p><a class="big" href="status.html">Open the full measured status report &rarr;</a></p>
+</footer>
+
+<script src="assets/js/present.js"></script>
+</body>
+</html>

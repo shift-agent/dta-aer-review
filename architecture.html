@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P1 — Two Brands, One Roof</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E1116; --panel:#161B22; --panel2:#1C232C; --line:#2A323D;
+    --ink:#E6EDF3; --muted:#8B98A5; --dim:#6B7683;
+    --orange:#EF6C24; --aer:#F0523D; --dta:#7FA6D4; --ok:#3FB950;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:400 15px/1.65 Inter,system-ui,sans-serif;}
+  .wrap{width:min(1180px,calc(100% - 3rem));margin-inline:auto}
+  a{color:var(--orange)}
+  header{padding:3.5rem 0 2rem;border-bottom:1px solid var(--line)}
+  .tag{font:500 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+       color:var(--orange);margin:0 0 1rem}
+  h1{font-size:clamp(1.9rem,4vw,2.8rem);font-weight:600;letter-spacing:-.02em;margin:0 0 .5rem;line-height:1.15}
+  .sub{color:var(--muted);font-size:1.05rem;max-width:62ch;margin:0}
+  h2{font-size:1.25rem;font-weight:600;margin:0 0 .3rem;letter-spacing:-.01em}
+  .note{color:var(--muted);font-size:.9rem;margin:0 0 1.5rem;max-width:70ch}
+  section{padding:3rem 0;border-bottom:1px solid var(--line)}
+
+  /* flow diagram */
+  .flow{display:grid;gap:.9rem}
+  .row{display:grid;grid-template-columns:180px 1fr;gap:1rem;align-items:stretch}
+  .stage{font:500 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+         color:var(--dim);display:flex;align-items:center;justify-content:flex-end;
+         text-align:right;padding-right:.2rem}
+  .lanes{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+  .box{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:.85rem 1rem}
+  .box.wide{grid-column:1 / -1;background:var(--panel2)}
+  .box b{display:block;font-size:.92rem;font-weight:600;margin-bottom:.15rem}
+  .box span{color:var(--muted);font-size:.82rem;display:block}
+  .box code{font:500 .78rem var(--mono);color:var(--ink);background:#0B0E13;
+            border:1px solid var(--line);border-radius:4px;padding:.1rem .38rem}
+  .b-aer{border-left:3px solid var(--aer)}
+  .b-dta{border-left:3px solid var(--dta)}
+  .b-key{border-left:3px solid var(--orange)}
+  .arrow{text-align:center;color:var(--dim);font-size:1.1rem;line-height:1}
+
+  /* token table */
+  table{width:100%;border-collapse:collapse;font-size:.85rem}
+  th,td{text-align:left;padding:.6rem .75rem;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font:500 10px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+  td code{font:500 .78rem var(--mono);color:var(--ink)}
+  .sw{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:.45rem;
+      vertical-align:-1px;border:1px solid rgba(255,255,255,.18)}
+  .col-aer{color:var(--aer)} .col-dta{color:var(--dta)}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.25rem}
+  .card h3{margin:.1rem 0 .4rem;font-size:1rem;font-weight:600}
+  .card p{margin:0;color:var(--muted);font-size:.86rem}
+  .owner{font:500 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+         color:var(--orange);display:block;margin-bottom:.5rem}
+
+  .cta{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.4rem}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.3rem;border-radius:8px;
+       border:1px solid var(--line);background:var(--panel);color:var(--ink);
+       text-decoration:none;font-weight:500;font-size:.9rem;transition:.18s}
+  .btn:hover{border-color:var(--orange);color:#fff}
+  .btn--aer{border-left:3px solid var(--aer)} .btn--dta{border-left:3px solid var(--dta)}
+  .proof{background:#0B1F13;border:1px solid #1D4429;border-radius:8px;padding:1rem 1.15rem;
+         color:#8FD9A8;font-size:.87rem;margin-top:1.2rem}
+  .proof b{color:var(--ok)}
+  footer{padding:2.5rem 0 4rem;color:var(--dim);font-size:.82rem}
+  @media(max-width:760px){.row{grid-template-columns:1fr}.stage{justify-content:flex-start;text-align:left}.lanes{grid-template-columns:1fr}}
+</style>
+<link rel="stylesheet" href="assets/present.css">
+</head>
+<body>
+
+<header><div class="wrap">
+  <p class="tag">Prototype P1 · Architecture</p>
+  <h1>Two brands, one roof</h1>
+  <p class="sub">One WordPress install. One inventory. Two brands that look nothing alike —
+  resolved per request, themed by preset, and scoped at the catalog query.</p>
+</div></header>
+
+<section><div class="wrap">
+  <h2>How a request becomes a brand</h2>
+  <p class="note">Brand is resolved once, early, then everything downstream reads it. No conditional
+  branching scattered through templates.</p>
+
+  <div class="flow">
+    <div class="row"><div class="stage">1 · Request</div><div class="lanes">
+      <div class="box b-aer"><b>alabamaeventrentals.com</b><span>visitor hits the domain</span></div>
+      <div class="box b-dta"><b>decortoadore.com</b><span>visitor hits the domain</span></div>
+    </div></div>
+
+    <div class="arrow">↓</div>
+
+    <div class="row"><div class="stage">2 · Resolve</div><div class="lanes">
+      <div class="box wide b-key"><b>Brand Context</b>
+        <span>Resolution order: <code>request host</code> → <code>page brand override</code> → <code>default</code>.
+        Exposes <code>ss_current_brand()</code>, a <code>brand-{slug}</code> body class, and a scoped CSS variable block.</span>
+      </div>
+    </div></div>
+
+    <div class="arrow">↓</div>
+
+    <div class="row"><div class="stage">3 · Dress</div><div class="lanes">
+      <div class="box b-aer"><b>Preset: AER</b><span>Fjalla One · monochrome · square grid · full-bleed hero</span></div>
+      <div class="box b-dta"><b>Preset: DTA</b><span>Cormorant / Gilda · ivory + navy · portrait grid · split hero</span></div>
+    </div></div>
+
+    <div class="arrow">↓</div>
+
+    <div class="row"><div class="stage">4 · Scope</div><div class="lanes">
+      <div class="box wide b-key"><b>Catalog query auto-filters by brand</b>
+        <span>Products carry <code>brand:dta</code> / <code>brand:aer</code> (a product may carry both).
+        One shared Current RMS inventory — 3,888 products — projected into two catalogs.</span>
+      </div>
+    </div></div>
+
+    <div class="arrow">↓</div>
+
+    <div class="row"><div class="stage">5 · Capture</div><div class="lanes">
+      <div class="box wide b-key"><b>Quote is brand-aware</b>
+        <span>The enquiry lands on the right brand's opportunity — correct <code>store_id</code> and owner —
+        with real <code>opportunity_items</code> (<code>item_id</code> + <code>item_type</code> + quantity), not free text.</span>
+      </div>
+    </div></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>One contract, two value sets</h2>
+  <p class="note">The structural stylesheet names no brand. Each preset supplies values for the same
+  variables — which is why the two catalogs are the same build.</p>
+  <table>
+    <tr><th>Token</th><th>Alabama Event Rentals</th><th>Decor To Adore</th></tr>
+    <tr><td><code>--font-display</code></td><td class="col-aer">Fjalla One</td><td class="col-dta">Cormorant Garamond</td></tr>
+    <tr><td><code>--font-body</code></td><td class="col-aer">Libre Franklin</td><td class="col-dta">Montserrat</td></tr>
+    <tr><td><code>--tt-display</code></td><td class="col-aer">uppercase</td><td class="col-dta">none (title case)</td></tr>
+    <tr><td><code>--shell-bg</code></td><td><span class="sw" style="background:#fff"></span><code>#FFFFFF</code></td>
+        <td><span class="sw" style="background:#FAF7F1"></span><code>#FAF7F1</code> <span style="color:var(--dim)">warm ivory</span></td></tr>
+    <tr><td><code>--shell-text-dark</code></td><td><span class="sw" style="background:#1d1d1d"></span><code>#1D1D1D</code></td>
+        <td><span class="sw" style="background:#26332F"></span><code>#26332F</code></td></tr>
+    <tr><td><code>--shell-accent</code></td><td><span class="sw" style="background:#f0523d"></span><code>#F0523D</code> <span style="color:var(--dim)">coral</span></td>
+        <td><span class="sw" style="background:#4F7D77"></span><code>#4F7D77</code> <span style="color:var(--dim)">blue-green</span></td></tr>
+    <tr><td><code>--shell-accent-2</code></td><td><span class="sw" style="background:#3E3E3E"></span><code>#3E3E3E</code></td>
+        <td><span class="sw" style="background:#7FA6A0"></span><code>#7FA6A0</code> <span style="color:var(--dim)">sage</span></td></tr>
+    <tr><td><code>--shell-grid-gap-standard</code></td><td class="col-aer">1.25rem &nbsp;<span style="color:var(--dim)">tight</span></td>
+        <td class="col-dta">2.25rem &nbsp;<span style="color:var(--dim)">airy</span></td></tr>
+    <tr><td><code>--proto-card-ratio</code></td><td class="col-aer">1 / 1 &nbsp;<span style="color:var(--dim)">square</span></td>
+        <td class="col-dta">3 / 4 &nbsp;<span style="color:var(--dim)">portrait</span></td></tr>
+    <tr><td><code>--proto-radius</code></td><td class="col-aer">0 &nbsp;<span style="color:var(--dim)">squared</span></td>
+        <td class="col-dta">2px &nbsp;<span style="color:var(--dim)">softened</span></td></tr>
+    <tr><td>hero section</td><td class="col-aer"><code>hero-fullbleed</code></td><td class="col-dta"><code>hero-split</code></td></tr>
+    <tr><td>CTA section</td><td class="col-aer"><code>cta-dark</code></td><td class="col-dta"><code>cta-banner</code></td></tr>
+  </table>
+
+  <div class="proof"><b>Verified three ways:</b>
+  <br>1. <b>One source</b> — both catalogs render from one template + one structural stylesheet.
+  Component census is identical; the only differences are the documented section variants
+  (hero, CTA) and DTA's script flourish.
+  <br>2. <b>ss-launch conformance</b> — the 22 <code>--shell-*</code> tokens consumed by
+  <code>base.css</code> were checked against ss-launch's own emitters: <b>22/22 exist</b>.
+  All 7 section types used (<code>nav-standard</code>, <code>hero-fullbleed</code>,
+  <code>hero-split</code>, <code>showcase-grid</code>, <code>cta-dark</code>,
+  <code>cta-banner</code>, <code>footer-standard</code>) <b>already exist in the SSLA registry</b> —
+  nothing new was invented. Hit <em>toggle SSLA sections</em> on either catalog to see them labelled.
+  <br>3. <b>Shared inventory</b> — both sites render the <b>same 26 products, grouped from 205 flat Current RMS size listings</b>, with real names and real photography. <br>4. <b>Multi-page &amp; functional</b> — home, collection, product detail and quote basket per brand. Live search, category filters, size selection and a working quote basket.</div>
+
+  <div class="cta">
+    <a class="btn btn--aer" href="aer/index.html">P2 · Alabama Event Rentals — enter site →</a>
+    <a class="btn btn--dta" href="dta/index.html">P3 · Decor To Adore — enter site →</a>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Where each piece lives</h2>
+  <p class="note">Respecting existing ownership — chrome stays with the theme; the engine only recommends.</p>
+  <div class="cards">
+    <div class="card"><span class="owner">ss-theme</span><h3>Chrome</h3>
+      <p>Header, nav, footer. Owned by the theme, dressed by the active brand preset. Not reinvented in the engine.</p></div>
+    <div class="card"><span class="owner">ss-launch</span><h3>Brand registry</h3>
+      <p>Create a brand, bind its domain, pick its preset and menus, preview. Plus the per-page “which brand” control.</p></div>
+    <div class="card"><span class="owner">ss-workspace</span><h3>Operating surface</h3>
+      <p>Day-to-day content and catalog work, with brand-context switching while editing.</p></div>
+    <div class="card"><span class="owner">new bolt-on</span><h3>Inventory</h3>
+      <p>Current RMS connector, canonical mapping, variation overrides, brand assignment, image pipeline, scheduled sync.</p></div>
+  </div>
+  <div class="cta">
+    <a class="btn btn--dta" href="dta/index.html">Decor To Adore — enter site →</a>
+    <a class="btn btn--aer" href="aer/index.html">Alabama Event Rentals — enter site →</a>
+    <a class="btn" href="wizard.html" style="border-left:3px solid var(--orange)">P4 · Inventory management wizard →</a>
+    <a class="btn" href="photos.html" style="border-left:3px solid var(--orange)">P5 · Photo management →</a>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  Prototype for internal review · built from the live Current RMS catalog ·
+  DTA palette is a proposal (the built theme shipped with unconfigured Flexia demo colour).
+</div></footer>
+
+<script src="assets/js/present.js"></script>
+</body>
+</html>

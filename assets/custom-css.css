@@ -1,0 +1,91 @@
+/* ============================================================
+   CUSTOM CSS  →  goes in the ss-launch `custom-css` section
+   ============================================================
+   Everything in this file is deliberately NOT part of the
+   standard preset/token contract. These are bespoke geometry
+   treatments that SSLA has no field or variant for, so in a
+   real Launch build they are pasted into the registered
+   `custom-css` section (ss-launch/pages/sections/custom-css.php)
+   rather than added to the theme or the preset manifest.
+
+   Keeping them here means the preset files stay convertible
+   into a clean manifest.json "palette" with no stray rules.
+
+   Contents:
+     1. Angled hero split (DTA)   — the diagonal ivory panel
+     2. Page hero (photo + scrim) — used on About
+     3. Two-tone headline accent
+   ============================================================ */
+
+/* ---- 1. ANGLED HERO SPLIT -------------------------------------
+   The diagonal is a linear-gradient hard-stop on the media layer:
+   the brand's paper colour fills to N%, then goes transparent at
+   N.1% so the photograph shows through beyond the angle.
+   Change --proto-angle to move the diagonal; --proto-angle-deg to
+   steepen it. Falls back to a plain vertical scrim when unset.  */
+.hero--angle .hero__media {
+  background-image:
+    /* 1. the paper panel, cut on the diagonal */
+    linear-gradient(
+      var(--proto-angle-deg, 102deg),
+      var(--shell-bg) 0%,
+      var(--shell-bg) var(--proto-angle, 52%),
+      transparent calc(var(--proto-angle, 52%) + 0.1%)
+    ),
+    /* 2. tint overlay over the photograph — same idea as the tone
+          variant SSLA's hero-bg already ships. --proto-photo-tint
+          carries a brand-tinted rgba; set to transparent to disable. */
+    linear-gradient(0deg, var(--proto-photo-tint, transparent),
+                          var(--proto-photo-tint, transparent)),
+    /* 3. the photograph */
+    var(--proto-hero-photo);
+  background-size: cover;
+  background-position: center;
+}
+@media (max-width: 860px) {
+  /* below the breakpoint the angle stops working as a text bed —
+     fall back to a full scrim so copy stays readable */
+  .hero--angle .hero__media {
+    background-image:
+      linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.72)),
+      var(--proto-hero-photo);
+  }
+}
+
+/* ---- 2. PAGE HERO (photo + dark scrim) ------------------------
+   Interior pages get a photographic hero rather than the angled
+   split. White copy over a darkened image.                      */
+.hero--page { --proto-hero-h: 46vh; }
+.hero--page .hero__media {
+  background-image:
+    linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.62) 100%),
+    var(--proto-page-photo, var(--proto-hero-photo));
+  background-size: cover;
+  background-position: center;
+}
+.hero--page .hero__body,
+.hero--page .hero__body h1 { color: #fff; }
+.hero--page .hero__body p  { color: rgba(255,255,255,.88); }
+.hero--page .eyebrow       { color: var(--proto-page-eyebrow, #fff); }
+.hero--page h1 em          { color: var(--proto-h1-accent-on-dark, var(--shell-accent-on-dark)); }
+
+/* ---- 3. TWO-TONE HEADLINE -------------------------------------
+   The emphasised span in an H1 takes a distinct accent so the
+   headline reads as two colours. Kept here because SSLA's heading
+   field supports inline colour per-instance in the editor; this
+   is the prototype's standing default.                          */
+.hero h1 em,
+.pagehead h1 em {
+  font-style: var(--proto-h1-em-style, italic);
+  color: var(--proto-h1-accent, var(--shell-accent));
+}
+
+/* ---- 4. GHOST BUTTON ON A DARK HERO ---------------------------
+   Heroes that put white copy over a photograph need the outline
+   button inverted. The angled hero keeps its normal accent
+   treatment because its copy sits on the light paper panel.     */
+.hero--page .herobtns .btn:not(.btn--solid),
+.band .herobtns .btn:not(.btn--solid) { color: #fff; border-color: rgba(255,255,255,.7); }
+.hero--page .herobtns .btn:not(.btn--solid):hover,
+.band .herobtns .btn:not(.btn--solid):hover { background: #fff; color: var(--shell-text-dark);
+  border-color: #fff; }

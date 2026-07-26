@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plan Your Event &middot; Alabama Event Rentals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Libre+Franklin:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/base.css">
+<link rel="stylesheet" href="../assets/brand-aer.css">
+<!-- goes in the ss-launch `custom-css` section -->
+<link rel="stylesheet" href="../assets/custom-css.css">
+<link rel="stylesheet" href="../assets/present.css">
+<style>
+  /* Plan Your Event — mirror of the DTA plan page, AER branding. Composed from
+     ss-launch sections (g-hero, g-gallery, g-intake, g-cta). */
+  /* full-bleed photo + a flat 60% white overlay so the headline reads; AER's
+     hero text is white by default, so pin it to ink to match the treatment. */
+  .planhero {
+    --proto-hero-h: 56vh;
+    --proto-hero-photo: url(../assets/img/site/stg-aer-1.jpg);
+    --proto-hero-scrim: linear-gradient(rgba(255,255,255,.6), rgba(255,255,255,.6));
+    --proto-hero-measure: 44rem;
+    --proto-hero-fg: #15202B;
+    --proto-hero-fg-muted: #43505E;
+  }
+  .planhero .hero__body { max-width: 46rem; }
+  .planhero .hero__body > h1 { max-width: 22ch; }
+  .planhero .hero__body > p:not(.script) { max-width: 40rem; }
+  .planhero .herobtns { margin-top: 1.4rem; }
+  /* AER's base button is a dark fill; on the light-tinted hero, force the two
+     hero CTAs to an outlined ink style so they read (matches the DTA treatment). */
+  .planhero .herobtns .btn { background: transparent; color: var(--proto-hero-fg);
+    border: 1px solid var(--proto-hero-fg); }
+  .planhero .herobtns .btn:hover { background: var(--proto-hero-fg); color: #fff; }
+
+  .gal__head { text-align: center; max-width: 58ch; margin: 0 auto 1.6rem; }
+  .galfilters { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; margin-bottom: 1.8rem; }
+  .galfilters .chip { font-family: var(--shell-font-family-body); font-size: var(--proto-fs-chip); letter-spacing: .04em;
+    padding: .5rem 1.05rem; border: 1px solid var(--shell-hairline); background: var(--shell-surface-light);
+    color: var(--shell-text-body); cursor: pointer; transition: all .15s; }
+  .galfilters .chip:hover { border-color: var(--shell-accent); color: var(--shell-accent); }
+  .galfilters .chip.is-on { background: var(--shell-accent); color: var(--shell-text-inverted); border-color: var(--shell-accent); }
+  /* tight uniform mosaic — every tile the same square, minimal gutters */
+  .galgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(188px, 1fr)); gap: 6px; }
+  .shot { position: relative; overflow: hidden; cursor: pointer; background: var(--shell-surface-card); aspect-ratio: 1/1; }
+  .shot img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--proto-ease); display: block; }
+  .shot:hover img { transform: scale(1.06); }
+  .shot__cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.4rem .9rem .8rem; color: #fff;
+    font-size: var(--proto-fs-small); background: linear-gradient(to top, rgba(20,16,14,.72), transparent);
+    opacity: 0; transition: opacity .2s; }
+  .shot:hover .shot__cap { opacity: 1; }
+  .shot.is-hidden { display: none; }
+
+  .lbx { position: fixed; inset: 0; z-index: 300; display: none; place-items: center; padding: 24px; }
+  .lbx.is-on { display: grid; }
+  .lbx__scrim { position: absolute; inset: 0; background: rgba(16,12,10,.82); }
+  .lbx__fig { position: relative; max-width: min(1000px, 94vw); max-height: 88vh; }
+  .lbx__fig img { max-width: 100%; max-height: 82vh; object-fit: contain; display: block; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+  .lbx__cap { color: #fff; font-size: .85rem; text-align: center; margin-top: .8rem; letter-spacing: .02em; }
+  .lbx__x { position: absolute; top: -42px; right: 0; background: transparent; border: 0; color: #fff; font-size: 1.8rem; cursor: pointer; line-height: 1; }
+  .lbx__nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,.14);
+    border: 0; color: #fff; width: 44px; height: 44px; font-size: 1.4rem; cursor: pointer; }
+  .lbx__nav.prev { left: -58px; } .lbx__nav.next { right: -58px; }
+  @media (max-width: 680px) { .lbx__nav.prev { left: 4px; } .lbx__nav.next { right: 4px; } }
+
+  .intake { display: grid; grid-template-columns: 1.5fr 1fr; gap: 2.4rem; align-items: start; }
+  @media (max-width: 860px) { .intake { grid-template-columns: 1fr; } }
+  .intake__form { background: var(--shell-surface-light); border: 1px solid var(--shell-hairline); padding: 1.8rem 1.9rem 2rem; }
+  .fld select, .fld textarea, .fld input { width: 100%; padding: .7rem .8rem; border: 1px solid var(--shell-hairline);
+    background: var(--shell-surface-card); color: var(--shell-text-dark); font: inherit; }
+  .fld select:focus, .fld textarea:focus, .fld input:focus { outline: none; border-color: var(--shell-accent); }
+  .f3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+  @media (max-width: 620px) { .f3, .f2 { grid-template-columns: 1fr; } }
+  .needgrid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem .9rem; margin: .2rem 0 1rem; }
+  @media (max-width: 480px) { .needgrid { grid-template-columns: 1fr; } }
+  .needgrid label { display: flex; align-items: center; gap: .55rem; font-size: var(--proto-fs-small); color: var(--shell-text-body); cursor: pointer; }
+  .needgrid input { width: 16px; height: 16px; accent-color: var(--shell-accent); }
+  .intake__side h3 { font-family: var(--shell-font-family-heading); font-weight: var(--proto-fw-heading);
+    font-size: 1.3rem; color: var(--shell-text-dark); margin: 0 0 .6rem; }
+  .steps { list-style: none; margin: 0 0 1.6rem; padding: 0; counter-reset: s; }
+  .steps li { position: relative; padding: 0 0 1rem 2.4rem; font-size: var(--proto-fs-small); color: var(--shell-text-body); }
+  .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 0; top: -2px;
+    width: 26px; height: 26px; display: grid; place-items: center; background: var(--shell-accent);
+    color: var(--shell-text-inverted); font-size: .8rem; font-weight: 600; }
+  .intake__card { border: 1px solid var(--shell-hairline); background: var(--shell-surface-light); padding: 1.1rem 1.2rem; }
+  .intake__card p { margin: 0 0 .6rem; font-size: var(--proto-fs-small); color: var(--shell-text-body); }
+  .intake__card a { color: var(--shell-accent); }
+</style>
+</head>
+<body data-brand="aer" data-page="plan" data-base="../">
+
+<template id="present-extras">
+  <a href="../dta/index.html">Decor To Adore &rarr;</a>
+</template>
+
+<header class="chrome" data-ssla="chrome (theme)"><div class="wrap chrome__inner">
+  <a class="brandmark" href="index.html">ALABAMA<small>Event Rentals</small></a>
+  <nav class="nav"><a href="shop.html">Shop</a><a href="events.html">Events</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
+  <a class="btn quotepill" href="quote.html">Quote<span data-quote-count class="is-empty"></span></a>
+</div></header>
+
+<!-- HERO -->
+<section class="hero hero--bg planhero" data-ssla="g-hero">
+  <div class="hero__media"></div>
+  <div class="wrap hero__body">
+    <p class="eyebrow">Plan Your Event</p>
+    <h1>Let's plan the room, <em>down to the last chair</em>.</h1>
+    <p>Tell us about your event and we'll build the list with you — tables, chairs, linens, place
+       settings and staging, delivered and set on your schedule.</p>
+    <div class="herobtns"><a class="btn" href="#intake">Start Planning</a>
+      <a class="btn" href="shop.html">View Rentals</a></div>
+  </div>
+</section>
+
+<!-- INSPIRATION GALLERY -->
+<section class="sec sec--white" id="inspo" data-ssla="g-gallery"><div class="wrap">
+  <div class="gal__head">
+    <p class="eyebrow">Get inspired</p>
+    <h2>Events we've outfitted</h2>
+    <p class="sec__note">A look at rooms we've delivered, set and struck — tap any image to see it up close.</p>
+  </div>
+  <div class="galfilters" data-galfilters>
+    <button class="chip is-on" data-galf="all">All</button>
+    <button class="chip" data-galf="weddings">Weddings</button>
+    <button class="chip" data-galf="corporate">Corporate &amp; Gala</button>
+    <button class="chip" data-galf="celebrations">Celebrations</button>
+    <button class="chip" data-galf="details">Details</button>
+  </div>
+  <div class="galgrid" data-galgrid></div>
+</div></section>
+
+<!-- INTAKE FORM -->
+<section class="sec" id="intake" data-ssla="g-intake"><div class="wrap">
+  <div class="gal__head">
+    <p class="eyebrow">Your event brief</p>
+    <h2>Tell us what you're planning</h2>
+    <p class="sec__note">The more you share, the more accurate our quote. It takes about two minutes.</p>
+  </div>
+  <div class="intake">
+    <form class="intake__form" data-planform onsubmit="return false">
+      <div class="f2">
+        <label class="fld"><span>Event type</span>
+          <select><option value="">Choose…</option><option>Wedding</option><option>Corporate &amp; Gala</option><option>Party / Celebration</option><option>Bridal / Baby shower</option><option>Nonprofit / Fundraiser</option><option>Other</option></select></label>
+        <label class="fld"><span>Estimated guest count</span><input type="number" min="1" placeholder="250"></label>
+      </div>
+      <div class="f2">
+        <label class="fld"><span>Event date</span><input type="date"></label>
+        <label class="fld"><span>Delivery / setup date</span><input type="date"></label>
+      </div>
+      <div class="f2">
+        <label class="fld"><span>Venue</span><input type="text" placeholder="Ballroom, tent, warehouse…"></label>
+        <label class="fld"><span>City / location</span><input type="text" placeholder="Birmingham, AL"></label>
+      </div>
+      <label class="fld"><span>Colour palette &amp; style</span><input type="text" placeholder="Navy &amp; white, modern industrial…"></label>
+
+      <p class="detail__label">What are you looking for?</p>
+      <div class="needgrid">
+        <label><input type="checkbox"> Linens &amp; napkins</label>
+        <label><input type="checkbox"> Chairs &amp; covers</label>
+        <label><input type="checkbox"> Tables &amp; furniture</label>
+        <label><input type="checkbox"> China, glass &amp; flatware</label>
+        <label><input type="checkbox"> Lighting</label>
+        <label><input type="checkbox"> Staging / dance floor / drape</label>
+        <label><input type="checkbox"> Delivery &amp; setup</label>
+        <label><input type="checkbox"> Breakdown &amp; collection</label>
+      </div>
+
+      <label class="fld"><span>Estimated budget</span>
+        <select><option value="">Prefer not to say</option><option>Under $2,000</option><option>$2,000 – $5,000</option><option>$5,000 – $12,000</option><option>$12,000 – $25,000</option><option>$25,000+</option></select></label>
+
+      <div class="f3">
+        <label class="fld"><span>Name</span><input type="text" placeholder="Your name"></label>
+        <label class="fld"><span>Email</span><input type="email" placeholder="you@example.com"></label>
+        <label class="fld"><span>Phone</span><input type="tel" placeholder="(205) 555-0100"></label>
+      </div>
+      <label class="fld"><span>Anything else?</span><textarea rows="4" placeholder="Item list, must-haves, delivery window…"></textarea></label>
+
+      <button class="btn btn--solid" type="submit" data-plansubmit>Send my event brief</button>
+      <p class="sec__note" style="margin-top:.8rem">Prototype &mdash; nothing is sent. On the real site this creates a
+        <strong>quote request</strong> for Alabama Event Rentals, routed to the store.</p>
+    </form>
+
+    <aside class="intake__side">
+      <h3>What happens next</h3>
+      <ol class="steps">
+        <li>We review your brief and check availability for your date.</li>
+        <li>You get an itemised quote — pieces, quantities, delivery and setup.</li>
+        <li>We confirm the details and logistics, and lock in the schedule.</li>
+      </ol>
+      <div class="intake__card">
+        <p><strong>Prefer to talk?</strong></p>
+        <p><a href="mailto:info@alabamaeventrentals.com">info@alabamaeventrentals.com</a><br><a href="tel:205.637.8695">205.637.8695</a></p>
+        <p>Birmingham, Alabama &middot; by appointment</p>
+      </div>
+    </aside>
+  </div>
+</div></section>
+
+<!-- CTA -->
+<section class="strip" data-ssla="g-cta"><div class="wrap strip__inner">
+  <div><h2>Not sure where to start?</h2><p>Browse the rentals for ideas, then send us your list.</p></div>
+  <a class="btn" href="shop.html">Browse the rentals</a>
+</div></section>
+
+<footer class="foot" data-ssla="chrome (theme)"><div class="wrap">
+  <div class="foot__grid">
+    <div class="foot__brand">
+      <a class="brandmark" href="index.html">ALABAMA<small>Event Rentals</small></a>
+      <p class="foot__blurb">Alabama Event Rentals supplies planners, venues and caterers across the Southeast with the pieces that make an event work.</p>
+    </div>
+    <div><h4>Explore</h4><ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="collections.html">Collections</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li></ul></div>
+    <div><h4>Plan</h4><ul>
+      <li><a href="plan.html">Plan your event</a></li>
+      <li><a href="collections.html">Browse the rentals</a></li>
+      <li><a href="quote.html">Your quote</a></li></ul></div>
+    <div><h4>Get in touch</h4><ul>
+      <li><a href="mailto:info@alabamaeventrentals.com">info@alabamaeventrentals.com</a></li>
+      <li><a href="tel:205.637.8695">205.637.8695</a></li>
+      <li>Birmingham, Alabama</li>
+      <li>By appointment</li></ul></div>
+  </div>
+  <div class="foot__base">
+    <small>&copy; 2026 Alabama Event Rentals. Prototype for design review &mdash; not a live site.</small>
+    <small>67 colourways across 7 fabrics &middot; 1304 size listings</small>
+  </div>
+</div></footer>
+
+<!-- lightbox -->
+<div class="lbx" data-lbx>
+  <div class="lbx__scrim" data-lbxclose></div>
+  <div class="lbx__fig">
+    <button class="lbx__x" data-lbxclose aria-label="Close">&times;</button>
+    <button class="lbx__nav prev" data-lbxprev aria-label="Previous">&#8249;</button>
+    <button class="lbx__nav next" data-lbxnext aria-label="Next">&#8250;</button>
+    <img data-lbximg alt="">
+    <p class="lbx__cap" data-lbxcap></p>
+  </div>
+</div>
+
+<script>
+/* Inspiration gallery — staged event photography, filterable + lightbox. */
+(function () {
+  var B = '../assets/img/site/';
+  var SHOTS = [
+    { img:'stg-aer-2.jpg',      cap:'Reception, set and ready',          tag:'corporate' },
+    { img:'bg-tablescape.jpg',  cap:'Layered tablescape with chargers',  tag:'weddings' },
+    { img:'bg-drapery.jpg',     cap:'Draped ceremony backdrop',          tag:'weddings' },
+    { img:'stg-events.jpg',     cap:'Corporate gala staging',            tag:'corporate' },
+    { img:'bg-event.jpg',       cap:'Awards dinner, uplit room',         tag:'corporate' },
+    { img:'stg-reception2.jpg', cap:'Head table, dressed',               tag:'celebrations' },
+    { img:'bg-favor-table.jpg', cap:'Welcome & favor table',             tag:'celebrations' },
+    { img:'bg-wedding.jpg',     cap:'Garden-romantic reception',         tag:'weddings' },
+    { img:'stg-detail.jpg',     cap:'Place setting detail',              tag:'details' },
+    { img:'bg-detail.jpg',      cap:'Napkin fold & menu card',           tag:'details' },
+    { img:'stg-alt.jpg',        cap:'Lounge & cocktail styling',         tag:'celebrations' },
+    { img:'bg-reception.jpg',   cap:'Long feasting tables',              tag:'corporate' }
+  ];
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); };
+  var grid = document.querySelector('[data-galgrid]');
+  grid.innerHTML = SHOTS.map(function (s, i) {
+    return '<figure class="shot" data-tag="' + s.tag + '" data-i="' + i + '">' +
+      '<img src="' + B + s.img + '" alt="' + esc(s.cap) + '" loading="lazy">' +
+      '<figcaption class="shot__cap">' + esc(s.cap) + '</figcaption></figure>';
+  }).join('');
+
+  var filter = 'all';
+  document.querySelectorAll('[data-galf]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      filter = b.dataset.galf;
+      document.querySelectorAll('[data-galf]').forEach(function (x) { x.classList.toggle('is-on', x === b); });
+      document.querySelectorAll('.shot').forEach(function (sh) {
+        sh.classList.toggle('is-hidden', filter !== 'all' && sh.dataset.tag !== filter);
+      });
+    });
+  });
+
+  var lbx = document.querySelector('[data-lbx]'), img = lbx.querySelector('[data-lbximg]'),
+      cap = lbx.querySelector('[data-lbxcap]'), cur = 0;
+  function visShots() { return [].slice.call(document.querySelectorAll('.shot:not(.is-hidden)')); }
+  function show(i) {
+    var vis = visShots(); if (!vis.length) return;
+    cur = (i + vis.length) % vis.length;
+    var idx = +vis[cur].dataset.i, s = SHOTS[idx];
+    img.src = B + s.img; img.alt = s.cap; cap.textContent = s.cap;
+    lbx.classList.add('is-on');
+  }
+  grid.addEventListener('click', function (e) {
+    var sh = e.target.closest('.shot'); if (!sh) return;
+    var vis = visShots(); show(vis.indexOf(sh));
+  });
+  lbx.querySelectorAll('[data-lbxclose]').forEach(function (b) { b.addEventListener('click', function () { lbx.classList.remove('is-on'); }); });
+  lbx.querySelector('[data-lbxprev]').addEventListener('click', function () { show(cur - 1); });
+  lbx.querySelector('[data-lbxnext]').addEventListener('click', function () { show(cur + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (!lbx.classList.contains('is-on')) return;
+    if (e.key === 'Escape') lbx.classList.remove('is-on');
+    if (e.key === 'ArrowLeft') show(cur - 1);
+    if (e.key === 'ArrowRight') show(cur + 1);
+  });
+
+  var pf = document.querySelector('[data-planform]');
+  if (pf) pf.addEventListener('submit', function () {
+    var t = document.querySelector('.toast');
+    if (!t) { t = document.createElement('div'); t.className = 'toast'; document.body.appendChild(t); }
+    t.textContent = 'Prototype — your event brief would be sent to Alabama Event Rentals.';
+    t.classList.add('is-on'); clearTimeout(t._t); t._t = setTimeout(function () { t.classList.remove('is-on'); }, 2600);
+  });
+})();
+</script>
+
+<script src="../assets/data/fabrics.js"></script>
+<script src="../assets/data/catalog.js"></script>
+<script src="../assets/data/products.js"></script>
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/present.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simplitory — Simple Inventory for Current RMS</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/simplitory.css">
+<link rel="stylesheet" href="assets/present.css">
+</head>
+<body class="sy">
+
+<template id="present-extras">
+  <a href="simplitory.html">Simplitory</a>
+  <span class="sep">/</span>
+  <a href="wizard.html">Import</a>
+  <span class="sep">/</span>
+  <a href="photos.html">Photos</a>
+  <span class="sep">/</span>
+  <a href="architecture.html">Architecture</a>
+</template>
+
+<div class="app">
+
+  <!-- ── Sidebar: the same shape every bolt-on uses ─────────── -->
+          <aside class="sb" id="sb" data-sidebar></aside>
+
+  <!-- ── Main ───────────────────────────────────────────────── -->
+  <main class="main">
+    <div class="topbar">
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">☰</button>
+      <strong>Simplitory</strong>
+      <span class="tierctx">Plan: <b data-tier-label>Basic</b> <button class="tglt" data-tier-toggle>Unlock Pro</button></span>
+    </div>
+
+    <div class="home">
+      <div class="home-hero">
+        <span class="home-hero__i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg></span>
+        <h1>What would you like to do?</h1>
+        <p>Pick the next job — each one shows where it stands.</p>
+      </div>
+
+      <div class="quad quad--home">
+        <a class="dcard" href="products.html">
+          <span class="cico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="4"/><rect x="3" y="10" width="18" height="4"/><rect x="3" y="16" width="18" height="4"/></svg></span>
+          <h3>Manage products</h3>
+          <p>The master catalog — category, brand, images, publish.</p>
+          <span class="cmeta"><span class="n">2,572</span><span class="lbl">products</span><span class="cgo">Open →</span></span>
+        </a>
+        <a class="dcard" href="photos.html">
+          <span class="cico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14"/><circle cx="8.5" cy="10" r="1.5"/><path d="m21 16-5-5-4 4-2-2-7 7"/></svg></span>
+          <h3>Fix my photos</h3>
+          <p>Find what's missing and build a shoot list.</p>
+          <span class="cmeta"><span class="n n--bad">85%</span><span class="lbl">no photo</span><span class="cgo">Start →</span></span>
+        </a>
+        <a class="dcard" href="source.html">
+          <span class="cico"><svg viewBox="0 0 24 24"><path d="M15 4V2M8 9h2M20 9h2M17.8 11.8l1.4 1.4M17.8 6.2l1.4-1.4M3 21l9-9M12.2 6.2 10.8 4.8"/></svg></span>
+          <h3>Run a wizard</h3>
+          <p>Connect a source, map categories, tag brands.</p>
+          <span class="cmeta"><span class="n">4</span><span class="lbl">connectors</span><span class="cgo">Open →</span></span>
+        </a>
+        <a class="dcard" href="shop.html">
+          <span class="cico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg></span>
+          <h3>See the storefront</h3>
+          <p>The browse-first shop, the way customers see it.</p>
+          <span class="cmeta"><span class="n">1,174</span><span class="lbl">live</span><span class="cgo">View →</span></span>
+        </a>
+      </div>
+
+      <p class="home-conn"><span class="dot"></span> Connected to <b>Current RMS</b> <span class="sep">·</span> <a href="settings.html">connection settings</a></p>
+    </div>
+
+  </main>
+</div>
+
+<div class="scrim" id="scrim"></div>
+
+<script src="assets/js/connectors.js"></script>
+<script src="assets/js/sidebar.js"></script>
+<script src="assets/js/simplitory.js"></script>
+<script src="assets/js/present.js"></script>
+</body>
+</html>

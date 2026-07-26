@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sync — Simplitory</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/simplitory.css">
+<link rel="stylesheet" href="assets/present.css">
+</head>
+<body class="sy">
+<template id="present-extras">
+  <a href="source.html">Source</a><span class="sep">/</span>
+  <a href="sync.html">Sync</a><span class="sep">/</span>
+  <a href="products.html">Products</a>
+</template>
+<div class="app">
+  <aside class="sb" id="sb" data-sidebar></aside>
+  <main class="main">
+    <div class="topbar"><button class="burger" id="burger" aria-label="Menu" aria-expanded="false">☰</button>
+      <strong>Simplitory</strong>
+      <span class="tierctx">Plan: <b data-tier-label>Basic</b> <button class="tglt" data-tier-toggle>Unlock Pro</button></span>
+    </div>
+    <p class="crumbs"><b>Simplitory</b> · Data · Sync</p>
+    <h1 class="h">Sync</h1>
+    <p class="hsub">Keep the catalog current. How it works depends on what the source supports.</p>
+    <div data-manage="sync"></div>
+  </main>
+</div>
+<div class="scrim" id="scrim"></div>
+<script src="assets/data/products.js"></script>
+<script src="assets/js/connectors.js"></script>
+<script src="assets/js/sidebar.js"></script>
+<script src="assets/js/manage.js"></script>
+<script src="assets/js/simplitory.js"></script>
+<script src="assets/js/present.js"></script>
+</body>
+</html>
