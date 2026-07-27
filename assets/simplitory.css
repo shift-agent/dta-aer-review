@@ -359,9 +359,11 @@ body.tier-pro .nav .lock--pad { display:none; }  /* "Pro" label drops once unloc
 
 .sy .btn { font:inherit; font-size:.76rem; font-weight:600; padding:8px 13px; cursor:pointer;
   border:1px solid var(--sy-line); background:var(--sy-surface); color:var(--sy-ink); }
-.sy .btn:hover { border-color:var(--sy-line-h); }
+/* Hover gives a dark fill for contrast (was border-only, which ghosted on white). */
+.sy .btn:hover { background:var(--sy-ink); border-color:var(--sy-ink); color:#fff; }
 .sy .btn--pri { background:var(--sy-accent); border-color:var(--sy-accent); color:#fff; }
-.sy .btn--pri:hover { background:#255fd0; }
+/* Darken the accent on hover (never lighten it — that was the wash-out). */
+.sy .btn--pri:hover { background:color-mix(in srgb, var(--sy-accent) 80%, #000); border-color:color-mix(in srgb, var(--sy-accent) 80%, #000); color:#fff; }
 .sy .btn[disabled] { opacity:.45; cursor:not-allowed; }
 .sy .btn--pro { position:relative; }
 .sy .btn--pro[disabled] { opacity:.5; cursor:not-allowed; }

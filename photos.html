@@ -103,6 +103,9 @@
   @media (max-width: 720px) { .aimodal__body { grid-template-columns: 1fr; } }
   .aiscene { position: relative; aspect-ratio: 4/3; background: var(--sy-fill); border-right: 1px solid var(--sy-line); overflow: hidden; }
   .aiscene svg { width: 100%; height: 100%; display: block; }
+  .aiscene__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  /* the recolour: a blend overlay tints the real photo (linen/material appears to change) */
+  .aiscene__tint { position: absolute; inset: 0; mix-blend-mode: multiply; opacity: .62; pointer-events: none; }
   .aiscene__load { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(250,251,252,.92); z-index: 2; }
   .aiscene__load div { text-align: center; font-size: .8rem; color: var(--sy-ink-2); }
   .aiscene__load .spin { display: inline-block; width: 26px; height: 26px; border: 3px solid var(--sy-line);

@@ -183,26 +183,12 @@
     const f = v => Math.round(v + (target - v) * amt);
     return `rgb(${f(r)},${f(g)},${f(b)})`;
   }
+  // A REAL staged photograph, recoloured live by a blend overlay — the swatch
+  // just swaps the overlay colour, so the linen/material appears to change
+  // instantly on the actual photo (no re-render, no cartoon SVG).
   function aiScene(hex) {
-    const cloth = hex, top = lighten(hex, .16), drape = lighten(hex, .34), fold = darken(hex, .12);
-    return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
-      <rect width="400" height="300" fill="#F1ECE4"/>
-      <rect y="212" width="400" height="88" fill="#E3DACC"/>
-      <rect x="24" y="18" width="66" height="196" fill="${drape}"/>
-      <rect x="52" y="18" width="10" height="196" fill="${fold}" opacity=".35"/>
-      <rect x="310" y="18" width="66" height="196" fill="${drape}"/>
-      <rect x="338" y="18" width="10" height="196" fill="${fold}" opacity=".35"/>
-      <ellipse cx="200" cy="256" rx="128" ry="24" fill="rgba(0,0,0,.10)"/>
-      <rect x="176" y="150" width="14" height="58" fill="#7A6650"/>
-      <rect x="210" y="150" width="14" height="58" fill="#7A6650"/>
-      <path d="M104 188 Q200 172 296 188 L308 262 Q200 284 92 262 Z" fill="${cloth}"/>
-      <path d="M104 188 Q200 172 296 188 L296 196 Q200 182 104 196 Z" fill="${fold}" opacity=".4"/>
-      <ellipse cx="200" cy="188" rx="96" ry="22" fill="${top}"/>
-      <ellipse cx="200" cy="178" rx="15" ry="9" fill="#8FA98A"/>
-      <circle cx="190" cy="172" r="6" fill="#E9C6CE"/><circle cx="210" cy="173" r="6" fill="#F0D9A8"/>
-      <circle cx="200" cy="168" r="5" fill="#EBD3DA"/>
-      <circle cx="148" cy="182" r="4" fill="#D8CBB6"/><circle cx="252" cy="182" r="4" fill="#D8CBB6"/>
-    </svg>`;
+    return '<img class="aiscene__img" src="assets/img/site/stg-reception.jpg" alt="Staged table setting" loading="eager">' +
+           '<div class="aiscene__tint" data-aitint style="background:' + hex + '"></div>';
   }
   function aiStatus(loading) {
     if (loading) return `<div class="aitokens"><div class="aitok-head"><b>One-time render</b>` +
@@ -224,7 +210,7 @@
         <button class="aimodal__x" data-aiclose aria-label="Close">&times;</button>
         <div class="aimodal__hd">
           <h2>See it in action <span class="aibadge">AI &middot; BYOK</span></h2>
-          <p class="aimodal__sub">Stage your palette in a real room and recolor the scene to match a product. Rendered once with your own AI key via the Hub broker, then cached — browsing colours afterward costs nothing.</p>
+          <p class="aimodal__sub">Take a real photo of a set table and change its colour and material — the swatch recolours the linens instantly. Rendered once with your own AI key via the Hub broker, then cached, so browsing colours afterward costs nothing.</p>
         </div>
         <div class="aimodal__body">
           <div class="aiscene">
@@ -259,7 +245,8 @@
     m.querySelectorAll('[data-aiclose]').forEach(b => b.addEventListener('click', aiClose));
     m.querySelectorAll('[data-ai]').forEach(b => b.addEventListener('click', () => {
       aiColorIdx = +b.dataset.ai;
-      m.querySelector('[data-aisvg]').innerHTML = aiScene(AI_COLORS[aiColorIdx][1]);
+      // recolour the real photo instantly — only the blend overlay changes
+      const tint = m.querySelector('[data-aitint]'); if (tint) tint.style.background = AI_COLORS[aiColorIdx][1];
       m.querySelector('[data-aicolorname]').textContent = AI_COLORS[aiColorIdx][0];
       m.querySelectorAll('.aisw').forEach(s => s.classList.toggle('is-on', s === b));
     }));
