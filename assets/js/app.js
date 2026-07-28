@@ -119,7 +119,7 @@
         </div>
         <div class="card__body">
           <h3>${esc(f.fabric)}</h3>
-          <p class="card__meta">${f.colour_total} colourways &middot; ${f.sizes.length} sizes</p>
+          <p class="card__meta">${f.colour_total} colors &middot; ${f.sizes.length} sizes</p>
           <div class="minis">${sw}${more}</div>
         </div>
       </a></article>`;
@@ -155,7 +155,7 @@
     const shown = rows.slice(0, CAP);
     grid.innerHTML = rows.length
       ? shown.map(r => r.fabric ? card(r) : catCard(r)).join('')
-      : `<p class="empty">Nothing matches &ldquo;${esc(q)}&rdquo;. Try a fabric, a colour, a size or a category.</p>`;
+      : `<p class="empty">Nothing matches &ldquo;${esc(q)}&rdquo;. Try a fabric, a color, a size or a category.</p>`;
 
     const badge = document.querySelector('[data-filter-count]');
     if (badge) { badge.hidden = !cat; badge.textContent = cat ? '1' : ''; }
@@ -173,7 +173,7 @@
           + (rows.length > CAP ? ` &middot; showing first ${CAP}` : '');
       } else {
         const cols = FABRICS.reduce((s, f) => s + f.colour_total, 0);
-        cnt.textContent = `${FABRICS.length} fabrics · ${cols} colourways`;
+        cnt.textContent = `${FABRICS.length} fabrics · ${cols} colors`;
       }
     }
   }

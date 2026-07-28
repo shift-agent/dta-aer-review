@@ -18,28 +18,53 @@
   // v2 running order (Monday review): scope+solutions live on ONE page, so it's
   // one stop. Four stops: Scope & Solutions → the designs → Simplitory →
   // SimpleSuite. Reordering the meeting is still one array.
+  // Data-driven milestone list — add/rename/reorder review points here and the
+  // bar + the Commit layer follow. (Built generic on purpose: this is the shape
+  // Action Studio reuses as a client-facing project-progress view.)
+  // Running order (2026-07-28, Glenn's project-flow): 1 Project Review (status +
+  // issues; Simplitory + SimpleSuite are LINKED from here, not bar steps) → 2 the
+  // original Design Review → 3 Commit (today's meeting notes) → 4 Milestone 1
+  // (goals + decisions) → 5 Design Review 2 (the 3 approvals) → 6 Commit (the 3
+  // approvals + key decisions, accept/reject w/ notes) → 7 Path to Completion
+  // (remaining approvals + launch, with dates). Past/approved sit LEFT; the
+  // current step is highlighted. Reordering the meeting is still one array.
   var STEPS = [
-    { label: 'Scope & Solutions', href: 'scope.html'      },
-    { label: 'Design Review',     href: 'dta/index.html'  },
-    { label: 'Simplitory',        href: 'simplitory.html' },
-    { label: 'SimpleSuite',       href: 'simplesuite.html' },
-    { label: 'Commitments',      href: 'commitments.html' }
+    { id: 'projreview', label: 'Project Review',     href: 'project-review.html' },
+    // Step 2 = the ORIGINAL design as presented today — archived locally in
+    // original/ (design pages only, deck stripped; fetched from the 2026-07-27
+    // GH-Pages deploy, self-hosted Cormorant). Just the design, no old tabs.
+    { id: 'design',     label: 'Design Review',      href: 'original/dta/index.html' },
+    { id: 'commit1',    label: 'Commit',             href: 'commitments.html'    },
+    { id: 'milestone1', label: 'Milestone 1',        href: 'milestone1.html'     },
+    { id: 'review2',    label: 'Design Review 2',    href: 'review2.html'        },
+    { id: 'commit2',    label: 'Commit',             href: 'commit2.html'        },
+    { id: 'path',       label: 'Path to Completion', href: 'path.html'           }
   ];
 
   // Which step a page belongs to. First match wins; -1 = not in the deck.
   function stepForPath( path ) {
-    if ( /(^|\/)scope\.html$/.test( path ) )            return 0;
-    // "Design Review" = walking the real brand designs + the storefront.
-    if ( /\/(dta|aer)\/[^/]*$/.test( path ) )          return 1;
-    if ( /(^|\/)shop\.html$/.test( path ) )            return 1;
-    if ( /(^|\/)(simplitory|wizard|photos|source|products|storefront|settings|sync|quotes|cart|categories|brands|csv-setup|google-setup)\.html$/.test( path ) ) return 2;
-    if ( /(^|\/)simplesuite\.html$/.test( path ) )     return 3;
-    if ( /(^|\/)commitments\.html$/.test( path ) )    return 4;
+    if ( /(^|\/)(project-review|scope)\.html$/.test( path ) ) return 0;
+    // Simplitory + SimpleSuite (+ their tool pages) are linked FROM Project Review.
+    if ( /(^|\/)(simplitory|simplesuite|wizard|photos|source|products|storefront|settings|sync|quotes|cart|categories|brands|csv-setup|google-setup)\.html$/.test( path ) ) return 0;
+    // The archived ORIGINAL design (original/*) = Design Review (step index 1).
+    if ( /\/original\//.test( path ) )                 return 1;
+    // The LOCAL storefront is the NEW design → Design Review 2 (step index 4).
+    if ( /\/(dta|aer)\/[^/]*$/.test( path ) )          return 4;
+    if ( /(^|\/)shop\.html$/.test( path ) )            return 4;
+    if ( /(^|\/)commitments\.html$/.test( path ) )    return 2;
+    if ( /(^|\/)milestone1\.html$/.test( path ) )      return 3;
+    if ( /(^|\/)review2\.html$/.test( path ) )         return 4;
+    if ( /(^|\/)commit2\.html$/.test( path ) )         return 5;
+    if ( /(^|\/)(path|milestone2)\.html$/.test( path ) ) return 6;
     return -1; // status.html (full report) + index.html (architecture map) — reachable, not deck steps
   }
 
   var base = document.body.getAttribute( 'data-base' ) || '';
   var current = stepForPath( location.pathname );
+
+  // External steps (e.g. the live original-design deploy) keep their absolute URL
+  // and open in a new tab; internal steps are prefixed with the page's base path.
+  function hrefOf( s ) { return s.ext ? s.href : ( base + s.href ); }
 
   function el( tag, cls, html ) {
     var n = document.createElement( tag );
@@ -58,14 +83,15 @@
   // technical surfaces where it belongs.
   var mark = el( 'a', 'presentbar__mark',
     '<b>Simpliment</b> <span>&middot; Decor To Adore &amp; Alabama Event Rentals</span>' );
-  mark.href = base + STEPS[ 0 ].href;
+  mark.href = hrefOf( STEPS[ 0 ] );
   mark.title = 'Back to the start of the deck';
   bar.appendChild( mark );
 
   var steps = el( 'div', 'presentbar__steps' );
   STEPS.forEach( function ( s, i ) {
     var a = el( 'a', 'pstep' + ( i === current ? ' is-current' : ( i < current ? ' is-done' : '' ) ) );
-    a.href = base + s.href;
+    a.href = hrefOf( s );
+    if ( s.ext ) { a.target = '_blank'; a.rel = 'noopener'; }
     a.innerHTML = '<span class="pstep__n">' + ( i + 1 ) + '</span><span>' + s.label + '</span>';
     if ( i === current ) a.setAttribute( 'aria-current', 'step' );
     steps.appendChild( a );
@@ -80,7 +106,7 @@
 
   // Section-label overlay: an on/off switch, not a text link. Only offered on
   // pages that actually carry labelled sections.
-  if ( document.querySelector( '[data-ssla]' ) ) {
+  if ( document.querySelector( '[data-ssla], [data-ssla-section]' ) ) {
     var toggle = el( 'button', 'psw' );
     toggle.type = 'button';
     toggle.title = 'Show which Launch section each band is';
@@ -111,7 +137,8 @@
       a.setAttribute( 'aria-disabled', 'true' );
       a.href = '#';
     } else {
-      a.href = base + STEPS[ idx ].href;
+      a.href = hrefOf( STEPS[ idx ] );
+      if ( STEPS[ idx ].ext ) { a.target = '_blank'; a.rel = 'noopener'; }
     }
     return a;
   }
@@ -131,7 +158,8 @@
     if ( current < 0 ) return;
     var to = e.key === 'ArrowRight' ? current + 1 : ( e.key === 'ArrowLeft' ? current - 1 : null );
     if ( to === null || to < 0 || to >= STEPS.length ) return;
-    location.href = base + STEPS[ to ].href;
+    if ( STEPS[ to ].ext ) window.open( STEPS[ to ].href, '_blank', 'noopener' );
+    else location.href = hrefOf( STEPS[ to ] );
   } );
 
   // Step 1 and 2 are the same document; keep the highlight honest when the
@@ -140,9 +168,80 @@
     var now = stepForPath( location.pathname );
     if ( now === current ) return;
     current = now;
+    paintSteps();
+  } );
+
+  function paintSteps() {
     var links = steps.querySelectorAll( '.pstep' );
     for ( var i = 0; i < links.length; i++ ) {
-      links[ i ].className = 'pstep' + ( i === current ? ' is-current' : ( i < current ? ' is-done' : '' ) );
+      links[ i ].className = 'pstep'
+        + ( i === current ? ' is-current' : ( i < current ? ' is-done' : '' ) )
+        + ( isCommitted( STEPS[ i ].id ) ? ' is-committed' : '' );
     }
-  } );
+  }
+
+  /* ===============================================================
+     COMMIT / MILESTONE LAYER
+     Each phase ends with a "Commit" so a meeting can lock a decision
+     set and mark where to resume next time. Driven entirely off the
+     STEPS array (change the array → change the milestones). Persisted
+     to localStorage as JSON — no database. Kept generic on purpose:
+     this is the mechanism Action Studio reuses as a client-facing
+     project-progress view. window.SS_DECK exposes it to the
+     Commitments summary page.
+     =============================================================== */
+  var CKEY = 'ss_deck_commits_v1';
+  function readCommits() { try { return JSON.parse( localStorage.getItem( CKEY ) ) || {}; } catch ( e ) { return {}; } }
+  var commits = readCommits(); commits.phases = commits.phases || {};
+  function saveCommits() { try { localStorage.setItem( CKEY, JSON.stringify( commits ) ); } catch ( e ) {} }
+  function isCommitted( id ) { return !!( commits.phases[ id ] && commits.phases[ id ].committed ); }
+  function firstOpenIdx() { for ( var i = 0; i < STEPS.length; i++ ) { if ( STEPS[ i ].id !== 'commit' && !isCommitted( STEPS[ i ].id ) ) return i; } return -1; }
+
+  var cst = el( 'style' );
+  cst.textContent =
+    '.pstep.is-committed .pstep__n{background:#6F8A5C;border-color:#6F8A5C;color:#fff}'
+    + '.pcommit{position:fixed;right:1rem;bottom:1rem;z-index:60;display:flex;align-items:center;gap:.8rem;'
+    + 'background:#fff;border:1px solid rgba(21,32,43,.16);box-shadow:0 10px 30px rgba(21,32,43,.18);'
+    + 'padding:.55rem .6rem .55rem .95rem;font:600 12px/1.3 ui-sans-serif,system-ui,sans-serif;color:#15202B}'
+    + '.pcommit__lbl b{display:block;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:#8A97A5;margin-bottom:.15rem}'
+    + '.pcommit__btn{font:inherit;cursor:pointer;border:1px solid #6F8A5C;background:#6F8A5C;color:#fff;padding:.55rem .95rem}'
+    + '.pcommit__btn:hover{background:#5c7449;border-color:#5c7449}'
+    + '.pcommit__undo{font:inherit;cursor:pointer;border:none;background:none;color:#8A97A5;text-decoration:underline;padding:.2rem}'
+    + '@media(max-width:640px){.pcommit{left:1rem;right:1rem;justify-content:space-between}}';
+  document.head.appendChild( cst );
+
+  // Floating Commit control on every deck phase page (not the Commitments summary,
+  // not off-deck pages like status/architecture).
+  if ( current >= 0 && STEPS[ current ] && STEPS[ current ].id !== 'commit' ) {
+    var cur = STEPS[ current ];
+    var box = el( 'div', 'pcommit' );
+    var renderCommit = function () {
+      var done = isCommitted( cur.id );
+      var when = done ? new Date( commits.phases[ cur.id ].at ).toLocaleDateString( undefined, { month: 'short', day: 'numeric' } ) : '';
+      box.innerHTML =
+        '<span class="pcommit__lbl"><b>' + ( done ? 'Committed &middot; ' + when : 'Stage ' + ( current + 1 ) + ' of ' + ( STEPS.length - 1 ) ) + '</b>' + cur.label + '</span>'
+        + ( done ? '<button class="pcommit__undo" type="button">Undo</button>'
+                 : '<button class="pcommit__btn" type="button">Commit this stage &rarr;</button>' );
+      var b = box.querySelector( '.pcommit__btn' );
+      if ( b ) b.addEventListener( 'click', function () {
+        commits.phases[ cur.id ] = { committed: true, at: new Date().toISOString(), label: cur.label };
+        commits.resume = firstOpenIdx(); saveCommits(); paintSteps(); renderCommit();
+      } );
+      var u = box.querySelector( '.pcommit__undo' );
+      if ( u ) u.addEventListener( 'click', function () {
+        delete commits.phases[ cur.id ]; commits.resume = firstOpenIdx(); saveCommits(); paintSteps(); renderCommit();
+      } );
+    };
+    renderCommit();
+    document.body.appendChild( box );
+  }
+  paintSteps();
+
+  window.SS_DECK = {
+    steps: STEPS, current: current, base: base, key: CKEY,
+    read: readCommits,
+    isCommitted: isCommitted,
+    setNextReview: function ( v ) { commits.nextReview = v; saveCommits(); },
+    getNextReview: function () { return commits.nextReview || ''; }
+  };
 } )();

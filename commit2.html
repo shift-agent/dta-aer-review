@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Commit &middot; Approvals &amp; Decisions</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/deck.css">
+<link rel="stylesheet" href="assets/present.css">
+</head>
+<body data-base="" data-deck="commit2">
+
+<header class="mast"><div class="wrap">
+  <span class="num">06 &middot; Commit</span>
+  <h1>The three approvals &mdash; and the key decisions</h1>
+  <p>Lock today&rsquo;s three design approvals (accept or reject, each with notes), then record the decisions
+     that unblock the build.</p>
+</div></header>
+
+<main><div class="wrap">
+  <div class="ctl"><span class="datefld"><span>Committed on</span><input type="date" data-persist="date"></span></div>
+
+  <h2 class="sec">The three approvals</h2>
+  <p class="sec-note">Mark each accepted or rejected, and add any conditions.</p>
+
+  <div class="mlist">
+    <div class="mrow"><span class="mnum">1</span>
+      <div><h3>Font</h3><p>Playfair&nbsp;Display headings + Montserrat body, self-hosted, in the logo blue.</p>
+        <p style="margin-top:.35rem;font-size:.86rem"><a href="fontcheck.html" style="color:var(--accent);font-weight:600">See the 3-font comparison against the logo &mdash; why we chose Playfair &rarr;</a></p>
+        <div class="verdict">
+          <label><input type="radio" name="v-font" value="accept" data-persist="v-font"> Accepted with notes</label>
+          <label class="rej"><input type="radio" name="v-font" value="reject" data-persist="v-font"> Rejected with notes</label>
+        </div>
+        <textarea class="notes" data-persist="n-font" placeholder="Notes on the font approval&hellip;"></textarea></div></div>
+
+    <div class="mrow"><span class="mnum">2</span>
+      <div><h3>Home page</h3><p>The full home-page design and banner.</p>
+        <p style="margin-top:.35rem;font-size:.86rem"><a href="dta/index.html" style="color:var(--accent);font-weight:600">View the home page &rarr;</a></p>
+        <div class="verdict">
+          <label><input type="radio" name="v-home" value="accept" data-persist="v-home"> Accepted with notes</label>
+          <label class="rej"><input type="radio" name="v-home" value="reject" data-persist="v-home"> Rejected with notes</label>
+        </div>
+        <textarea class="notes" data-persist="n-home" placeholder="Notes on the home-page approval&hellip;"></textarea></div></div>
+
+    <div class="mrow"><span class="mnum">3</span>
+      <div><h3>Inventory format</h3><p>Browse by product / by event, with the curated demo set.</p>
+        <p style="margin-top:.35rem;font-size:.86rem"><a href="shop.html" style="color:var(--accent);font-weight:600">View the inventory &rarr;</a></p>
+        <div class="verdict">
+          <label><input type="radio" name="v-inv" value="accept" data-persist="v-inv"> Accepted with notes</label>
+          <label class="rej"><input type="radio" name="v-inv" value="reject" data-persist="v-inv"> Rejected with notes</label>
+        </div>
+        <textarea class="notes" data-persist="n-inv" placeholder="Notes on the inventory-format approval&hellip;"></textarea></div></div>
+  </div>
+
+  <h2 class="sec">Key decisions to make</h2>
+  <p class="sec-note">The calls that unblock the next phase of work.</p>
+
+  <div class="mlist">
+    <div class="mrow mrow--gold"><span class="mnum">1</span>
+      <div><h3>Alabama Event Rentals site &mdash; yes or no?</h3><p>Do we stand up the AER storefront on the same shared inventory?</p>
+        <div class="verdict">
+          <label><input type="radio" name="d-aer" value="yes" data-persist="d-aer"> Yes</label>
+          <label class="rej"><input type="radio" name="d-aer" value="no" data-persist="d-aer"> No</label>
+        </div>
+        <textarea class="notes" data-persist="dn-aer" placeholder="Notes&hellip;"></textarea></div></div>
+
+    <div class="mrow mrow--gold"><span class="mnum">2</span>
+      <div><h3>Order of categories for image fulfillment</h3><p>Which categories get photographed and published first?</p>
+        <textarea class="notes" data-persist="dn-order" placeholder="Priority order of categories&hellip;"></textarea></div></div>
+
+    <div class="mrow mrow--gold"><span class="mnum">3</span>
+      <div><h3>Naming convention for photos</h3><p>How product/category images are named so they map cleanly into the catalog.</p>
+        <textarea class="notes" data-persist="dn-naming" placeholder="Agreed naming convention&hellip;"></textarea></div></div>
+
+    <div class="mrow mrow--gold"><span class="mnum">4</span>
+      <div><h3>Who generates the AI version and/or colors</h3><p>Owner for AI-generated imagery / colorways where real photos aren&rsquo;t available yet.</p>
+        <textarea class="notes" data-persist="dn-ai" placeholder="Owner + approach&hellip;"></textarea></div></div>
+  </div>
+
+  <div class="bar2"><span class="saved">Saved locally in your browser &mdash; survives reloads. No database.</span></div>
+
+  <footer class="deckfoot">Commit &middot; DTA / AER &middot; approvals locked, decisions recorded.</footer>
+</div></main>
+
+<script src="assets/js/present.js?v=3"></script>
+<script src="assets/js/deck.js"></script>
+</body>
+</html>

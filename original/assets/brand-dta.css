@@ -1,0 +1,114 @@
+/* ============================================================
+   SSLA PRESET — DECOR TO ADORE           preset_slug: decor-to-adore
+   Warm ivory ground + BLUE/GREEN palette (per Glenn, 2026-07-23).
+   Type from the theme the previous dev built (deliberate choice):
+   Cormorant Garamond / Gilda Display / Montserrat / Mr De Haviland.
+
+   The --shell-* names below are ss-launch's real token vocabulary,
+   so this block converts directly into a preset manifest.json
+   "palette" object (see presets/editorial/manifest.json).
+   ============================================================ */
+
+:root {
+  /* ---- SSLA palette (manifest keys in comments) ---- */
+  --shell-bg:                 #FDF9F5;   /* paper  (staging --paper) */   /* surface-warm  : warm ivory ground */
+  --shell-surface-light:      #FFFFFF;   /* surface-light */
+  --shell-surface-warm:       #F5EFE7;   /* surface-warm  */
+  --shell-surface-card:       #F7F1EA;   /* surface-card  */
+  --shell-surface-dark:       #2F4D6A;   /* staging --navy */   /* surface-dark  : deep blue-green */
+  --shell-text-dark:          #15202B;   /* staging --ink */   /* text-dark     : heading ink */
+  --shell-text-body:          #4B5E71;   /* staging --inkSoft */   /* text-body     */
+  --shell-text-muted:         #8A97A5;   /* text-muted    */
+  --shell-text-inverted:      #FFFFFF;   /* heading-on-dark */
+  --shell-accent:             #2F4D6A;   /* staging --navy */   /* accent        : blue-green */
+  --shell-accent-hover:       #3E6284;   /* staging --navyLight */   /* accent-hover  */
+  --shell-accent-2:           #8FB58A;   /* staging --sage */   /* accent-2      : sage */
+  --shell-accent-3:           #6F8A5C;   /* staging --olive */   /* accent-3      : pale blue-green */
+  --shell-accent-on-dark:     #D9B25F;   /* staging --gold */   /* accent-on-dark */
+  --shell-hairline:           rgba(21,32,43,.12);      /* hairline */
+  --shell-hairline-on-dark:   rgba(255,255,255,.14);
+  --shell-text-on-dark:       rgba(255,255,255,.84);
+  --shell-text-on-dark-muted: rgba(255,255,255,.60);
+
+  /* ---- SSLA type system ---- */
+  --shell-font-family-heading: "Cormorant Garamond", "Gilda Display", Georgia, serif;
+  --shell-font-family-body:    "Montserrat", system-ui, sans-serif;
+  --shell-h1-size:             clamp(2.8rem, 6.5vw, 4.9rem);
+  --shell-h1-letter-spacing:   .005em;
+  --shell-h2-size:             clamp(1.7rem, 3.2vw, 2.5rem);
+  --shell-h2-letter-spacing:   .005em;
+  --shell-eyebrow-size:        .66rem;
+  --shell-eyebrow-letter-spacing: .20em;
+
+  /* ---- SSLA layout ---- */
+  --shell-content-max-width:        1180px;
+  --shell-text-max-width:           42ch;
+  --shell-section-padding-y-standard: clamp(4.5rem, 9vw, 7.5rem);
+  --shell-section-padding-y-compact:  clamp(3rem, 6vw, 4.5rem);
+  --shell-grid-gap-standard:         2.25rem;
+  --shell-card-padding:              1.15rem;
+
+  /* ---- prototype-only (no SSLA equivalent) ---- */
+  --proto-font-script:  "Mr De Haviland", cursive;
+  --proto-script-display: block;
+  --proto-fs-body: .93rem;  --proto-fs-small: .78rem;  --proto-fs-lead: 1.1rem;
+  --proto-fs-nav: .70rem;   --proto-fs-chip: .68rem;   --proto-fs-card: 1.14rem;
+  --proto-fs-brand: 1.9rem; --proto-fs-script: clamp(2rem, 4vw, 2.9rem);
+  --proto-fw-body: 300;     --proto-fw-heading: 300;   --proto-fw-card: 400;
+  --proto-tt-heading: none; --proto-tt-brand: none;    --proto-tt-nav: uppercase;
+  --proto-tt-card: none;    --proto-ls-brand: .02em;   --proto-ls-card: .01em;
+  --proto-lh-heading: 1.1;
+  --proto-gutter: 2.25rem;  --proto-radius: 6px;
+  --proto-nav-gap: 2.2rem;  --proto-chrome-h: 92px;
+  --proto-chrome-bg: rgba(250,247,241,.93);
+  --proto-btn-pad: .8rem 1.7rem;
+  --proto-chip-pad: .55rem 1.15rem;
+  --proto-btn-bg: transparent; --proto-btn-fg: var(--shell-accent); --proto-btn-bdr: var(--shell-accent);
+  --proto-card-min: 250px;  --proto-card-ratio: 3 / 4;   /* portrait, editorial */
+  --proto-card-bdr: 1px solid var(--shell-hairline);
+  --proto-card-zoom: 1.04;
+  --proto-ease: cubic-bezier(.25,.8,.35,1);
+  --proto-flag-bg: rgba(255,255,255,.92); --proto-flag-fg: var(--shell-accent);
+  --proto-strip-bg: var(--shell-surface-warm); --proto-strip-fg: var(--shell-text-dark);
+  /* g-cta banner: photo behind, the strip colour laid over it as the tint */
+  /* events page only: faint photography under the section colour */
+  --proto-bgmedia-photo:   url("img/site/bg-drapery.jpg");
+  --proto-pagehead-tint:   rgba(245,239,231,.90);
+  --proto-strip-tint:      rgba(245,239,231,.95);   /* DTA banner is light-on-light too */
+  --proto-strip-fg-muted: var(--shell-text-muted);
+
+  /* hero — hero-split: text on ivory beside a blue/green wash */
+  --proto-hero-h: 72vh;
+  --proto-hero-pad: clamp(3rem, 6vw, 5rem);
+  --proto-hero-align: center;
+  --proto-hero-fg: var(--shell-text-dark);
+  --proto-hero-fg-muted: var(--shell-text-body);
+  --proto-eyebrow-fg: var(--shell-accent);
+  --proto-hero-scrim: linear-gradient(102deg, var(--shell-bg) 0%, var(--shell-bg) 52%, rgba(253,249,245,0) 52.1%);
+  --proto-hero-img: linear-gradient(140deg, #DDE7E2 0%, #A8C3C0 45%, #4F7D77 100%);
+  --proto-font-card: "Gilda Display", "Cormorant Garamond", Georgia, serif;
+
+  /* ---- multi-page additions ---- */
+  --proto-hero-photo: url("img/site/stg-hero.jpg");
+  --proto-band-photo: url("img/site/bg-reception.jpg");
+  --proto-search-w: 620px;
+  --proto-search-bg: rgba(255,255,255,.96);
+  --proto-search-bdr: 1px solid rgba(255,255,255,.5);
+  --proto-search-ring: rgba(79,125,119,.28);
+  --proto-detail-cols: 1fr 1fr;
+  --proto-hero-measure: 30ch;
+  --proto-band-scrim: linear-gradient(0deg, rgba(20,32,30,.62), rgba(20,32,30,.42));
+  --proto-hero-h1-measure: 17ch;
+  --proto-search-pad: 1rem 1.25rem;
+  /* two-tone headline (custom-css consumes this) */
+  --proto-h1-accent: #6F8A5C;            /* staging --olive (green) */            /* staging --navyLighter */
+  --proto-h1-accent-on-dark: #D9B25F;    /* staging --gold */
+  --proto-h1-em-style: italic;
+  /* angled hero (custom-css section) */
+  --proto-angle: 52%;
+  --proto-angle-deg: 102deg;
+  --proto-photo-tint: rgba(47,77,106,.16);   /* staging --navy, 16% */
+}
+
+.hero h1 em { font-style: italic; color: var(--shell-accent); 
+}

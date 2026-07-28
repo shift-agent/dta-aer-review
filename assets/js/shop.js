@@ -33,6 +33,25 @@
   'use strict';
   var BASE = document.body.dataset.base || '';
   var PBASE = document.body.dataset.pbase || '';  // product-page prefix (dta/ or aer/)
+
+  // Hand-built showcase PDPs stand in for the generic product.html template
+  // during the design review. Map the slug(s) they cover → the built page
+  // (relative to PBASE), so browsing to that product lands on the real design
+  // instead of the data-driven placeholder. The four Madeline Damask colorways
+  // are one fabric family and all resolve to the same family page (it carries
+  // the color-family chips). Add a slug here as each showcase PDP is built.
+  var SHOWCASE_PDP = {
+    'madeline-damask-kiwi':   'product-madeline-kiwi.html',
+    'madeline-damask-black':  'product-madeline-kiwi.html',
+    'madeline-damask-ivory':  'product-madeline-kiwi.html',
+    'madeline-damask-silver': 'product-madeline-kiwi.html'
+  };
+  // One place that decides a product's destination URL, shared by the result
+  // cards and the pairing strip so both honor the showcase override.
+  function productHref(p) {
+    var show = p && SHOWCASE_PDP[p.slug];
+    return show ? (PBASE + show) : (PBASE + 'product.html?p=' + encodeURIComponent(p.slug));
+  }
   // The catalog follows the active source: the Current RMS pull, or the
   // imported CSV rows when a CSV is the active connector. Capability gating
   // below then hides what that source can't back.
@@ -45,13 +64,14 @@
   // can back. No order history → no "most rented". No stock/availability →
   // no date control. This is the audit's capability model, live on the FE.
   var SRC = window.SS_SOURCE;
-  var CAN_RENT  = SRC ? SRC.has('orders') : true;
-  var CAN_AVAIL = SRC ? (SRC.has('stock') || SRC.has('availability')) : true;
-  // Exit strategy: on a detached WordPress snapshot the LIVE order signal (most
-  // rented) goes dark, but pairings survive because they were materialized at
-  // publish — so the "Completes the look" strip stays on the frozen catalog.
+  // Client punch-list: the storefront must show NO popularity signals ("most
+  // rented" / "popular") and NO date-availability control, so those two
+  // capabilities are forced off regardless of the connected source. Curated
+  // pairings ("Completes the look") are NOT a popularity signal, so they stay on.
+  var CAN_RENT  = false;
+  var CAN_AVAIL = false;
   var IS_SNAPSHOT = SRC ? SRC.activeId() === 'snapshot' : false;
-  var CAN_PAIR = CAN_RENT || IS_SNAPSHOT;
+  var CAN_PAIR = true;
 
   /* ── Top-level categories from the group field ─────────────── */
   var TOPCATS = [
@@ -72,6 +92,29 @@
   ];
   var g2cat = {};
   TOPCATS.forEach(function (c) { c.groups.forEach(function (g) { g2cat[g] = c.key; }); });
+
+  // DEMO scope (client review): present LINENS only. Scoping the working
+  // catalog to the linens category flows through every view — categories,
+  // search, counts, pairings — so the inventory shows the full linen set and
+  // nothing else. Widen DEMO_CATS (or clear it) to restore the full catalog.
+  var DEMO_CATS = ['linens'];
+  // DEMO tightening (client review): narrow the working catalog to a SINGLE
+  // proof-of-concept product so the client approves one tight version. Opening
+  // Linens then lists ONLY the Madeline Damask ("Madeline Kiwi") linen — the
+  // showcase piece (Current RMS catalog id 2892, slug 'madeline-damask-kiwi').
+  // The Linens landing card still says Linens; pagination stays intact (one
+  // product = one page); "Completes the look" pairings are unaffected (they
+  // resolve from SS_PAIRINGS, not this filtered set).
+  // To WIDEN later: set DEMO_ONLY_PRODUCT to null/'' to restore the full linen
+  // set, or comment out the filter block below entirely.
+  var DEMO_ONLY_PRODUCT = 'madeline-damask-kiwi';
+  function demoCats() { return TOPCATS.filter(function (c) { return DEMO_CATS.indexOf(c.key) > -1; }); }
+  if (DEMO_CATS.length) {
+    PRODUCTS = PRODUCTS.filter(function (p) { return DEMO_CATS.indexOf(g2cat[p.group]) > -1; });
+  }
+  if (DEMO_ONLY_PRODUCT) {
+    PRODUCTS = PRODUCTS.filter(function (p) { return p.slug === DEMO_ONLY_PRODUCT; });
+  }
 
   /* ── EVENT-LED entry (the "uber-simple decision space") ──────────────
      type of event → the pieces you'll usually want → common add-ons.
@@ -166,7 +209,18 @@
   function availIsLive(p) { return !!(AVAIL[p.slug] && AVAIL[p.slug].owned != null); }
 
   /* ── State ─────────────────────────────────────────────────── */
-  var state = { view: 'category', cat: null, style: null, color: null, date: '', pop: false, q: '' };
+  var state = { view: 'category', cat: null, style: null, color: null, date: '', pop: false, q: '', page: 1 };
+
+  // Pagination — never render more than PAGE_SIZE product cards at once.
+  var PAGE_SIZE = 20;
+  function pagerHtml(total) {
+    var pages = Math.ceil(total / PAGE_SIZE);
+    if (pages <= 1) return '';
+    var p = state.page;
+    return '<button class="pgbtn" data-pg="' + (p - 1) + '"' + (p <= 1 ? ' disabled' : '') + '>Prev</button>' +
+      '<span class="pgnow">Page ' + p + ' of ' + pages + '</span>' +
+      '<button class="pgbtn" data-pg="' + (p + 1) + '"' + (p >= pages ? ' disabled' : '') + '>Next</button>';
+  }
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
@@ -197,10 +251,10 @@
       return '<span class="mini" style="background-image:url(' + BASE + 'assets/img/' + esc(v.img) + ')" title="' + esc(v.name) + '"></span>';
     }).join('');
     return '<article class="rc' + (state.date && !ok ? ' is-out' : '') + '">' +
-      '<a class="rc__link" href="' + PBASE + 'product.html?p=' + encodeURIComponent(p.slug) + '">' +
+      '<a class="rc__link" href="' + productHref(p) + '">' +
       '<div class="rc__m">' + media + pop + availBadge + '</div>' +
       '<div class="rc__b"><h4>' + esc(p.base) + '</h4>' +
-      '<p class="rc__meta">' + esc(p.group) + (p.nvar > 1 ? ' &middot; ' + p.nvar + ' colourways' : '') + '</p>' +
+      '<p class="rc__meta">' + esc(p.group) + (p.nvar > 1 ? ' &middot; ' + p.nvar + ' colors' : '') + '</p>' +
       '<div class="minis">' + sw + '</div></div></a></article>';
   }
 
@@ -221,11 +275,11 @@
     if (!pairs.length) return '';
     var cards = pairs.map(function (p) {
       var media = p.img ? '<img src="' + BASE + 'assets/img/' + esc(p.img) + '" alt="">' : '<span class="ph">' + esc(p.base.slice(0, 2)) + '</span>';
-      return '<a class="pairmini" href="' + PBASE + 'product.html?p=' + encodeURIComponent(p.slug) + '">' +
+      return '<a class="pairmini" href="' + productHref(p) + '">' +
         '<div class="pairmini__m">' + media + '</div>' +
         '<div class="pairmini__b"><b>' + esc(p.base) + '</b><span>' + esc(p.group) + '</span></div></a>';
     }).join('');
-    var src = IS_SNAPSHOT ? 'last published pairings' : 'modelled from order history';
+    var src = IS_SNAPSHOT ? 'last published pairings' : 'suggested pairings';
     return '<section class="pairstrip"><h3 class="pairstrip__h">Completes the look</h3>' +
       '<p class="pairstrip__sub">Often booked with <b>' + esc(hero.base) + '</b> · ' + src + '</p>' +
       '<div class="pairstrip__row">' + cards + '</div></section>';
@@ -278,33 +332,29 @@
     var ft = root.querySelector('[data-filtertoggle]'); if (ft) ft.classList.remove('is-open');
   }
 
-  function goCat(key) { state.q = ''; state.cat = key; state.style = state.color = null; viewWizard(); }
+  function goCat(key) { state.q = ''; state.cat = key; state.style = state.color = null; state.page = 1; viewWizard(); }
   function openSearch(q) { viewHome(); var i = root.querySelector('[data-q]'); if (i) { i.value = q; live(); i.focus(); } }
 
   /* ── VIEW: landing — browse by category / by event, with live search ── */
   function viewHome() {
     state.cat = null; state.style = state.color = null; state.q = '';
     var counts = catCounts();
-    var catChips = TOPCATS.map(function (c) {
+    var catChips = demoCats().map(function (c) {
       return '<button class="chip" data-cat="' + c.key + '">' + esc(c.label) + ' <em>' + (counts[c.key] || 0) + '</em></button>';
     }).join('');
     root.innerHTML =
-      '<div class="shophead"><p class="eyebrow">Browse the collection</p><h1>What are you dressing?</h1>' +
-        '<p class="shoplede">Browse by category or plan by event, then narrow it down' +
-        (CAN_AVAIL ? ' — we\'ll show what\'s free for your date' : '') + '.</p></div>' +
+      '<div class="shophead"><p class="eyebrow">Browse Inventory</p><h1>What are you dressing?</h1>' +
+        '<p class="shoplede">Browse the linen collection, then narrow it down by color and fabric.</p></div>' +
       '<div class="shopbar">' +
         '<div class="viewtoggle">' +
-          '<button class="vt" data-view="category">By category</button>' +
+          '<button class="vt" data-view="category">By product</button>' +
           '<button class="vt" data-view="event">By event</button>' +
         '</div>' +
         '<div class="shopsearch">' + SEARCHI +
-          '<input type="search" data-q placeholder="Search the catalog…" aria-label="Search the catalog"></div>' +
+          '<input type="search" data-q placeholder="Search the inventory…" aria-label="Search the inventory"></div>' +
         '<div class="filterwrap">' +
           '<button class="filtbtn" data-filtertoggle aria-label="Filter">' + FUNNEL + '<span>Filter</span></button>' +
           '<div class="filterpop" data-filterpop hidden>' +
-            '<div class="filterpop__sec"><span class="wizlbl">View</span><div class="chips">' +
-              '<button class="chip" data-view="category">By category</button>' +
-              '<button class="chip" data-view="event">By event</button></div></div>' +
             '<div class="filterpop__sec"><span class="wizlbl">Jump to a category</span><div class="chips">' + catChips + '</div></div>' +
           '</div>' +
         '</div>' +
@@ -312,12 +362,15 @@
       '<div data-body></div>';
 
     bindFilter(); wireDismiss();
+    root.querySelectorAll('.viewtoggle [data-view]').forEach(function (b) {
+      b.addEventListener('click', function () { setView(b.dataset.view); });
+    });
     root.querySelector('[data-q]').addEventListener('input', live);
-    root.querySelectorAll('[data-view]').forEach(function (b) { b.addEventListener('click', function () { setView(b.dataset.view); }); });
     root.querySelectorAll('[data-filterpop] [data-cat]').forEach(function (a) {
       a.addEventListener('click', function () { closePopup(); goCat(a.dataset.cat); });
     });
-    syncToggle(); renderBody();
+    syncToggle();
+    renderBody();
   }
   function setView(v) { state.view = v; closePopup(); syncToggle(); renderBody(); }
   function syncToggle() {
@@ -326,29 +379,43 @@
   }
   function live() {
     var qEl = root.querySelector('[data-q]'); state.q = qEl ? qEl.value.trim() : '';
+    state.page = 1;
     renderBody();
   }
   function renderBody() {
     var body = root.querySelector('[data-body]'); if (!body) return;
     if (state.q) {
       var rows = searchRows(state.q), max = rows.length ? Math.max.apply(null, rows.map(rentScore)) : 1;
+      var pages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+      if (state.page > pages) state.page = pages;
+      if (state.page < 1) state.page = 1;
+      var start = (state.page - 1) * PAGE_SIZE;
+      var pageRows = rows.slice(start, start + PAGE_SIZE);
       body.innerHTML = '<p class="rescount">' + rows.length + ' product' + (rows.length === 1 ? '' : 's') +
-          ' matching &ldquo;' + esc(state.q) + '&rdquo;</p>' +
-        '<div class="resgrid">' + (rows.slice(0, 60).map(function (p) { return productCard(p, max); }).join('') ||
-          '<p class="resempty">Nothing matches. Try a colour, a fabric or a category.</p>') + '</div>' +
+          ' matching &ldquo;' + esc(state.q) + '&rdquo;' + (pages > 1 ? ' &middot; page ' + state.page + ' of ' + pages : '') + '</p>' +
+        '<div class="resgrid">' + (pageRows.map(function (p) { return productCard(p, max); }).join('') ||
+          '<p class="resempty">Nothing matches. Try a color, a fabric or a category.</p>') + '</div>' +
+        '<div class="pager" data-pager></div>' +
         (rows.length ? pairStrip(rows) : '');
-      return;
-    }
-    if (state.view === 'event') {
-      body.innerHTML = '<div class="evrow">' + EVENTS.map(function (ev) {
-        return '<button class="evcard" data-event="' + ev.key + '"><span class="evcard__i">' + ev.icon + '</span>' +
-          '<b>' + esc(ev.label) + '</b><span>' + esc(ev.blurb) + '</span></button>';
-      }).join('') + '</div>';
-      body.querySelectorAll('[data-event]').forEach(function (b) { b.addEventListener('click', function () { viewEvent(b.dataset.event); }); });
+      var pg = body.querySelector('[data-pager]');
+      if (pg) {
+        pg.innerHTML = pagerHtml(rows.length);
+        pg.querySelectorAll('[data-pg]').forEach(function (b) {
+          b.addEventListener('click', function () { if (b.disabled) return; state.page = +b.dataset.pg; renderBody(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        });
+      }
       return;
     }
     var counts = catCounts();
-    body.innerHTML = '<div class="catgrid">' + TOPCATS.map(function (c) { return catCard(c.key, true, counts); }).join('') + '</div>';
+    if (state.view === 'event') {
+      body.innerHTML = '<div class="evrow">' + EVENTS.map(function (ev) {
+        return '<button class="evcard" data-ev="' + ev.key + '"><span class="evcard__i">' + ev.icon +
+          '</span><b>' + esc(ev.label) + '</b><span>' + esc(ev.blurb) + '</span></button>';
+      }).join('') + '</div>';
+      body.querySelectorAll('[data-ev]').forEach(function (b) { b.addEventListener('click', function () { viewEvent(b.dataset.ev); }); });
+      return;
+    }
+    body.innerHTML = '<div class="catgrid">' + demoCats().map(function (c) { return catCard(c.key, true, counts); }).join('') + '</div>';
     body.querySelectorAll('[data-cat]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); goCat(a.dataset.cat); }); });
   }
 
@@ -362,7 +429,7 @@
     root.innerHTML =
       '<div class="crumb"><a href="#" data-home>Browse</a> <span>/</span> <a href="#" data-events>By event</a> <span>/</span> <b>' + esc(ev.label) + '</b></div>' +
       '<div class="shophead"><p class="eyebrow">Event starter</p><h1>For a ' + esc(ev.label.toLowerCase()) + ', you\'ll usually want…</h1>' +
-        '<p class="shoplede">Pick a piece to start, then narrow by style, colour' + (CAN_AVAIL ? ' and date' : '') +
+        '<p class="shoplede">Pick a piece to start, then narrow by style, color' + (CAN_AVAIL ? ' and date' : '') +
         '. Add the extras that finish the look.</p></div>' +
       '<div class="catgrid catgrid--needs">' + needCards + '</div>' +
       '<div class="entrysec"><p class="entrysec__h">Common add-ons</p><div class="addons">' + addonBtns + '</div></div>';
@@ -408,7 +475,7 @@
             '<div class="filterpop__sec"><span class="wizlbl">Style</span><div class="chips">' +
               '<button class="chip' + (!state.style ? ' is-on' : '') + '" data-style="">Any</button>' +
               styles.map(function (s) { return chip('style', s, styleSet[s]); }).join('') + '</div></div>' +
-            '<div class="filterpop__sec"><span class="wizlbl">Colour</span><div class="chips">' +
+            '<div class="filterpop__sec"><span class="wizlbl">Color</span><div class="chips">' +
               '<button class="chip' + (!state.color ? ' is-on' : '') + '" data-color="">Any</button>' +
               colors.map(function (c) { return chip('color', c, colorSet[c]); }).join('') + '</div></div>' +
           '</div>' +
@@ -416,17 +483,18 @@
       '</div>' +
       '<p class="rescount" data-rescount></p>' +
       '<div class="resgrid" data-resgrid></div>' +
+      '<div class="pager" data-pager></div>' +
       '<div data-pairstrip></div>';
 
     root.querySelector('[data-home]').addEventListener('click', function (e) { e.preventDefault(); state.view = 'category'; viewHome(); });
     bindFilter(); wireDismiss();
     root.querySelectorAll('[data-style]').forEach(function (b) {
-      b.addEventListener('click', function () { state.style = b.dataset.style || null; viewWizard(); }); });
+      b.addEventListener('click', function () { state.style = b.dataset.style || null; state.page = 1; viewWizard(); }); });
     root.querySelectorAll('[data-color]').forEach(function (b) {
-      b.addEventListener('click', function () { state.color = b.dataset.color || null; viewWizard(); }); });
+      b.addEventListener('click', function () { state.color = b.dataset.color || null; state.page = 1; viewWizard(); }); });
     var dEl = root.querySelector('[data-date]'); if (dEl) dEl.addEventListener('input', function (e) { state.date = e.target.value; renderResults(pool); });
     var pEl = root.querySelector('[data-pop]'); if (pEl) pEl.addEventListener('change', function (e) { state.pop = e.target.checked; renderResults(pool); });
-    var qEl = root.querySelector('[data-q]'); if (qEl) qEl.addEventListener('input', function (e) { state.q = e.target.value.trim(); renderResults(pool); });
+    var qEl = root.querySelector('[data-q]'); if (qEl) qEl.addEventListener('input', function (e) { state.q = e.target.value.trim(); state.page = 1; renderResults(pool); });
 
     if (filtered) { var fti = root.querySelector('[data-filtertoggle]'); if (fti) fti.classList.add('is-active'); }
     renderResults(pool);
@@ -444,14 +512,27 @@
     });
     if (state.pop && CAN_RENT) rows.sort(function (a, b) { return rentScore(b) - rentScore(a); });
 
-    var grid = root.querySelector('[data-resgrid]'), cnt = root.querySelector('[data-rescount]');
-    var avail = rows.filter(function (p) { return availableOn(p, state.date); }).length;
-    cnt.innerHTML = rows.length + ' product' + (rows.length === 1 ? '' : 's') +
-      (CAN_AVAIL && state.date ? ' &middot; <b>' + avail + '</b> available on ' + esc(fmtDate(state.date)) : '') +
-      (state.q ? ' matching &ldquo;' + esc(state.q) + '&rdquo;' : '');
+    var pages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+    if (state.page > pages) state.page = pages;
+    if (state.page < 1) state.page = 1;
+    var start = (state.page - 1) * PAGE_SIZE;
+    var pageRows = rows.slice(start, start + PAGE_SIZE);
 
-    grid.innerHTML = rows.slice(0, 60).map(function (p) { return productCard(p, max); }).join('') ||
+    var grid = root.querySelector('[data-resgrid]'), cnt = root.querySelector('[data-rescount]');
+    cnt.innerHTML = rows.length + ' product' + (rows.length === 1 ? '' : 's') +
+      (state.q ? ' matching &ldquo;' + esc(state.q) + '&rdquo;' : '') +
+      (pages > 1 ? ' &middot; page ' + state.page + ' of ' + pages : '');
+
+    grid.innerHTML = pageRows.map(function (p) { return productCard(p, max); }).join('') ||
       '<p class="resempty">Nothing matches. Loosen a filter or clear the search.</p>';
+
+    var pg = root.querySelector('[data-pager]');
+    if (pg) {
+      pg.innerHTML = pagerHtml(rows.length);
+      pg.querySelectorAll('[data-pg]').forEach(function (b) {
+        b.addEventListener('click', function () { if (b.disabled) return; state.page = +b.dataset.pg; renderResults(pool); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      });
+    }
 
     var strip = root.querySelector('[data-pairstrip]');
     if (strip) strip.innerHTML = rows.length ? pairStrip(rows) : '';

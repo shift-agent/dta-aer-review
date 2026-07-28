@@ -4,9 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Decor To Adore &amp; Alabama Event Rentals — Commitments &amp; Path Forward</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/fonts.css">
 <style>
   :root {
     --navy:#2F4D6A; --navy-dk:#22394F; --ink:#15202B; --body:#4B5E71;
@@ -14,7 +12,7 @@
     --sage:#8FB58A; --olive:#6F8A5C; --gold:#D9B25F;
     --line:rgba(21,32,43,.12); --amber:#B8862A; --red:#B3261E;
     --accent:#1E40AF;
-    --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+    --serif:"Playfair Display",Georgia,"Times New Roman",serif;
     --sans:"Montserrat",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
   }
   * { box-sizing:border-box; }
@@ -67,6 +65,45 @@
   .mile textarea { margin-top:.7rem; min-height:64px; resize:vertical; }
   @media (max-width:640px){ .mile__meta { grid-template-columns:1fr; } }
 
+  /* next-review key decisions — the focused agenda for the upcoming review */
+  .decides { display:grid; gap:.7rem; margin:.2rem 0 2rem; }
+  .decide { display:flex; gap:.9rem; align-items:flex-start; background:var(--white);
+    border:1px solid var(--line); border-left:3px solid var(--accent); padding:1rem 1.2rem; }
+  .decide--bonus { border-left-color:var(--gold); background:var(--warm); }
+  .decide__n { flex:0 0 auto; width:30px; height:30px; display:grid; place-items:center;
+    background:var(--accent); color:#fff; font-family:var(--serif); font-size:1.05rem; line-height:1; }
+  .decide--bonus .decide__n { background:var(--gold); color:var(--ink); }
+  .decide h3 { font-family:var(--serif); font-weight:400; font-size:1.28rem; color:var(--ink); margin:0 0 .15rem; }
+  .decide p { margin:0; font-size:.9rem; color:var(--body); }
+  .decide__hint { font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--amber);
+    font-weight:600; margin-left:.5rem; white-space:nowrap; }
+
+  /* today's commitments — bullet recap */
+  .todaycommit { list-style:none; margin:.2rem 0 2rem; padding:0; display:grid; gap:.5rem; }
+  .todaycommit li { position:relative; padding-left:1.5rem; font-size:.94rem; color:var(--body); }
+  .todaycommit li::before { content:"\2014"; position:absolute; left:0; top:0; color:var(--accent); font-weight:700; }
+  .todaycommit b { color:var(--ink); }
+
+  /* every expectation met — checklist */
+  .meets { list-style:none; margin:.2rem 0 2rem; padding:0; display:grid; gap:.55rem; }
+  .meets li { display:flex; gap:.6rem; align-items:baseline; font-size:.92rem; color:var(--body); }
+  .meets .ok { color:var(--olive); font-weight:700; flex:0 0 auto; }
+  .meets b { color:var(--ink); }
+
+  /* reference-site comparison */
+  .compare { display:grid; gap:.45rem; margin:.2rem 0 1.4rem; }
+  .cmp { display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:var(--white);
+    border:1px solid var(--line); padding:.75rem 1rem; font-size:.88rem; }
+  .cmp--head { background:var(--warm); font-weight:600; color:var(--ink); font-size:.66rem;
+    letter-spacing:.1em; text-transform:uppercase; }
+  .cmp__ex { color:var(--muted); }
+  .cmp__us { color:var(--ink); }
+  .cmp__us b { color:var(--ink); }
+  .cmp.exceed { border-left:3px solid var(--olive); }
+  .cmp .badge { display:inline-block; font-size:.58rem; letter-spacing:.08em; text-transform:uppercase;
+    color:#fff; background:var(--olive); padding:.08rem .4rem; margin-left:.4rem; font-weight:600; vertical-align:middle; }
+  @media (max-width:640px){ .cmp { grid-template-columns:1fr; gap:.3rem; } .cmp--head { display:none; } }
+
   .aeo { background:var(--warm); border:1px solid var(--line); padding:1rem 1.2rem; margin-top:1.6rem; font-size:.88rem; }
   .aeo b { color:var(--ink); }
   footer { border-top:1px solid var(--line); margin-top:2.4rem; padding-top:1.2rem; font-size:.8rem; color:var(--muted); }
@@ -86,6 +123,55 @@
 </div></header>
 
 <main><div class="wrap">
+
+  <h2 class="sec">Deliverables agreed today</h2>
+  <p class="sec-note">The tasks each side owns coming out of today&rsquo;s meeting (from the saved commitments JSON).</p>
+  <div class="decides">
+    <div class="decide"><span class="decide__n" style="background:var(--olive)">L</span>
+      <div><h3>Laura &amp; Emily &mdash; documents &amp; images <span class="decide__hint" style="color:var(--olive)">48 hours</span></h3>
+        <p>Get Glenn the documents and images &mdash; already sorted, named and ready for inventory &mdash; including the <b>12 fixed category images</b> (this covers the Lighting &amp; Tents photos).</p></div></div>
+    <div class="decide"><span class="decide__n">P</span>
+      <div><h3>Proof of concept &mdash; Madeline Kiwi</h3><p>End-to-end test on one product &mdash; the working model to grow the rest of the catalog from.</p></div></div>
+    <div class="decide"><span class="decide__n">S</span>
+      <div><h3>Simpliment &mdash; build</h3><p>Home-page font updated (keeping the structure); then build out the site 1&ndash;2 pages at a time.</p></div></div>
+    <div class="decide decide--bonus"><span class="decide__n">&mdash;</span>
+      <div><h3>Alabama Event Rentals &mdash; tabled</h3><p>AER decision set aside for a future conversation.</p></div></div>
+  </div>
+
+  <h2 class="sec">What we committed to today</h2>
+  <p class="sec-note">The direction we agreed on in this review, and the basis for moving forward.</p>
+  <ul class="todaycommit">
+    <li><b>The design direction</b> — a two-font system, a browse-first storefront and a squared, elevated UI that matches your staging site's look and the reference site's proven function.</li>
+    <li><b>The inventory approach</b> — browse by product or by event, shown with a curated set of products for this review.</li>
+    <li><b>The quote fix</b> — a website quote that flows straight into Current RMS as a real, itemized opportunity, replacing the hand re-keying done today.</li>
+    <li><b>Scope &amp; cost</b> — no additional charges for Phase 1 and Phase 2 as described; any change of scope is agreed in writing before work begins.</li>
+    <li><b>The next review</b> — lock in the <b>font</b>, the <b>home page</b> and the <b>inventory format</b>, with the Quote&nbsp;&rarr;&nbsp;Current&nbsp;RMS connection demonstrated as a bonus.</li>
+  </ul>
+
+  <h2 class="sec">Every expectation, met</h2>
+  <p class="sec-note">Each thing you asked for, and where it lives in the new design.</p>
+  <ul class="meets">
+    <li><span class="ok">&#10003;</span><span><b>Emulate the reference site's function.</b> Browse-first shop, category &amp; event entry, and product pages with color swatches and &ldquo;completes the look.&rdquo;</span></li>
+    <li><span class="ok">&#10003;</span><span><b>Match the staging site's look.</b> The same hero language, palette and structure &mdash; and the quote form's fields mirror your staging contact form exactly.</span></li>
+    <li><span class="ok">&#10003;</span><span><b>A clean, elevated brand.</b> Two fonts (Playfair Display + Montserrat), a squared UI, and one warm, consistent background throughout.</span></li>
+    <li><span class="ok">&#10003;</span><span><b>No prices or sizes on the storefront.</b> Quote-based end to end &mdash; nothing exposes rates or size rows.</span></li>
+    <li><span class="ok">&#10003;</span><span><b>Solve the quote handoff.</b> Every selection maps to a real Current RMS line item &mdash; ready to wire once the write-scoped API key is issued.</span></li>
+    <li><span class="ok">&#10003;</span><span><b>Real content, not filler.</b> A real event story surfaced from your blog, and staging photography placed where it's been delivered.</span></li>
+    <li><span class="ok">&#10003;</span><span><b>Social presence.</b> A Stories / Journal hub, with linked Instagram and Facebook.</span></li>
+  </ul>
+
+  <h2 class="sec">Aligned with &mdash; and beyond &mdash; the example site</h2>
+  <p class="sec-note">Matching BBJ&nbsp;La&nbsp;Tavola's proven model, then going further where it counts.</p>
+  <div class="compare">
+    <div class="cmp cmp--head"><span>The example site (BBJ La Tavola)</span><span>Decor To Adore &mdash; this design</span></div>
+    <div class="cmp exceed"><span class="cmp__ex">Browse rentals by category</span><span class="cmp__us">Browse by category <b>and by event type</b><span class="badge">beyond</span></span></div>
+    <div class="cmp exceed"><span class="cmp__ex">Product pages with color families</span><span class="cmp__us">Color families <b>plus labeled in-use photography &amp; a quick-view</b><span class="badge">beyond</span></span></div>
+    <div class="cmp"><span class="cmp__ex">&ldquo;Completes the look&rdquo; pairings</span><span class="cmp__us">Matched &mdash; suggested pairings on every product</span></div>
+    <div class="cmp"><span class="cmp__ex">Filter by style &amp; color</span><span class="cmp__us">Matched &mdash; an anchored style &amp; color filter</span></div>
+    <div class="cmp exceed"><span class="cmp__ex">Request a quote (no prices), then re-keyed into the rental system by hand</span><span class="cmp__us"><b>Writes straight into Current RMS</b> as a real, itemized opportunity <span class="decide__hint">pending API key</span><span class="badge">beyond</span></span></div>
+    <div class="cmp exceed"><span class="cmp__ex">A standalone marketing site</span><span class="cmp__us">Built on <b>SimpleSuite</b> &mdash; one login, team profiles and room to grow<span class="badge">beyond</span></span></div>
+  </div>
+
   <h2 class="sec">What we walked today</h2>
   <p class="sec-note">Tick each stop you're comfortable we covered.</p>
   <div class="rev" id="rev">
@@ -95,8 +181,14 @@
     <label class="revchip"><input type="checkbox" data-rev="suite"> SimpleSuite (enhancements)</label>
   </div>
 
+  <h2 class="sec">Where we are — committed stages</h2>
+  <p class="sec-note">Each stage is committed with its "Commit this stage" button as we walk it. This is the running
+     history — where we were, and where we pick up next.</p>
+  <div id="committed" style="display:grid;gap:.5rem;margin-bottom:1.6rem"></div>
+
   <div class="bar">
-    <button class="btn btn--primary" id="save">▼ Save file</button>
+    <button class="btn btn--primary" id="lock">&#128274; Lock commitments</button>
+    <button class="btn" id="save">▼ Save file</button>
     <button class="btn" id="load">▲ Load file</button>
     <input type="file" id="file" accept="application/json" hidden>
     <button class="btn" id="reset">Reset</button>
@@ -124,6 +216,8 @@
   var MILESTONES = [
     { id:'inventory', title:'Inventory Clean Up', phase:'Foundation',
       desc:'Fold Current RMS size-rows into browsable products, set back-office groups aside, and build the prioritized photo shoot list. Sellable-catalog coverage moves from 14.7% toward 19.1% as the zero-photo groups clear.' },
+    { id:'approve-home-inv', title:'Design Approval — Home &amp; Inventory', phase:'Next review',
+      desc:'The next review stage: final sign-off on the full home-page design (banner + sections) and the Inventory page shown with a limited, curated product set. Bonus demonstration — a website quote flowing straight into Current RMS as a real, itemized opportunity (pending the write-scoped API token).' },
     { id:'dta', title:'Design &amp; Launch — Decor To Adore', phase:'Phase 1',
       desc:'Publish the ready categories on the DTA storefront: browse-first shop, product pages, and quote requests flowing straight into Current RMS.' },
     { id:'aer', title:'Design &amp; Launch — Alabama Event Rentals', phase:'Phase 1 · 2',
@@ -186,8 +280,35 @@
     flash('<b>Saved</b> in this browser');
   }
 
-  // load from localStorage on open
-  try { var raw = localStorage.getItem(KEY); if(raw) apply(JSON.parse(raw)); } catch(e){}
+  // Today's meeting commitments (imported from commitments-dta-aer.json).
+  var IMPORTED = {
+    project:'DTA / AER', savedAt:'2026-07-27T21:27:42.541Z',
+    reviewed:{ scope:true, design:true, simplitory:true, suite:true },
+    milestones:[
+      { id:'inventory', agreed:true, owner:'Both', timeline:'48 hours',
+        notes:'Laura & Emily — get Glenn the documents and images, already sorted, named and ready for inventory (incl. the 12 fixed category images).\nProof of concept — Madeline Kiwi, end-to-end test (the model to grow from).' },
+      { id:'dta', agreed:true, owner:'Simpliment', timeline:'',
+        notes:'Glenn — modify the home-page font, maintaining structure.\nEmily / Laura — fixed 12 image categories.\nBuild 1–2 pages at a time.' },
+      { id:'aer', agreed:false, owner:'— set owner —', timeline:'',
+        notes:'Tabling decision — AER — future conversation.' },
+      { id:'phase3', agreed:false, owner:'— set owner —', timeline:'', notes:'' }
+    ]
+  };
+  // load saved state, or — on first open — import today's meeting, lock it, and
+  // mark the first Commit stage committed in the deck.
+  try {
+    var raw = localStorage.getItem(KEY);
+    if (raw) { apply(JSON.parse(raw)); }
+    else {
+      apply(IMPORTED); persist();
+      var d = new Date(), ts = (d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear();
+      localStorage.setItem('dta_aer_commit_locked', ts);
+      var C = {}; try { C = JSON.parse(localStorage.getItem('ss_deck_commits_v1')) || {}; } catch(e){}
+      C.phases = C.phases || {};
+      if (!C.phases.commit1) C.phases.commit1 = { committed:true, at:new Date().toISOString(), label:'Commit' };
+      localStorage.setItem('ss_deck_commits_v1', JSON.stringify(C));
+    }
+  } catch(e){}
 
   // live: autosave + toggle visual state
   document.addEventListener('input', function(e){
@@ -228,5 +349,46 @@
 })();
 </script>
 <script src="assets/js/present.js?v=2"></script>
+<script>
+(function(){
+  var D = window.SS_DECK; if(!D) return;
+  var host = document.getElementById('committed');
+  var commits = D.read(); commits.phases = commits.phases || {};
+  D.steps.forEach(function(s){
+    if(s.id === 'commit') return;               // the summary tab itself isn't a committable stage
+    var c = commits.phases[s.id], done = c && c.committed;
+    var row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:.7rem;padding:.7rem .9rem;border:1px solid var(--line);'
+      + 'border-left:3px solid ' + (done ? 'var(--olive)' : 'var(--line)') + ';'
+      + 'background:' + (done ? 'color-mix(in srgb, var(--olive) 8%, #fff)' : '#fff');
+    row.innerHTML =
+      '<span style="font-size:1rem;color:' + (done ? 'var(--olive)' : 'var(--muted)') + '">' + (done ? '✓' : '○') + '</span>'
+      + '<b style="font-family:var(--serif);font-weight:400;font-size:1.12rem;color:var(--ink);flex:1">' + s.label + '</b>'
+      + '<span style="font-size:.78rem;color:var(--muted)">' + (done ? 'committed ' + new Date(c.at).toLocaleDateString() : 'not yet committed') + '</span>';
+    host.appendChild(row);
+  });
+  var nr = document.getElementById('nextreview');
+  if(nr){ nr.value = D.getNextReview(); nr.addEventListener('input', function(){ D.setNextReview(nr.value); }); }
+})();
+</script>
+<script>
+  // Lock: freeze the milestones, review chips and notes once agreed. Persisted.
+  (function(){
+    var LKEY='dta_aer_commit_locked', btn=document.getElementById('lock');
+    function apply(ts){
+      document.querySelectorAll('#miles input,#miles select,#miles textarea,#rev input').forEach(function(el){ el.disabled=true; });
+      document.body.classList.add('is-locked');
+      btn.innerHTML='🔒 Locked · '+ts; btn.disabled=true;
+      btn.classList.remove('btn--primary');
+    }
+    var saved=localStorage.getItem(LKEY);
+    if(saved) setTimeout(function(){ apply(saved); }, 60);
+    btn.addEventListener('click', function(){
+      if(!confirm('Lock these commitments? Fields will be frozen.')) return;
+      var d=new Date(), ts=(d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear();
+      localStorage.setItem(LKEY, ts); apply(ts);
+    });
+  })();
+</script>
 </body>
 </html>

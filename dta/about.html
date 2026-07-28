@@ -4,14 +4,54 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>About &middot; Decor To Adore</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Gilda+Display&family=Montserrat:wght@300;400;500&family=Mr+De+Haviland&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/fonts.css">
 <link rel="stylesheet" href="../assets/base.css">
 <link rel="stylesheet" href="../assets/brand-dta.css">
 <!-- goes in the ss-launch `custom-css` section -->
 <link rel="stylesheet" href="../assets/custom-css.css">
 <link rel="stylesheet" href="../assets/present.css">
+<style>
+  /* ---- About page, scoped. New CSS lives here (not custom-css.css). ---- */
+
+  /* Italic serif section headlines (eyebrow color comes from the unified global rule). */
+  .abt .split__body h2,
+  .abt .sec__head h2 { font-style: normal; }
+  /* one line, a touch smaller + lighter (was reading too heavy) */
+  .hero--page h1.abt__h1 { font-style: normal; font-weight: 500;
+    font-size: clamp(2.05rem, 4.1vw, 3.15rem); max-width: none; white-space: nowrap; }
+  @media (max-width: 560px) { .hero--page h1.abt__h1 { white-space: normal; font-size: clamp(2rem, 8vw, 2.6rem); } }
+
+  /* Section 4 — "The Decor To Adore Difference": 4 category groups, each a
+     gold icon over a centered list of items (matches staging). */
+  .diff__cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
+    margin-top: 2.6rem; text-align: center; }
+  .diff__col { display: flex; flex-direction: column; align-items: center; }
+  .diff__icon { color: var(--shell-accent-on-dark); margin-bottom: 1.1rem; line-height: 0; }
+  .diff__icon svg { width: 38px; height: 38px; }
+  .diff__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
+  .diff__col li { font-family: var(--shell-font-family-body); font-size: .82rem;
+    font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--shell-text-body); }
+  @media (max-width: 720px) { .diff__cols { grid-template-columns: repeat(2, 1fr); gap: 2.4rem 1rem; } }
+  @media (max-width: 420px) { .diff__cols { grid-template-columns: 1fr; } }
+
+  /* Section 7 — team: tiled profiles (photo + name + role), click → Identity profile.
+     Placeholder glyph tiles until each member's real Identity photo/bio lands. */
+  .team__lead { max-width: 66ch; margin: 0 0 2.2rem; color: var(--shell-text-body); }
+  .team__grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.1rem; }
+  .team__tile { display: block; text-align: center; }
+  .team__ph { display: grid; place-items: center; aspect-ratio: 1 / 1;
+    background: var(--shell-surface-warm); border: 1px solid var(--shell-hairline);
+    transition: background .18s ease; }
+  .team__ph svg { width: 38%; height: 38%; color: var(--shell-text-muted); opacity: .55; }
+  .team__tile:hover .team__ph { background: var(--shell-surface-card); }
+  .team__name { display: block; font-family: var(--shell-font-family-heading);
+    font-size: 1.15rem; color: var(--shell-text-dark); margin: .7rem 0 .15rem; }
+  .team__role { display: block; font-family: var(--shell-font-family-body);
+    font-size: .64rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--shell-accent); }
+  @media (max-width: 900px) { .team__grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 560px) { .team__grid { grid-template-columns: repeat(2, 1fr); } }
+</style>
 </head>
 <body data-brand="dta" data-page="about" data-base="../">
 
@@ -19,67 +59,152 @@
   <a href="../aer/about.html">Alabama Event Rentals &rarr;</a>
 </template>
 
-<header class="chrome" data-ssla="chrome (theme)"><div class="wrap chrome__inner">
+<header class="chrome" data-ssla-section="chrome"><div class="wrap chrome__inner">
   <a class="brandmark" href="index.html"><img src="../assets/img/site/logo-dta.png" alt="Decor To Adore" style="height:50px;width:auto"></a>
-  <nav class="nav"><a href="../shop.html">Shop</a><a href="events.html">Events</a><a href="about.html" class="is-active">About</a><a href="contact.html">Contact</a></nav>
-  <a class="btn quotepill" href="quote.html">Quote<span data-quote-count class="is-empty"></span></a>
+  <nav class="nav"><a href="../shop.html">Inventory</a><a href="about.html" class="is-active">About</a><a href="social.html">Social</a><a href="contact.html">Contact</a></nav>
+  <div class="chrome__icons">
+    <button class="iconlink" type="button" data-headsearch aria-label="Search" title="Search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button>
+    <a class="iconlink" href="#login" aria-label="Log in" title="Log in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg></a>
+    <a class="btn quotepill" href="quote.html">Quote<span data-quote-count class="is-empty"></span></a>
+  </div>
 </div></header>
 
+<div class="headsearch" hidden><div class="wrap">
+  <form class="headsearch__form" onsubmit="location.href='../shop.html#q='+encodeURIComponent(this.q.value||'');return false;">
+    <input name="q" type="search" placeholder="Search the inventory &mdash; a color, a fabric, a piece&hellip;" aria-label="Search the inventory">
+    <button class="btn btn--solid" type="submit">Search</button>
+  </form>
+</div></div>
 
-<section class="hero hero--bg hero--page" data-ssla="g-hero"
-         style="--proto-page-photo:url(../assets/img/site/stg-alt.jpg)">
+
+<!-- 1 — Photo banner header -->
+<section class="hero hero--bg hero--page" data-ssla-section="g-page-hero"
+         style="--proto-page-photo:url(../assets/img/site/stg-hero.jpg)">
   <div class="hero__media"></div>
   <div class="wrap hero__body">
-    <p class="eyebrow">About Our Family Business</p>
-    <h1>A family business, dressing Alabama events</h1>
-    <p>A family-owned Alabama business dedicated to beautifully styled weddings, events and celebrations &mdash; created with care, and delivered with intention.</p>
+    <p class="eyebrow">Event Rentals &middot; Alabama</p>
+    <h1 class="abt__h1">About Decor To Adore</h1>
+    <p>A family-owned event rental company, helping clients bring their vision to life with ease, intention and style.</p>
   </div>
 </section>
 
-<section class="sec splitsec" data-ssla="g-about-bio"><div class="wrap split">
-  <div class="split__media"><img src="../assets/img/site/stg-about.jpg" alt=""></div>
+<!-- 2 — OUR STORY (image left, text right) -->
+<section class="sec splitsec abt" data-ssla-section="g-about-bio"><div class="wrap split">
+  <div class="split__media"><img src="../assets/img/site/story-couple.jpg" alt="Barrett and his wife, the family behind Decor to Adore"></div>
   <div class="split__body">
-    <h2>Meet the people behind the details</h2>
-    <p>Decor to Adore is very much a family business. My husband Barrett and I met during our freshman orientation in college. We dated through college and officially tied the knot in November of 2010 at Big Canoe in Jasper, Georgia.</p>
-    <p>We are both involved with the business and are often seen together throughout the week and at our events on the weekends. We also have several wonderful assistants who you may see out with us during event setups.</p>
+    <p class="eyebrow">Our Story</p>
+    <h2>Every celebration has a story</h2>
+    <p>Decor to Adore is a family-owned event rental company led by Barrett and his wife, built on a shared love for design, hospitality, and creating unforgettable celebrations. What started as a passion for beautiful gatherings has grown into a full-service rental company dedicated to helping clients bring their vision to life with ease, intention, and style.</p>
+    <p>We specialize in providing thoughtfully curated event rentals for weddings, corporate events, and special occasions.</p>
   </div>
 </div></section>
 
-<section class="sec splitsec alt" data-ssla="g-content-split"><div class="wrap split split--rev">
-  <div class="split__media"><img src="../assets/img/site/stg-reception2.jpg" alt=""></div>
+<!-- 3 — OUR PHILOSOPHY (reversed: text left, image right) -->
+<section class="sec splitsec alt abt" data-ssla-section="g-content-split"><div class="wrap split split--rev">
+  <div class="split__media"><img src="../assets/img/site/stg-detail.jpg" alt="Curated tablescape detail styled by Decor to Adore"></div>
   <div class="split__body">
-    <h2>Our story continues</h2>
-    <p>Our first child, Finley, arrived in November of 2012 &mdash; a content and happy child, quite the daredevil, always seeking out his next adrenaline rush. Our second child, Sutton, blessed us with her arrival in August of 2015.</p>
-    <p>If you see them out with us at a job or around town, be sure to say hello. They love meeting new people.</p>
-    <a class="btn" href="plan.html">Plan Your Event</a>
+    <p class="eyebrow">Our Philosophy</p>
+    <h2>Every detail matters</h2>
+    <p>At Decor to Adore, we believe every detail matters. From the texture of a linen to the placement of a light, our goal is to create a cohesive and elevated experience that photographs beautifully and feels effortless in person. We work closely with planners, venues, and clients to ensure every element comes together seamlessly.</p>
   </div>
 </div></section>
 
-<section class="sec stats" data-ssla="g-proof"><div class="wrap statrow"><div class="stat"><b>30+</b><span>Years styling Alabama events</span></div><div class="stat"><b>3,889</b><span>Pieces in inventory</span></div><div class="stat"><b>1&nbsp;day</b><span>Typical quote turnaround</span></div></div></section>
-
-<section class="sec quote1" data-ssla="g-proof"><div class="wrap">
-  <blockquote>Kendall was great. She had great attention to detail and thought of things that I certainly would have forgotten &mdash; patient with me even as I made changes again and again as the reception took shape. Quality at a steal.<cite>Casey &mdash; Temple Emanu-El</cite></blockquote>
+<!-- 4 — THE DECOR TO ADORE DIFFERENCE + categories grid -->
+<section class="sec sec--white abt" data-ssla-section="g-cards"><div class="wrap">
+  <div class="sec__head"><div>
+    <p class="eyebrow">The Decor To Adore Difference</p>
+    <h2>Intentional. Elevated. Unforgettable.</h2>
+  </div></div>
+  <div class="diff__cols">
+    <div class="diff__col">
+      <!-- draped round banquet table (Tables / Chairs / Linens / Napkins) -->
+      <span class="diff__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6.5" rx="7.5" ry="2.2"/><path d="M12 8.7V18"/><path d="M8.5 18h7"/></svg></span>
+      <ul><li>Tables</li><li>Chairs</li><li>Linens</li><li>Napkins</li></ul>
+    </div>
+    <div class="diff__col">
+      <!-- place setting: charger + china, fork &amp; knife (Chargers / China / Flatware / Glassware) -->
+      <span class="diff__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5.6"/><circle cx="12" cy="12" r="2.4"/><path d="M3.4 3v3.4a1.4 1.4 0 0 0 2.8 0V3"/><path d="M4.8 3v18"/><path d="M20.6 3c-1.9.4-2.9 2.7-2.9 5.3 0 1.6 1 2.3 2.9 2.3"/><path d="M20.6 3v18"/></svg></span>
+      <ul><li>Chargers</li><li>China</li><li>Flatware</li><li>Glassware</li></ul>
+    </div>
+    <div class="diff__col">
+      <!-- string lights: swag wire + hanging bulbs (String Lights / Uplighting / Pinspots / Chandeliers) -->
+      <span class="diff__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5c4.5 4 13.5 4 18 0"/><path d="M7 7.1v1.8M12 8.4v1.8M17 7.1v1.8"/><circle cx="7" cy="10.4" r="1.5"/><circle cx="12" cy="11.7" r="1.5"/><circle cx="17" cy="10.4" r="1.5"/></svg></span>
+      <ul><li>String Lights</li><li>Uplighting</li><li>Pinspots</li><li>Chandeliers</li></ul>
+    </div>
+    <div class="diff__col">
+      <!-- event tent (Stage / Stage Facade / Bars / Tents) -->
+      <span class="diff__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 3 20M12 3.5 21 20M3 20h18M12 3.5V20M9.4 20l2.6-5 2.6 5"/></svg></span>
+      <ul><li>Stage</li><li>Stage Facade</li><li>Bars</li><li>Tents</li></ul>
+    </div>
+  </div>
 </div></section>
 
-
-<section class="strip" data-ssla="g-cta"><div class="wrap strip__inner">
-  <div><h2>Planning something lovely?</h2><p>Tell us the date, the venue and the palette. We'll build the look with you.</p></div>
-  <a class="btn" href="plan.html">Plan Your Event</a>
+<!-- 5 — OUR SHOWROOM (image left, text right + CTA) -->
+<section class="sec splitsec abt" data-ssla-section="g-content-split"><div class="wrap split">
+  <div class="split__media"><img src="../assets/img/site/stg-reception2.jpg" alt="Curated showroom setup at Decor to Adore"></div>
+  <div class="split__body">
+    <p class="eyebrow">Our Showroom</p>
+    <h2>Visit our showroom</h2>
+    <p>Because our inventory is always growing, we invite clients to visit our showroom, where they can explore our full collection in person and view a curated setup that reflects what their event could look like. It&rsquo;s the best way to experience the depth of our offerings and begin designing with confidence.</p>
+    <a class="btn" href="contact.html">Book a Showroom Visit</a>
+  </div>
 </div></section>
 
-<footer class="foot" data-ssla="chrome (theme)"><div class="wrap">
+<!-- 6 — BLEND FROM EVENTS: "How we work" services tracks + CTA -->
+<section class="sec splitsec alt abt" data-ssla-section="g-content-split"><div class="wrap split">
+  <div class="split__body">
+    <p class="eyebrow">What We Style</p>
+    <h2>Three ways we work with you</h2>
+    <div class="tracks"><article class="track"><h3>Weddings</h3><p>Romantic, classic, modern or rustic &mdash; your wedding style is our starting point. Whether you're planning a rustic-chic celebration or a black-tie soiree, our linens, covers and seating build the room around you.</p></article><article class="track"><h3>Corporate &amp; Galas</h3><p>From company parties to grand galas, we cover them all. We'll help you plan and implement ideas that align with your brand and your budget.</p></article><article class="track"><h3>Celebrations</h3><p>Showers, birthdays, mitzvahs and intimate gatherings &mdash; done beautifully, at whatever scale suits the moment.</p></article></div>
+    <a class="btn tracks__cta" href="https://staging.decortoadore.com/services">Explore Our Services</a>
+  </div>
+  <div class="split__media"><img src="../assets/img/site/stg-events.jpg" alt="An event styled end-to-end by Decor to Adore"></div>
+</div></section>
+
+<!-- 7 — OUR TEAM (tiled profiles, powered by SimpleSuite Identity) -->
+<section class="sec sec--white abt team" data-ssla-section="g-cards"><div class="wrap">
+  <div class="sec__head"><div>
+    <p class="eyebrow">Our Team</p>
+    <h2>Meet our team</h2>
+  </div></div>
+  <p class="team__lead">Full-service delivery, setup and breakdown &mdash; so you can enjoy your event while we handle the logistics. Each profile below is powered by a SimpleSuite Identity account: every team member adds their own photo and bio, and it appears here automatically. Tap a profile to read their full bio.</p>
+  <div class="team__grid">
+    <a class="team__tile" href="#profile"><span class="team__ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span><span class="team__name">Barrett</span><span class="team__role">Owner</span></a>
+    <a class="team__tile" href="#profile"><span class="team__ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span><span class="team__name">Emily</span><span class="team__role">Events &amp; Design</span></a>
+    <a class="team__tile" href="#profile"><span class="team__ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span><span class="team__name">Laura</span><span class="team__role">Client Coordination</span></a>
+    <a class="team__tile" href="#profile"><span class="team__ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span><span class="team__name">Team Member</span><span class="team__role">Setup Lead</span></a>
+    <a class="team__tile" href="#profile"><span class="team__ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span><span class="team__name">Team Member</span><span class="team__role">Styling</span></a>
+    <a class="team__tile" href="#profile"><span class="team__ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span><span class="team__name">Team Member</span><span class="team__role">Logistics</span></a>
+  </div>
+</div></section>
+
+<!-- 8 — Closing CTA (simple strip, not a hero) -->
+<section class="strip" data-ssla-section="g-cta"><div class="wrap strip__inner">
+  <div><h2>Let&rsquo;s design something beautiful</h2><p>Your vision. Our expertise. A flawless event.</p></div>
+  <a class="btn" href="contact.html">Get In Touch</a>
+</div></section>
+
+<footer class="foot" data-ssla-section="footer-expanded"><div class="wrap">
   <div class="foot__grid">
     <div class="foot__brand">
       <a class="brandmark" href="index.html"><img src="../assets/img/site/logo-dta.png" alt="Decor To Adore" style="height:50px;width:auto"></a>
       <p class="foot__blurb">A family-owned Alabama business dedicated to beautifully styled weddings, events and celebrations &mdash; created with care, and delivered with intention.</p>
+      <div class="foot__social">
+        <a href="https://instagram.com/decor2adore" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://facebook.com/Decor2Adore" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      </div>
     </div>
     <div><h4>Explore</h4><ul>
       <li><a href="index.html">Home</a></li>
-      <li><a href="collections.html">Collections</a></li>
+      <li><a href="../shop.html">Inventory</a></li>
       <li><a href="events.html">Events</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li></ul></div>
-    <div><h4>Collections</h4><ul><li><a href="collections.html?q=Dupioni">Dupioni</a></li><li><a href="collections.html?q=Polyester">Polyester</a></li><li><a href="collections.html?q=Crinkle">Crinkle</a></li><li><a href="collections.html?q=Lamour">Lamour</a></li><li><a href="collections.html?q=Pintuck">Pintuck</a></li></ul></div>
+      <li><a href="contact.html">Contact</a></li><li><a href="quote-request.html">Request a Quote</a></li></ul></div>
+    <div><h4>By Event</h4><ul><li><a href="../shop.html#event=wedding">Weddings</a></li><li><a href="../shop.html#event=corporate">Corporate &amp; Galas</a></li><li><a href="../shop.html#event=celebration">Celebrations</a></li><li><a href="../shop.html#event=shower">Showers</a></li><li><a href="../shop.html#event=fundraiser">Fundraisers</a></li></ul></div>
     <div><h4>Get in touch</h4><ul>
       <li><a href="mailto:info@decortoadore.com">info@decortoadore.com</a></li>
       <li><a href="tel:205.637.8695">205.637.8695</a></li>
@@ -93,7 +218,6 @@
   </div>
   <div class="foot__base">
     <small>&copy; 2026 Decor To Adore. Prototype for design review &mdash; not a live site.</small>
-    <small>67 colourways across 7 fabrics &middot; 1304 size listings</small>
   </div>
 </div></footer>
 
@@ -102,5 +226,16 @@
 <script src="../assets/data/products.js"></script>
 <script src="../assets/js/app.js"></script>
 <script src="../assets/js/present.js?v=2"></script>
+<script>
+  // header search icon reveals the inline search bar
+  document.querySelectorAll('[data-headsearch]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var s = document.querySelector('.headsearch');
+      if (!s) return;
+      s.hidden = !s.hidden;
+      if (!s.hidden) { var i = s.querySelector('input'); if (i) i.focus(); }
+    });
+  });
+</script>
 </body>
 </html>

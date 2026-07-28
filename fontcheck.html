@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Font check &middot; Cormorant vs Playfair vs Georgia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#15202B; --body:#4B5E71; --line:rgba(21,32,43,.14); --paper:#FDF9F5; --warm:#F5EFE7;
+    --green:#6F8A5C; --red:#B3261E; --accent:#1E40AF; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--body);
+    font-family:"Montserrat",system-ui,sans-serif; font-size:15px; line-height:1.5; }
+  .wrap { width:min(1040px, calc(100% - 3rem)); margin:0 auto; padding:2rem 0 4rem; }
+  h1.pg { font-family:"Cormorant Garamond",Georgia,serif; font-weight:500; font-size:2rem; color:var(--ink); margin:0 0 .3rem; }
+  .lede { margin:0 0 1.4rem; max-width:70ch; }
+
+  /* load status readout */
+  .status { display:flex; flex-wrap:wrap; gap:.6rem; margin:0 0 1.8rem; }
+  .st { font-size:.82rem; font-weight:600; padding:.5rem .8rem; border:1px solid var(--line); background:#fff; }
+  .st b { font-weight:700; }
+  .st.ok { border-color:var(--green); color:var(--green); }
+  .st.no { border-color:var(--red); color:var(--red); }
+
+  /* logo reference */
+  .logo { background:#fff; border:1px solid var(--line); padding:1.2rem 1.4rem; margin:0 0 1.6rem; }
+  .logo img { height:64px; width:auto; display:block; }
+  .logo span { display:block; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--body); margin-top:.7rem; }
+
+  .cols { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:1.6rem; }
+  @media (max-width:820px){ .cols { grid-template-columns:1fr; } }
+  .card { background:#fff; border:1px solid var(--line); padding:1.2rem 1.3rem; }
+  .card.pick { border:2px solid var(--accent); }
+  .card__h { font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--body); font-weight:600; margin:0 0 1rem; }
+  .card__h em { font-style:normal; color:var(--accent); }
+  .cor { font-family:"Cormorant Garamond",Georgia,serif; }
+  .pla { font-family:"Playfair Display",Georgia,serif; }
+  .geo { font-family:Georgia, "Times New Roman", serif; }
+  .samp { color:var(--ink); }
+  .samp .big { font-size:2.5rem; font-weight:500; line-height:1.05; display:block; margin-bottom:.2rem; }
+  .samp .big.i { font-style:italic; }
+  .samp .row { font-size:1.5rem; margin:.5rem 0 0; }
+  .samp .de { font-size:3.4rem; letter-spacing:.02em; display:block; margin:.4rem 0 .2rem; }
+  .note { font-size:.82rem; color:var(--body); margin-top:1rem; }
+  .foot { font-size:.8rem; color:var(--body); border-top:1px solid var(--line); padding-top:1rem; margin-top:1rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1 class="pg">Font check — does the heading font match the logo?</h1>
+  <p class="lede">The design system specifies <b>Cormorant Garamond</b>. If it isn't loading (e.g. blocked by
+     Brave&rsquo;s shields), the site silently falls back to <b>Georgia</b> — which is likely what you&rsquo;re
+     seeing. Below: the actual load status, the logo for reference, then the same words in each font. Look at the
+     <b>d</b> and <b>e</b> against the logo.</p>
+
+  <div class="status" id="status">
+    <span class="st">Checking fonts…</span>
+  </div>
+
+  <div class="logo">
+    <img src="assets/img/site/logo-dta.png" alt="Decor To Adore logo">
+    <span>The logo — the letterforms to match (see the d, e, o)</span>
+  </div>
+
+  <div class="cols">
+    <div class="card">
+      <p class="card__h">Cormorant Garamond <em>(current spec)</em></p>
+      <div class="samp cor">
+        <span class="de">Decor to Adore</span>
+        <span class="big">Madeline Damask</span>
+        <span class="big i">Request a quote</span>
+        <span class="row">abcdefg &middot; <i>abcdefg</i></span>
+      </div>
+    </div>
+    <div class="card">
+      <p class="card__h">Playfair Display <em>(you asked about)</em></p>
+      <div class="samp pla">
+        <span class="de">Decor to Adore</span>
+        <span class="big">Madeline Damask</span>
+        <span class="big i">Request a quote</span>
+        <span class="row">abcdefg &middot; <i>abcdefg</i></span>
+      </div>
+    </div>
+    <div class="card">
+      <p class="card__h">Georgia <em>(the fallback)</em></p>
+      <div class="samp geo">
+        <span class="de">Decor to Adore</span>
+        <span class="big">Madeline Damask</span>
+        <span class="big i">Request a quote</span>
+        <span class="row">abcdefg &middot; <i>abcdefg</i></span>
+      </div>
+    </div>
+  </div>
+
+  <p class="note"><b>Reading it:</b> if the “Cormorant Garamond” column looks identical to the “Georgia” column,
+     Cormorant is <b>not loading</b> — that&rsquo;s the bug, separate from the Cormorant-vs-Playfair choice.
+     Playfair Display is a higher-contrast serif (thin/thick strokes, more vertical) that reads closer to a classic
+     logotype; Cormorant is softer and more calligraphic, especially in italic.</p>
+
+  <p class="foot">Once we pick, the robust fix is to <b>self-host the chosen font</b> so it always renders —
+     no dependency on Google Fonts or a browser&rsquo;s ad/tracker shields.</p>
+</div>
+
+<script>
+  document.fonts.ready.then(function(){
+    var fonts = [
+      { name:'Cormorant Garamond', spec:'current spec' },
+      { name:'Playfair Display',   spec:'option' },
+      { name:'Georgia',            spec:'fallback — always present' }
+    ];
+    var host = document.getElementById('status'); host.innerHTML = '';
+    fonts.forEach(function(f){
+      var loaded = document.fonts.check('24px "' + f.name + '"');
+      var isWeb = f.name !== 'Georgia';
+      var span = document.createElement('span');
+      span.className = 'st ' + (loaded ? 'ok' : 'no');
+      span.innerHTML = (loaded ? '✓ ' : '✗ ') + '<b>' + f.name + '</b> ' +
+        (isWeb ? (loaded ? 'loaded' : 'NOT loaded — falling back to Georgia') : '(system)');
+      host.appendChild(span);
+    });
+  });
+</script>
+</body>
+</html>

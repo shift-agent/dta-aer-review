@@ -4,14 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Contact &middot; Decor To Adore</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Gilda+Display&family=Montserrat:wght@300;400;500&family=Mr+De+Haviland&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/fonts.css">
 <link rel="stylesheet" href="../assets/base.css">
 <link rel="stylesheet" href="../assets/brand-dta.css">
 <!-- goes in the ss-launch `custom-css` section -->
 <link rel="stylesheet" href="../assets/custom-css.css">
 <link rel="stylesheet" href="../assets/present.css">
+<style>
+  /* ---- Contact page, scoped. Full-image hero H1 to match About. ---- */
+  .hero--page h1.ct__h1 { font-family: var(--shell-font-family-heading);
+    font-style: normal; font-weight: 500;
+    font-size: clamp(2.05rem, 4.1vw, 3.15rem); max-width: none; white-space: nowrap; }
+  @media (max-width: 560px) { .hero--page h1.ct__h1 { white-space: normal; font-size: clamp(2rem, 8vw, 2.6rem); } }
+</style>
 </head>
 <body data-brand="dta" data-page="contact" data-base="../">
 
@@ -19,18 +24,37 @@
   <a href="../aer/contact.html">Alabama Event Rentals &rarr;</a>
 </template>
 
-<header class="chrome" data-ssla="chrome (theme)"><div class="wrap chrome__inner">
+<header class="chrome" data-ssla-section="chrome"><div class="wrap chrome__inner">
   <a class="brandmark" href="index.html"><img src="../assets/img/site/logo-dta.png" alt="Decor To Adore" style="height:50px;width:auto"></a>
-  <nav class="nav"><a href="../shop.html">Shop</a><a href="events.html">Events</a><a href="about.html">About</a><a href="contact.html" class="is-active">Contact</a></nav>
-  <a class="btn quotepill" href="quote.html">Quote<span data-quote-count class="is-empty"></span></a>
+  <nav class="nav"><a href="../shop.html">Inventory</a><a href="about.html">About</a><a href="social.html">Social</a><a href="contact.html" class="is-active">Contact</a></nav>
+  <div class="chrome__icons">
+    <button class="iconlink" type="button" data-headsearch aria-label="Search" title="Search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button>
+    <a class="iconlink" href="#login" aria-label="Log in" title="Log in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg></a>
+    <a class="btn quotepill" href="quote.html">Quote<span data-quote-count class="is-empty"></span></a>
+  </div>
 </div></header>
 
+<div class="headsearch" hidden><div class="wrap">
+  <form class="headsearch__form" onsubmit="location.href='../shop.html#q='+encodeURIComponent(this.q.value||'');return false;">
+    <input name="q" type="search" placeholder="Search the inventory &mdash; a color, a fabric, a piece&hellip;" aria-label="Search the inventory">
+    <button class="btn btn--solid" type="submit">Search</button>
+  </form>
+</div></div>
 
-<section class="pagehead" data-ssla="g-hero"><div class="wrap">
-  <p class="eyebrow">Contact</p>
-  <h1>We'd love to hear from you</h1>
-  <p class="pagehead__lead">Share a few details about your celebration and we'll be in touch to discuss the right combination of colours, materials and pieces.</p>
-</div></section>
+
+<!-- 1 — Photo banner header (matches About & Social) -->
+<section class="hero hero--bg hero--page" data-ssla-section="g-page-hero"
+         style="--proto-page-photo:url(../assets/img/site/stg-reception.jpg)">
+  <div class="hero__media"></div>
+  <div class="wrap hero__body">
+    <p class="eyebrow">Get In Touch</p>
+    <h1 class="ct__h1">Let&rsquo;s plan your event</h1>
+    <p>Share a few details about your celebration and we&rsquo;ll be in touch to discuss the right combination of colors, materials and pieces.</p>
+    <div class="herobtns"><a class="btn" href="quote-request.html">Request a custom quote</a></div>
+  </div>
+</section>
 
 <main class="sec" data-ssla="g-contact"><div class="wrap contact">
   <form class="contact__form" onsubmit="return false">
@@ -45,7 +69,7 @@
       <label class="fld"><span>Venue</span><input type="text" placeholder="Where is it?"></label>
     </div>
     <label class="fld"><span>Guest count</span><input type="number" placeholder="120"></label>
-    <label class="fld"><span>Tell us about the event</span><textarea rows="5" placeholder="Colours, style, pieces you have in mind..."></textarea></label>
+    <label class="fld"><span>Tell us about the event</span><textarea rows="5" placeholder="Colors, style, pieces you have in mind..."></textarea></label>
     <button class="btn" type="submit">Send request</button>
     <p class="sec__note" style="margin-top:.8rem">Prototype &mdash; nothing is sent. On the real site this
        creates a <strong>quote request</strong> for Decor To Adore.</p>
@@ -66,22 +90,28 @@
 
 <section class="strip" data-ssla="g-cta"><div class="wrap strip__inner">
   <div><h2>Planning something lovely?</h2><p>Tell us the date, the venue and the palette. We'll build the look with you.</p></div>
-  <a class="btn" href="plan.html">Plan Your Event</a>
+  <a class="btn" href="quote-request.html">Plan Your Event</a>
 </div></section>
 
-<footer class="foot" data-ssla="chrome (theme)"><div class="wrap">
+<footer class="foot" data-ssla-section="footer-expanded"><div class="wrap">
   <div class="foot__grid">
     <div class="foot__brand">
       <a class="brandmark" href="index.html"><img src="../assets/img/site/logo-dta.png" alt="Decor To Adore" style="height:50px;width:auto"></a>
       <p class="foot__blurb">A family-owned Alabama business dedicated to beautifully styled weddings, events and celebrations &mdash; created with care, and delivered with intention.</p>
+      <div class="foot__social">
+        <a href="https://instagram.com/decor2adore" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://facebook.com/Decor2Adore" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      </div>
     </div>
     <div><h4>Explore</h4><ul>
       <li><a href="index.html">Home</a></li>
-      <li><a href="collections.html">Collections</a></li>
+      <li><a href="../shop.html">Inventory</a></li>
       <li><a href="events.html">Events</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li></ul></div>
-    <div><h4>Collections</h4><ul><li><a href="collections.html?q=Dupioni">Dupioni</a></li><li><a href="collections.html?q=Polyester">Polyester</a></li><li><a href="collections.html?q=Crinkle">Crinkle</a></li><li><a href="collections.html?q=Lamour">Lamour</a></li><li><a href="collections.html?q=Pintuck">Pintuck</a></li></ul></div>
+      <li><a href="contact.html">Contact</a></li><li><a href="quote-request.html">Request a Quote</a></li></ul></div>
+    <div><h4>By Event</h4><ul><li><a href="../shop.html#event=wedding">Weddings</a></li><li><a href="../shop.html#event=corporate">Corporate &amp; Galas</a></li><li><a href="../shop.html#event=celebration">Celebrations</a></li><li><a href="../shop.html#event=shower">Showers</a></li><li><a href="../shop.html#event=fundraiser">Fundraisers</a></li></ul></div>
     <div><h4>Get in touch</h4><ul>
       <li><a href="mailto:info@decortoadore.com">info@decortoadore.com</a></li>
       <li><a href="tel:205.637.8695">205.637.8695</a></li>
@@ -95,7 +125,6 @@
   </div>
   <div class="foot__base">
     <small>&copy; 2026 Decor To Adore. Prototype for design review &mdash; not a live site.</small>
-    <small>67 colourways across 7 fabrics &middot; 1304 size listings</small>
   </div>
 </div></footer>
 
@@ -104,5 +133,16 @@
 <script src="../assets/data/products.js"></script>
 <script src="../assets/js/app.js"></script>
 <script src="../assets/js/present.js?v=2"></script>
+<script>
+  // header search icon reveals the inline search bar
+  document.querySelectorAll('[data-headsearch]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var s = document.querySelector('.headsearch');
+      if (!s) return;
+      s.hidden = !s.hidden;
+      if (!s.hidden) { var i = s.querySelector('input'); if (i) i.focus(); }
+    });
+  });
+</script>
 </body>
 </html>

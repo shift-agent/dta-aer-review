@@ -250,7 +250,6 @@ SHELL = """<!doctype html>
   </div>
   <div class="foot__base">
     <small>&copy; 2026 {name}. Prototype for design review &mdash; not a live site.</small>
-    <small>{ncol} colourways across {nfab} fabrics &middot; {nrow} size listings</small>
   </div>
 </div></footer>
 

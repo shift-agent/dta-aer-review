@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Shop the Collection &middot; Decor To Adore</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Gilda+Display&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/base.css">
 <link rel="stylesheet" href="assets/brand-dta.css">
+<!-- goes in the ss-launch `custom-css` section — carries the chrome icon + headsearch styling -->
+<link rel="stylesheet" href="assets/custom-css.css">
 <link rel="stylesheet" href="assets/present.css">
 <style>
   /* Browse-first shopper. Consumes the brand's --shell-* tokens so it
@@ -187,6 +187,15 @@
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .pairmini__b span { font-size: .68rem; color: var(--shell-text-muted); }
 
+  /* ── pagination (max 20 cards per page) ── */
+  .pager { display: flex; align-items: center; justify-content: center; gap: 1.1rem; margin: 2.2rem 0 0; }
+  .pgbtn { font: inherit; font-size: var(--proto-fs-small); letter-spacing: .04em; cursor: pointer;
+    padding: .55rem 1.3rem; border: 1px solid var(--shell-hairline);
+    background: var(--shell-surface-light); color: var(--shell-text-body); transition: all .15s; }
+  .pgbtn:hover:not([disabled]) { border-color: var(--shell-accent); color: var(--shell-accent); }
+  .pgbtn[disabled] { opacity: .4; cursor: default; }
+  .pgnow { font-size: var(--proto-fs-small); color: var(--shell-text-muted); letter-spacing: .06em; }
+
   @media (max-width: 700px) {
     .ctrlrow { gap: 1rem; } .modelnote { margin-left: 0; flex-basis: 100%; }
   }
@@ -197,16 +206,67 @@
 <template id="present-extras">
   <span>Shop</span>
   <span class="sep">/</span>
+  <a href="dta/product-madeline-kiwi.html">Sample product page &rarr;</a>
+  <span class="sep">/</span>
   <a href="dta/collections.html">Old collections</a>
 </template>
 
-<header class="chrome" data-ssla="chrome (theme)"><div class="wrap chrome__inner">
+<header class="chrome" data-ssla-section="chrome"><div class="wrap chrome__inner">
   <a class="brandmark" href="dta/index.html"><img src="assets/img/site/logo-dta.png" alt="Decor To Adore" style="height:50px;width:auto"></a>
-  <nav class="nav"><a href="shop.html" class="is-active">Shop</a><a href="dta/events.html">Events</a><a href="dta/about.html">About</a><a href="dta/contact.html">Contact</a></nav>
-  <a class="btn quotepill" href="dta/quote.html">Quote<span data-quote-count class="is-empty"></span></a>
+  <nav class="nav"><a href="shop.html" class="is-active">Inventory</a><a href="dta/about.html">About</a><a href="dta/social.html">Social</a><a href="dta/contact.html">Contact</a></nav>
+  <div class="chrome__icons">
+    <button class="iconlink" type="button" data-headsearch aria-label="Search" title="Search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button>
+    <a class="iconlink" href="#login" aria-label="Log in" title="Log in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg></a>
+    <a class="btn quotepill" href="dta/quote.html">Quote<span data-quote-count class="is-empty"></span></a>
+  </div>
 </div></header>
 
+<div class="headsearch" hidden><div class="wrap">
+  <form class="headsearch__form" onsubmit="location.href='shop.html#q='+encodeURIComponent(this.q.value||'');return false;">
+    <input name="q" type="search" placeholder="Search the inventory &mdash; a color, a fabric, a piece&hellip;" aria-label="Search the inventory">
+    <button class="btn btn--solid" type="submit">Search</button>
+  </form>
+</div></div>
+
 <main class="shopwrap"><div data-shop></div></main>
+
+<footer class="foot" data-ssla-section="footer-expanded"><div class="wrap">
+  <div class="foot__grid">
+    <div class="foot__brand">
+      <a class="brandmark" href="dta/index.html"><img src="assets/img/site/logo-dta.png" alt="Decor To Adore" style="height:50px;width:auto"></a>
+      <p class="foot__blurb">A family-owned Alabama business dedicated to beautifully styled weddings, events and celebrations &mdash; created with care, and delivered with intention.</p>
+      <div class="foot__social">
+        <a href="https://instagram.com/decor2adore" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://facebook.com/Decor2Adore" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      </div>
+    </div>
+    <div><h4>Explore</h4><ul>
+      <li><a href="dta/index.html">Home</a></li>
+      <li><a href="shop.html">Inventory</a></li>
+      <li><a href="dta/events.html">Events</a></li>
+      <li><a href="dta/about.html">About</a></li>
+      <li><a href="dta/contact.html">Contact</a></li>
+      <li><a href="dta/quote-request.html">Request a Quote</a></li></ul></div>
+    <div><h4>By Event</h4><ul><li><a href="shop.html#event=wedding">Weddings</a></li><li><a href="shop.html#event=corporate">Corporate &amp; Galas</a></li><li><a href="shop.html#event=celebration">Celebrations</a></li><li><a href="shop.html#event=shower">Showers</a></li><li><a href="shop.html#event=fundraiser">Fundraisers</a></li></ul></div>
+    <div><h4>Get in touch</h4><ul>
+      <li><a href="mailto:info@decortoadore.com">info@decortoadore.com</a></li>
+      <li><a href="tel:205.637.8695">205.637.8695</a></li>
+      <li>Irondale, Alabama</li>
+      <li>By appointment</li></ul>
+      <form class="foot__sub" onsubmit="return false">
+        <input type="email" placeholder="Stay connected" aria-label="Email address">
+        <button class="btn" type="submit">Join</button>
+      </form>
+    </div>
+  </div>
+  <div class="foot__base">
+    <small>&copy; 2026 Decor To Adore. Prototype for design review &mdash; not a live site.</small>
+  </div>
+</div></footer>
 
 <script src="assets/js/connectors.js"></script>
 <script src="assets/data/products.js"></script>
@@ -215,5 +275,16 @@
 <script src="assets/js/pairings.js"></script>
 <script src="assets/js/shop.js"></script>
 <script src="assets/js/present.js?v=2"></script>
+<script>
+  // header search icon reveals the inline search bar
+  document.querySelectorAll('[data-headsearch]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var s = document.querySelector('.headsearch');
+      if (!s) return;
+      s.hidden = !s.hidden;
+      if (!s.hidden) { var i = s.querySelector('input'); if (i) i.focus(); }
+    });
+  });
+</script>
 </body>
 </html>

@@ -246,6 +246,16 @@ body[data-page="events"] .strip {
 }
 body.show-sections [data-ssla] { outline: 1px dashed rgba(127,209,160,.55); outline-offset: -1px; position: relative; }
 body.show-sections [data-ssla]::before { opacity: 1; }
+/* dta pages use the upgraded data-ssla-section attribute (real registry names) */
+[data-ssla-section]::before {
+  content: "SSLA section: " attr(data-ssla-section);
+  position: absolute; z-index: 40; left: 0; top: 0;
+  font: 500 10px/1 ui-monospace, monospace; letter-spacing: .08em;
+  background: #101418; color: #7fd1a0; padding: .35rem .55rem;
+  opacity: 0; transition: opacity .2s; pointer-events: none;
+}
+body.show-sections [data-ssla-section] { outline: 1px dashed rgba(127,209,160,.55); outline-offset: -1px; position: relative; }
+body.show-sections [data-ssla-section]::before { opacity: 1; }
 
 @media (max-width: 720px) {
   .chrome__inner { flex-wrap: wrap; gap: .8rem; min-height: 0; padding-block: .9rem; }

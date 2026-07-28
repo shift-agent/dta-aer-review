@@ -89,3 +89,240 @@
 .hero--page .herobtns .btn:not(.btn--solid):hover,
 .band .herobtns .btn:not(.btn--solid):hover { background: #fff; color: var(--shell-text-dark);
   border-color: #fff; }
+
+/* ---- 5. CIRCLE CATEGORY ROW ("shotgun blast") -----------------
+   Round photographic category thumbnails on the home page. Circles
+   are the ONE deliberate exception to the squared-UI rule — they are
+   framed brand photography, not boxes/cards/buttons. Everything else
+   here stays squared. Uses object-fit so any source crop sits well. */
+/* even 5-across → two balanced rows of 5 (10 categories), not ragged auto-fill */
+/* items STRETCH to fill each equal 1fr cell (do NOT justify-items:center —
+   that shrinks each circle to its label width, so longer labels render
+   bigger circles). .circle centers its own contents instead. */
+.circles { display: grid; grid-template-columns: repeat(6, 1fr);
+  gap: clamp(1rem, 2vw, 1.7rem); }
+.circle__img { max-width: 172px; }
+.circle { display: flex; flex-direction: column; align-items: center; gap: .8rem; text-align: center; }
+.circle__img { display: block; width: 100%; max-width: 210px; aspect-ratio: 1 / 1;
+  border-radius: 50%; overflow: hidden; background: var(--shell-surface-card);
+  border: 1px solid var(--shell-hairline); position: relative;
+  background-size: cover; background-position: center;
+  transition: transform .28s var(--proto-ease), box-shadow .28s var(--proto-ease); }
+.circle:hover .circle__img { transform: translateY(-4px);
+  box-shadow: 0 12px 26px rgba(21,32,43,.16); }
+/* neutral tile fallback: serif monogram on warm ground for categories
+   with no photography yet */
+.circle__img--none { display: grid; place-items: center; }
+.circle__img--none em { font-family: var(--shell-font-family-heading); font-style: normal;
+  font-size: 2.4rem; font-weight: 500; color: var(--shell-text-muted); opacity: .6; }
+.circle__lbl { font-family: var(--shell-font-family-body); font-size: var(--proto-fs-chip);
+  letter-spacing: var(--shell-eyebrow-letter-spacing); text-transform: uppercase;
+  color: var(--shell-text-body); }
+.circle:hover .circle__lbl { color: var(--shell-accent); }
+@media (max-width: 600px) {
+  .circles { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .circle__lbl { font-size: .62rem; }
+}
+
+/* ---- 7. FULL-BLEED IMAGE HERO (staging-match) -----------------
+   Replaces the angled split. Mirrors the current staging home:
+   one full-bleed photograph + a centered translucent card holding an
+   italic serif headline, a subhead and two pill CTAs. The card corner
+   + pill buttons intentionally follow staging (which the client loves),
+   the one place we depart from the squared-UI default — easy to square
+   later if desired. */
+/* Content at the TOP; height trimmed so Elevated Events peeks above the fold.
+   The whole look is driven by these variables so the .hero--dark toggle (second
+   look, for the client presentation) only has to flip the values below. */
+.hero--full {
+  min-height: 78vh; align-items: start;
+  --hov: 251,247,240;                     /* overlay RGB — cream (default light look) */
+  --hh1: #3b4148;                         /* headline main — charcoal */
+  --hem: var(--shell-accent-3);           /* headline accent — green */
+  --hsub: var(--shell-text-dark);         /* subhead */
+  --hb1-bg: var(--shell-accent);   --hb1-fg: #fff;  --hb1-bgh: var(--shell-accent-hover);  /* primary pill */
+  --hb2-bg: var(--shell-accent-3); --hb2-fg: #fff;  --hb2-bgh: #5c7449;                    /* secondary pill (green) */
+}
+.hero--full.hero--dark {                  /* SECOND LOOK — charcoal fade, white copy */
+  --hov: 22,25,29;
+  --hh1: #fff;
+  --hem: var(--shell-accent-2);           /* sage-green accent on dark */
+  --hsub: rgba(255,255,255,.92);
+  --hb1-bg: #fff; --hb1-fg: var(--shell-text-dark); --hb1-bgh: rgba(255,255,255,.88);
+  --hb2-bg: var(--shell-accent-3); --hb2-fg: #fff; --hb2-bgh: #5c7449;
+}
+/* Edge-to-edge overlay from the bottom of the chrome, fading to transparent ~halfway
+   so the photo shows below while the top copy stays readable. No card. */
+.hero--full .hero__media {
+  background-image:
+    linear-gradient(180deg,
+      rgba(var(--hov),.94) 0%,
+      rgba(var(--hov),.90) 12%,
+      rgba(var(--hov),.64) 30%,
+      rgba(var(--hov),.30) 46%,
+      rgba(var(--hov),0)   58%),
+    var(--proto-hero-photo);
+  background-size: cover; background-position: center;
+}
+.hero--full .hero__body { align-self: start; padding-top: clamp(1.6rem, 4vh, 3.4rem); }
+.hero--full .herocard {
+  max-width: 760px; width: 100%; margin: 0 auto; text-align: center;
+  background: none; border: none; border-radius: 0; box-shadow: none; padding: 0;
+}
+.hero--full .herocard h1 {
+  font-family: var(--shell-font-family-heading); font-style: normal; font-weight: 500;
+  color: var(--hh1);
+  margin: 0 0 .32em; letter-spacing: .01em; line-height: 1.1;
+  font-size: clamp(2.1rem, 4vw, 3rem);
+}
+.hero--full .herocard h1 em { font-style: italic; color: var(--hem); }
+.hero--full .herocard p {
+  color: var(--hsub); font-size: var(--proto-fs-lead);
+  margin: 0 0 1.5em; max-width: none;
+}
+.hero--full .herobtns { justify-content: center; margin-top: 0; gap: .8rem; }
+.hero--full .herobtns .btn {
+  border-radius: 999px; padding: .7rem 1.7rem;
+  background: var(--hb1-bg); color: var(--hb1-fg); border: 1px solid var(--hb1-bg);
+}
+.hero--full .herobtns .btn + .btn { background: var(--hb2-bg); color: var(--hb2-fg); border-color: var(--hb2-bg); }
+.hero--full .herobtns .btn:hover { background: var(--hb1-bgh); border-color: var(--hb1-bgh); }
+.hero--full .herobtns .btn + .btn:hover { background: var(--hb2-bgh); border-color: var(--hb2-bgh); }
+@media (max-width: 600px) {
+  .hero--full { min-height: 76vh; }
+  .hero--full .herobtns { flex-direction: column; align-items: stretch; }
+}
+
+/* ---- 8. HOME REFINEMENTS (staging-match pass 2) ---------------
+   Global smoothing (Cormorant's fine serifs read rough without it),
+   event cards with photography, navy styling band, green footer. */
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility; }
+/* ONE eyebrow system for launch: single color + single size everywhere.
+   Body (light backgrounds) = green; dark backgrounds (hero photos, navy band) = white. */
+.eyebrow { color: var(--shell-accent-3); font-weight: 600; letter-spacing: .16em; font-size: .68rem; }
+.hero--page .eyebrow, .blogbanner .eyebrow, .splitsec--navy .eyebrow { color: #fff; }
+/* hero eyebrows (About + Social) unified to one compromise size */
+.hero--page .eyebrow, .blogbanner .eyebrow { font-size: .72rem; }
+
+/* Squared UI: zero the radius token → buttons, photos, cards, inputs all square.
+   Kept round by their own explicit values: home hero pills (999px) + inventory circles (50%). */
+:root { --proto-radius: 0px; }
+
+/* CTA strip background — a faded warm CREAM-TAN (yellow undertone, low saturation). */
+:root { --proto-strip-bg: #EEE6CE; }
+
+/* Events CTA = solid color, NOT a bg-media photo. Overrides the base.css
+   events-page bg-media+tint treatment for the CTA strip only (Glenn 2026-07-28). */
+body[data-page="events"] .strip {
+  background-image: none;
+  background: var(--proto-strip-bg);
+  color: var(--proto-strip-fg);
+}
+
+/* PERVASIVE light background — soft warm paper, used everywhere a warm surface appears
+   (alternating content sections, the Instagram/follow-along band, hovers) so the whole
+   site shares ONE consistent light ground. Glenn 2026-07-27: standardized to #FDF9F5. */
+:root { --shell-surface-warm: #FDF9F5; }
+
+/* footer social icons — left (brand) column. Color-agnostic so they read on the
+   footer whatever its final ground; borders use the footer's own text color. */
+.foot__social { display: flex; gap: .55rem; margin-top: 1.1rem; }
+.foot__social a { display: inline-grid; place-items: center; width: 34px; height: 34px;
+  border: 1px solid currentColor; color: inherit; opacity: .82;
+  transition: opacity .15s var(--proto-ease), background .15s var(--proto-ease); }
+.foot__social a:hover { opacity: 1; background: rgba(255,255,255,.14); }
+.foot__social svg { width: 17px; height: 17px; }
+
+/* CTA headings ("Planning something lovely", "Let's design something beautiful", etc.)
+   in the H-level serif — consistent across ALL CTAs. */
+.strip h2 { font-family: var(--shell-font-family-heading); font-weight: var(--proto-fw-heading);
+  font-size: clamp(1.45rem, 2.45vw, 1.95rem); line-height: var(--proto-lh-heading); letter-spacing: .005em; }
+
+/* About banner hero matches the Social hero height (Social = the standard; a bit more space) */
+.hero--page { --proto-hero-h: clamp(48vh, 52vh, 560px); }
+
+/* the look-switcher control (presentation only) — toggles .hero--dark (see the
+   .hero--full variable block above, which is what actually flips the look). */
+.herolook { position: absolute; z-index: 6; top: 1.1rem; right: 1.4rem;
+  background: rgba(255,255,255,.86); color: var(--shell-text-dark);
+  border: 1px solid var(--shell-hairline); padding: .55rem .95rem;
+  font-family: var(--shell-font-family-body); font-size: .64rem; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase; cursor: pointer; }
+.herolook:hover { background: #fff; }
+.hero--full.hero--dark .herolook { background: rgba(22,25,29,.55); color: #fff; border-color: rgba(255,255,255,.5); }
+
+/* Hero → "Elevated events" was too much space; tighten the first section's top padding */
+[data-home-default] > .sec:first-child { padding-top: clamp(.7rem, 1.8vw, 1.5rem); }
+
+/* three event types — photo on top, like staging.
+   Same lift-on-hover as the category circles (custom theme affordance). */
+.cards3 .c3 { padding: 0; overflow: hidden;
+  transition: transform .28s var(--proto-ease), box-shadow .28s var(--proto-ease); }
+.cards3 .c3:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(21,32,43,.16); }
+.c3__media { aspect-ratio: 3 / 2; background: var(--shell-surface-card); overflow: hidden; }
+.c3__media img { width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform .5s var(--proto-ease); }
+.cards3 .c3:hover .c3__media img { transform: scale(1.04); }
+.c3__body { padding: 1.4rem 1.6rem 1.7rem; }
+.c3__body h3 { margin-top: 0; }
+
+/* tighten the gap between Elevated Events and Find Your Piece (were too far apart) */
+.catrow { padding-top: clamp(1.5rem, 3vw, 2.6rem); }
+.sec:has(+ .catrow) { padding-bottom: clamp(1.5rem, 3vw, 2.6rem); }
+
+/* header — simple-theme menu with search + account icons, then the Quote pill */
+.chrome__icons { display: flex; align-items: center; gap: .85rem; }
+.iconlink { display: inline-grid; place-items: center; width: 34px; height: 34px;
+  color: var(--shell-text-body); background: none; border: none; cursor: pointer; padding: 0; }
+.iconlink svg { width: 19px; height: 19px; }
+.iconlink:hover { color: var(--shell-accent); }
+/* inline header search bar (revealed by the search icon) */
+.headsearch { border-bottom: 1px solid var(--shell-hairline); background: var(--shell-surface-light); }
+.headsearch__form { display: flex; gap: .6rem; padding: .9rem 0; }
+.headsearch__form input { flex: 1; min-width: 0; padding: .7rem .9rem;
+  border: 1px solid var(--shell-hairline); background: var(--shell-bg);
+  font-family: var(--shell-font-family-body); font-size: .95rem; color: var(--shell-text-dark); }
+.headsearch__form input:focus { outline: none; border-color: var(--shell-accent); }
+
+/* Complete Styling Support — navy ground, image on the right */
+.splitsec--navy { background: var(--shell-surface-dark);
+  padding-block: clamp(2.4rem, 4.5vw, 3.6rem); }   /* tighter top/bottom than default */
+.splitsec--navy .split__body h2 { color: #fff; }
+.splitsec--navy .split__body p { color: rgba(255,255,255,.90); }
+.splitsec--navy .eyebrow { color: var(--shell-accent-on-dark); }
+.splitsec--navy .ticks li { color: rgba(255,255,255,.90); }
+.splitsec--navy .ticks li::before { background: var(--shell-accent-2); }
+.splitsec--navy .btn { color: #fff; border-color: rgba(255,255,255,.7); }
+.splitsec--navy .btn:hover { background: #fff; color: var(--shell-accent); border-color: #fff; }
+
+/* footer — simple-theme conformant "inverted" footer on a green ground
+   (green is a placeholder; the treatment is what a ss-theme dark/color
+   footer option should look like: white mark, legible columns, hairline). */
+.foot { background: var(--shell-accent-3); border-top: none; color: rgba(255,255,255,.86); }
+.foot small, .foot__blurb, .foot li, .foot li a { color: rgba(255,255,255,.86); }
+.foot h4 { color: #fff; }
+.foot li a:hover { color: #fff; }
+.foot .brandmark img { filter: brightness(0) invert(1); opacity: .95; }  /* white logo on color */
+.foot__sub input { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.32);
+  color: #fff; }
+.foot__sub input::placeholder { color: rgba(255,255,255,.68); }
+.foot__sub .btn { background: #fff; color: var(--shell-accent-3); border-color: #fff; }
+.foot__sub .btn:hover { background: rgba(255,255,255,.88); }
+.foot__base { border-top: 1px solid rgba(255,255,255,.22); }
+.foot__base small { color: rgba(255,255,255,.72); }
+
+/* ---- 6. MOBILE HERO CLAMP -------------------------------------
+   .hero__body is a grid item (min-width:auto by default), so a child
+   with a desktop max-width wider than the phone viewport (the search
+   row is ~690px) lets the item overflow and pushes the whole page
+   sideways. Below the angle breakpoint, let the item shrink and cap
+   every wide child to the container so hero copy stays on-screen. */
+@media (max-width: 860px) {
+  .hero__body { min-width: 0; }
+  .hero--bg .hero__body > .searchrow,
+  .hero--bg .hero__body > .searchwrap,
+  .hero--bg .hero__body > p:not(.script),
+  .hero--bg .hero__body > .eyebrow,
+  .hero--bg .hero__body > h1 { max-width: 100%; }
+}

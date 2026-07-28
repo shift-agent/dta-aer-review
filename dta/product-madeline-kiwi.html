@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Madeline Damask &middot; Decor To Adore</title>
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="../assets/base.css">
+<link rel="stylesheet" href="../assets/brand-dta.css">
+<!-- goes in the ss-launch `custom-css` section -->
+<link rel="stylesheet" href="../assets/custom-css.css">
+<link rel="stylesheet" href="../assets/present.css">
+<style>
+/* ---- Madeline product page (page-specific; prefers tokens) ---------
+   Emulates the bbjlatavola product model in DTA's own look:
+   gallery + color swatch chips + suggested pairings. Squared UI —
+   color chips are the client-sanctioned swatch exception and stay square. */
+.gallery__cap { display: flex; align-items: center; gap: .5rem;
+  font-family: var(--shell-font-family-body); font-size: var(--proto-fs-small);
+  letter-spacing: .04em; color: var(--shell-text-body); margin: .8rem 0 0; }
+.gallery__cap b { color: var(--shell-text-dark); font-weight: 600; }
+.gallery__cap .tag { font-size: .62rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--shell-text-muted); border: 1px solid var(--shell-hairline);
+  padding: .15rem .45rem; }
+/* color family — swatch chips (bbj-style palette) */
+.detail__label .lbl-n { }
+.cfam { display: flex; flex-wrap: wrap; gap: .55rem; margin: 0 0 1rem; }
+.cfam__chip { width: 40px; height: 40px; padding: 0; cursor: pointer; position: relative;
+  border: 1px solid var(--shell-hairline); background-clip: padding-box;
+  transition: transform .15s var(--proto-ease), box-shadow .15s var(--proto-ease); }
+.cfam__chip:hover { transform: translateY(-2px); }
+.cfam__chip.is-on { box-shadow: 0 0 0 2px var(--shell-bg), 0 0 0 4px var(--shell-accent); }
+.cfam__chip[data-light="1"] { border-color: rgba(21,32,43,.22); }
+.detail__colour { margin: 0 0 .5rem; }
+.swatchnote { font-size: var(--proto-fs-small); color: var(--shell-text-muted);
+  background: var(--shell-surface-warm); border-left: 2px solid var(--shell-accent-2);
+  padding: .6rem .8rem; margin: 0 0 1.6rem; }
+.poptag { display: inline-flex; align-items: center; gap: .4rem; margin: 0 0 1.2rem;
+  font-family: var(--shell-font-family-body); font-size: .64rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--shell-text-muted); }
+.poptag::before { content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--shell-accent-2); }
+.detail__desc { font-size: var(--proto-fs-lead); color: var(--shell-text-body);
+  max-width: 46ch; margin: 0 0 1.4rem; }
+
+/* ---- In-use view switcher — an eye icon in the upper-right of the content
+   area (not the chrome). Click to open a small menu and pick the view. -------- */
+.inuse-host { position: relative; }
+/* tighter: less dead space under the header, and less gap down to the in-use band */
+.inuse-host { padding-top: clamp(1rem, 2.2vw, 1.7rem); }
+.inuse-host .crumbs { margin-bottom: 1rem; }
+body[data-inuse="below"] .inuse-host { padding-bottom: clamp(.8rem, 1.8vw, 1.4rem); }
+.inuse-below.sec { padding-top: clamp(.6rem, 1.5vw, 1.2rem); }
+/* eye icon floats on top no matter the treatment/layout — fixed, clears the sticky
+   header (+ the review deck bar when present); falls back cleanly with no deck */
+.inuse-eye { position: fixed; top: calc(var(--present-h, 0px) + 92px);
+  right: clamp(14px, 2.5vw, 30px); z-index: 45; }
+.inuse-eye__btn { box-shadow: 0 6px 18px rgba(21,32,43,.14); }
+.inuse-eye__btn { display: inline-grid; place-items: center; width: 40px; height: 40px;
+  background: var(--shell-surface-light); border: 1px solid var(--shell-hairline);
+  color: var(--shell-text-body); cursor: pointer;
+  transition: color .15s var(--proto-ease), border-color .15s var(--proto-ease); }
+.inuse-eye__btn:hover, .inuse-eye__btn.is-on { border-color: var(--shell-accent); color: var(--shell-accent); }
+.inuse-eye__btn svg { width: 20px; height: 20px; }
+.inuse-eye__menu { position: absolute; top: calc(100% + .4rem); right: 0; min-width: 230px;
+  background: var(--shell-surface-light); border: 1px solid var(--shell-hairline);
+  box-shadow: 0 14px 32px rgba(21,32,43,.18); padding: .35rem; }
+.inuse-eye__hd { display: block; font-family: var(--shell-font-family-body); font-size: .56rem;
+  letter-spacing: .15em; text-transform: uppercase; color: var(--shell-text-muted); padding: .55rem .65rem .4rem; }
+.inuse-eye__menu button { display: block; width: 100%; text-align: left; font: inherit;
+  font-family: var(--shell-font-family-body); font-size: .82rem; color: var(--shell-text-dark);
+  background: none; border: 0; cursor: pointer; padding: .6rem .65rem; }
+.inuse-eye__menu button:hover { background: var(--shell-surface-warm); }
+.inuse-eye__menu button.is-on { color: var(--shell-accent); font-weight: 600; }
+
+/* Placeholder watermark — these are stand-in photos until the real Madeline
+   Kiwi product images arrive. Overlays "REPLACE WITH CORRECT IMAGE". */
+.gallery__main:not(.is-empty), .inuse-banner, .inuse-below figure { position: relative; }
+.gallery__main:not(.is-empty)::after, .inuse-banner::after, .inuse-below figure::after {
+  content: "Replace with correct image"; position: absolute; inset: 0; z-index: 2;
+  display: grid; place-items: center; text-align: center; padding: 1rem; pointer-events: none;
+  font: 700 clamp(11px, 1.5vw, 15px)/1.35 ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.92);
+  background: rgba(21,32,43,.26); text-shadow: 0 1px 3px rgba(0,0,0,.55); }
+
+/* the big in-use photo has two placements (banner / below); the "View in action"
+   button is ALWAYS available in the buy row so the photo is one click away in any
+   treatment. The eye menu's "button" option = no big photo, rely on the View button. */
+.inuse-banner, .inuse-below { display: none; }
+.btn--inaction { display: inline-flex; }
+body[data-inuse="banner"] .inuse-banner { display: block; }
+body[data-inuse="below"]  .inuse-below  { display: block; }
+
+/* Banner — full-bleed photo across the top, above the product info */
+.inuse-banner { position: relative; margin: 0; }
+.inuse-banner img { width: 100%; height: clamp(220px, 40vh, 440px); object-fit: cover;
+  object-position: center 32%; display: block; }
+.inuse-banner figcaption { position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 2.4rem 1.4rem .9rem; color: #fff;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.62) 100%);
+  font-family: var(--shell-font-family-body); font-size: .74rem; letter-spacing: .06em; }
+.inuse-banner figcaption .wrap { padding: 0; }
+.inuse-banner figcaption b { font-weight: 600; }
+
+/* Below — body-width landscape photo after the buy area */
+.inuse-below { margin: 0; }
+.inuse-below figure { margin: 0; }
+.inuse-below img { width: 100%; height: clamp(260px, 44vh, 460px); object-fit: cover;
+  object-position: center 32%; display: block; border: 1px solid var(--shell-hairline); }
+.inuse-below figcaption { display: flex; align-items: center; gap: .5rem; margin: .8rem 0 0;
+  font-family: var(--shell-font-family-body); font-size: var(--proto-fs-small);
+  letter-spacing: .04em; color: var(--shell-text-body); }
+.inuse-below figcaption b { color: var(--shell-text-dark); font-weight: 600; }
+.inuse-below .tag { font-size: .62rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--shell-text-muted); border: 1px solid var(--shell-hairline); padding: .15rem .45rem; }
+
+/* Button treatment — "View In Action" opens the lightbox */
+.detail__buy .btn--inaction { align-items: center; gap: .45rem; }
+.detail__buy .btn--inaction svg { width: 15px; height: 15px; }
+
+/* Lightbox (pattern reused from plan.html) */
+.lbx { position: fixed; inset: 0; z-index: 300; display: none; place-items: center; padding: 24px; }
+.lbx.is-on { display: grid; }
+.lbx__scrim { position: absolute; inset: 0; background: rgba(16,12,10,.82); }
+.lbx__fig { position: relative; max-width: min(720px, 94vw); max-height: 88vh; }
+.lbx__fig img { max-width: 100%; max-height: 82vh; object-fit: contain; display: block;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+.lbx__cap { color: #fff; font-size: .85rem; text-align: center; margin-top: .8rem; letter-spacing: .02em; }
+.lbx__x { position: absolute; top: -42px; right: 0; background: transparent; border: 0;
+  color: #fff; font-size: 1.8rem; cursor: pointer; line-height: 1; }
+.lbx__nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,.14);
+  border: 0; color: #fff; width: 44px; height: 44px; font-size: 1.4rem; cursor: pointer; }
+.lbx__nav.prev { left: -58px; } .lbx__nav.next { right: -58px; }
+@media (max-width: 680px) { .lbx__nav.prev { left: 4px; } .lbx__nav.next { right: 4px; } }
+</style>
+</head>
+<body data-brand="dta" data-page="product" data-base="../" data-inuse="below">
+
+<template id="present-extras">
+  <a href="../aer/product.html">Alabama Event Rentals &rarr;</a>
+</template>
+
+<header class="chrome" data-ssla-section="chrome"><div class="wrap chrome__inner">
+  <a class="brandmark" href="index.html"><img src="../assets/img/site/logo-dta.png" alt="Decor To Adore" style="height:50px;width:auto"></a>
+  <nav class="nav"><a href="../shop.html" class="is-active">Inventory</a><a href="about.html">About</a><a href="social.html">Social</a><a href="contact.html">Contact</a></nav>
+  <div class="chrome__icons">
+    <button class="iconlink" type="button" data-headsearch aria-label="Search" title="Search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button>
+    <a class="iconlink" href="#login" aria-label="Log in" title="Log in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg></a>
+    <a class="btn quotepill" href="quote.html">Quote<span data-quote-count class="is-empty"></span></a>
+  </div>
+</div></header>
+
+<div class="headsearch" hidden><div class="wrap">
+  <form class="headsearch__form" onsubmit="location.href='../shop.html#q='+encodeURIComponent(this.q.value||'');return false;">
+    <input name="q" type="search" placeholder="Search the inventory &mdash; a color, a fabric, a piece&hellip;" aria-label="Search the inventory">
+    <button class="btn btn--solid" type="submit">Search</button>
+  </form>
+</div></div>
+
+
+<!-- IN-USE, treatment A: full-bleed banner across the top -->
+<figure class="inuse-banner">
+  <img src="../assets/img/inaction/madeline-windwood.jpg" alt="Madeline Damask linens dressed at Windwood Equestrian">
+  <figcaption><div class="wrap">In use &mdash; <b>Windwood Equestrian</b></div></figcaption>
+</figure>
+
+<main class="wrap sec inuse-host" data-ssla-section="g-product">
+  <div class="inuse-eye" data-inuse-switch>
+    <button class="inuse-eye__btn" type="button" data-inuse-eye aria-haspopup="true" aria-expanded="false" aria-label="Change how the in-use photo is shown" title="Change in-use view">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+    </button>
+    <div class="inuse-eye__menu" hidden>
+      <span class="inuse-eye__hd">In-use photo view</span>
+      <button type="button" data-inuse-set="banner">Banner across top</button>
+      <button type="button" data-inuse-set="below">Below the product</button>
+      <button type="button" data-inuse-set="button">&ldquo;View in action&rdquo; button</button>
+    </div>
+  </div>
+  <nav class="crumbs"><a href="../shop.html">Inventory</a> <span>/</span>
+    <a href="../shop.html#q=Specialty">Specialty</a> <span>/</span> <em>Madeline Damask</em></nav>
+
+  <div class="detail">
+    <!-- LEFT: image gallery — labeled studio + in-action shots -->
+    <div class="gallery">
+      <div class="gallery__main" data-main>
+        <img data-main-img src="../assets/img/inaction/madeline-windwood.jpg" alt="Madeline Damask linens dressed at Windwood Equestrian">
+      </div>
+      <p class="gallery__cap"><b data-cap-label>In use — Windwood Equestrian</b>
+        <span class="tag" data-cap-tag>In action</span></p>
+      <div class="gallery__strip">
+        <button class="sw is-on" data-view="0"
+          style="background-image:url(../assets/img/inaction/madeline-windwood.jpg)">
+          <span>In use — Windwood</span></button>
+        <button class="sw" data-view="1"
+          style="background-image:url(../assets/img/inaction/madeline-studio.jpg)">
+          <span>Studio</span></button>
+        <button class="sw sw--none" data-view="2"><em>Swatch<br>coming soon</em></button>
+      </div>
+      <p class="gallery__note">Real Madeline Kiwi photography arrives this week &mdash; the shots above are
+        clearly-labeled stand-ins for this review.</p>
+    </div>
+
+    <!-- RIGHT: product info -->
+    <div class="detail__body">
+      <p class="eyebrow">Specialty Linen</p>
+      <h1>Madeline Damask</h1>
+      <p class="detail__desc">A woven damask whose tone-on-tone scrollwork catches the light as guests move
+        through the room, dressing a table with quiet, heirloom formality. Layer it under simple china and
+        low candlelight and the pattern does the styling for you.</p>
+
+      <p class="detail__label">Color <span class="lbl-n" data-color-count>5</span></p>
+      <div class="cfam" data-cfam>
+        <button class="cfam__chip is-on" data-color="Kiwi"   style="background:#8FB58A"                      title="Kiwi"></button>
+        <button class="cfam__chip" data-color="Ivory"  data-light="1" style="background:#F5EFE7"            title="Ivory"></button>
+        <button class="cfam__chip" data-color="Black"   style="background:#15202B"                           title="Black"></button>
+        <button class="cfam__chip" data-color="Silver" data-light="1" style="background:#C7CCD1"            title="Silver"></button>
+        <button class="cfam__chip" data-color="Blush"  data-light="1" style="background:#E8D3CF"            title="Blush"></button>
+      </div>
+      <p class="detail__colour">Color: <strong data-color-name>Kiwi</strong></p>
+      <p class="swatchnote" data-swatchnote>A per-color swatch photo for <strong data-note-color>Kiwi</strong>
+        is coming soon &mdash; <a href="#" data-swatch>request a swatch</a> and we'll send the actual fabric.</p>
+
+      <div class="detail__buy">
+        <button class="btn btn--solid" data-add>Add to Quote</button>
+        <button class="btn btn--inaction" type="button" data-inaction-open>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+          View in action</button>
+      </div>
+
+      <p class="detail__note" style="margin-top:1.6rem">Held in Current RMS in the
+        <strong>Madeline Damask</strong> color family &mdash; Kiwi, Ivory, Black, Silver and Blush.
+        Sizes are managed in inventory and confirmed with your quote.</p>
+    </div>
+  </div>
+</main>
+
+<!-- IN-USE, treatment B: body-width landscape photo below the options -->
+<section class="inuse-below sec" data-ssla-section="g-inuse"><div class="wrap">
+  <figure>
+    <img src="../assets/img/inaction/madeline-windwood-2.jpg" alt="Madeline Damask linens styled on-site at Windwood Equestrian">
+    <figcaption><b>In use &mdash; Windwood Equestrian</b>
+      <span class="tag">In action</span></figcaption>
+  </figure>
+</div></section>
+
+<!-- Completes the look — suggested pairings (bbj-style) -->
+<section class="sec sec--white" data-ssla-section="g-cards"><div class="wrap">
+  <div class="sec__head"><div>
+    <p class="eyebrow">Suggested Pairings</p>
+    <h2>Completes the look</h2>
+  </div><a class="btn" href="../shop.html#q=Specialty">Browse Specialty</a></div>
+  <div class="grid">
+    <article class="card"><a class="card__link" href="../shop.html#q=Lattice%20Laurel">
+      <div class="card__media"><img src="../assets/img/cat/4120.jpg" alt="Lattice Laurel napkins in green" loading="lazy"></div>
+      <div class="card__body"><h3>Lattice Laurel Napkins &mdash; Green</h3>
+        <p class="card__meta">Napkins</p></div></a></article>
+    <article class="card"><a class="card__link" href="../shop.html#q=Charger">
+      <div class="card__media"><img src="../assets/img/cat/1734.jpg" alt="Brushed silver charger plate" loading="lazy"></div>
+      <div class="card__body"><h3>Brushed Silver Charger</h3>
+        <p class="card__meta">Chargers</p></div></a></article>
+    <article class="card"><a class="card__link" href="../shop.html#q=Runner">
+      <div class="card__media"><img src="../assets/img/cat/3241.jpg" alt="French Toile runner in light blue" loading="lazy"></div>
+      <div class="card__body"><h3>French Toile Runner &mdash; Light Blue</h3>
+        <p class="card__meta">Runners</p></div></a></article>
+    <article class="card"><a class="card__link" href="../shop.html#q=Sash">
+      <div class="card__media"><img src="../assets/img/cat/1550.jpg" alt="Lamour satin sash in rose petal" loading="lazy"></div>
+      <div class="card__body"><h3>Lamour Satin Sash &mdash; Rose Petal</h3>
+        <p class="card__meta">Sashes</p></div></a></article>
+  </div>
+</div></section>
+
+
+<section class="strip" data-ssla-section="g-cta"><div class="wrap strip__inner">
+  <div><h2>Planning something lovely?</h2><p>Tell us the date, the venue and the palette. We'll build the look with you.</p></div>
+  <a class="btn" href="quote-request.html">Plan Your Event</a>
+</div></section>
+
+<footer class="foot" data-ssla-section="footer-expanded"><div class="wrap">
+  <div class="foot__grid">
+    <div class="foot__brand">
+      <a class="brandmark" href="index.html"><img src="../assets/img/site/logo-dta.png" alt="Decor To Adore" style="height:50px;width:auto"></a>
+      <p class="foot__blurb">A family-owned Alabama business dedicated to beautifully styled weddings, events and celebrations &mdash; created with care, and delivered with intention.</p>
+      <div class="foot__social">
+        <a href="https://instagram.com/decor2adore" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://facebook.com/Decor2Adore" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      </div>
+    </div>
+    <div><h4>Explore</h4><ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="../shop.html">Inventory</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li><li><a href="quote-request.html">Request a Quote</a></li></ul></div>
+    <div><h4>By Event</h4><ul><li><a href="../shop.html#event=wedding">Weddings</a></li><li><a href="../shop.html#event=corporate">Corporate &amp; Galas</a></li><li><a href="../shop.html#event=celebration">Celebrations</a></li><li><a href="../shop.html#event=shower">Showers</a></li><li><a href="../shop.html#event=fundraiser">Fundraisers</a></li></ul></div>
+    <div><h4>Get in touch</h4><ul>
+      <li><a href="mailto:info@decortoadore.com">info@decortoadore.com</a></li>
+      <li><a href="tel:205.637.8695">205.637.8695</a></li>
+      <li>Irondale, Alabama</li>
+      <li>By appointment</li></ul>
+      <form class="foot__sub" onsubmit="return false">
+        <input type="email" placeholder="Stay connected" aria-label="Email address">
+        <button class="btn" type="submit">Join</button>
+      </form>
+    </div>
+  </div>
+  <div class="foot__base">
+    <small>&copy; 2026 Decor To Adore. Prototype for design review &mdash; not a live site.</small>
+  </div>
+</div></footer>
+
+<!-- In-use lightbox (treatment C) -->
+<div class="lbx" data-lbx>
+  <div class="lbx__scrim" data-lbxclose></div>
+  <div class="lbx__fig">
+    <button class="lbx__x" data-lbxclose aria-label="Close">&times;</button>
+    <button class="lbx__nav prev" data-lbxprev aria-label="Previous">&#8249;</button>
+    <button class="lbx__nav next" data-lbxnext aria-label="Next">&#8250;</button>
+    <img data-lbximg alt="">
+    <p class="lbx__cap" data-lbxcap></p>
+  </div>
+</div>
+
+<script src="../assets/data/fabrics.js"></script>
+<script src="../assets/data/catalog.js"></script>
+<script src="../assets/data/products.js"></script>
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/present.js?v=2"></script>
+
+<!-- Page-specific interactions: gallery view switch, color-family swatch
+     chips, and a quote-basket write that reuses the storefront's own key so
+     the header Quote pill updates. Deliberately tiny — the showcase product
+     is a static mock, not the app.js data-driven renderer. -->
+<script>
+(function () {
+  var VIEWS = [
+    { img: '../assets/img/inaction/madeline-windwood.jpg', label: 'In use — Windwood Equestrian', tag: 'In action', empty: false },
+    { img: '../assets/img/inaction/madeline-studio.jpg',   label: 'Studio',                        tag: 'Studio',    empty: false },
+    { img: null,                                            label: 'Swatch — coming soon',          tag: 'Swatch',    empty: true }
+  ];
+  var mainBox = document.querySelector('[data-main]');
+  var mainImg = document.querySelector('[data-main-img]');
+  var capLbl  = document.querySelector('[data-cap-label]');
+  var capTag  = document.querySelector('[data-cap-tag]');
+  var color   = 'Kiwi';
+
+  function setView(i) {
+    var v = VIEWS[i];
+    document.querySelectorAll('.gallery__strip .sw').forEach(function (b, k) {
+      b.classList.toggle('is-on', k === i);
+    });
+    if (v.empty) {
+      mainBox.classList.add('is-empty');
+      mainImg.style.display = 'none';
+      if (!mainBox.querySelector('span')) {
+        var s = document.createElement('span'); s.textContent = color;
+        mainBox.appendChild(s);
+      } else { mainBox.querySelector('span').textContent = color; }
+      capLbl.textContent = color + ' swatch — photo coming soon';
+    } else {
+      mainBox.classList.remove('is-empty');
+      var extra = mainBox.querySelector('span'); if (extra) extra.remove();
+      mainImg.style.display = '';
+      mainImg.src = v.img;
+      capLbl.textContent = v.label;
+    }
+    capTag.textContent = v.tag;
+  }
+  document.querySelectorAll('.gallery__strip .sw').forEach(function (b) {
+    b.addEventListener('click', function () { setView(+b.dataset.view); });
+  });
+
+  // color family chips
+  var nameEl = document.querySelector('[data-color-name]');
+  var noteColor = document.querySelector('[data-note-color]');
+  document.querySelectorAll('[data-cfam] .cfam__chip').forEach(function (c) {
+    c.addEventListener('click', function () {
+      document.querySelectorAll('[data-cfam] .cfam__chip').forEach(function (x) { x.classList.remove('is-on'); });
+      c.classList.add('is-on');
+      color = c.dataset.color;
+      nameEl.textContent = color;
+      noteColor.textContent = color;
+      // if the swatch-placeholder view is showing, keep its label in sync
+      var onEmpty = document.querySelector('.gallery__strip .sw[data-view="2"]').classList.contains('is-on');
+      if (onEmpty) setView(2);
+    });
+  });
+
+  // quote basket — reuse the storefront key so the header pill updates
+  var KEY = 'ssproto_quote_dta';
+  function read() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } }
+  function paintCount() {
+    var n = read().reduce(function (s, x) { return s + (x.qty || 0); }, 0);
+    document.querySelectorAll('[data-quote-count]').forEach(function (el) {
+      el.textContent = n ? String(n) : '';
+      el.classList.toggle('is-empty', !n);
+    });
+  }
+  function toast(msg) {
+    var t = document.querySelector('.toast');
+    if (!t) { t = document.createElement('div'); t.className = 'toast'; document.body.appendChild(t); }
+    t.textContent = msg; t.classList.add('is-on');
+    clearTimeout(t._t); t._t = setTimeout(function () { t.classList.remove('is-on'); }, 2000);
+  }
+  document.querySelector('[data-add]').addEventListener('click', function () {
+    var b = read();
+    var hit = b.find(function (x) { return x.fabric === 'Madeline Damask' && x.colour === color; });
+    if (hit) hit.qty += 1; else b.push({ fabric: 'Madeline Damask', colour: color, size: '—', qty: 1 });
+    localStorage.setItem(KEY, JSON.stringify(b));
+    paintCount();
+    toast('Added Madeline Damask — ' + color + ' to your quote');
+  });
+  document.querySelector('[data-swatch]').addEventListener('click', function (e) {
+    e.preventDefault();
+    toast('Swatch request noted for Madeline Damask — ' + color + ' (prototype)');
+  });
+
+  // --- In-use view switcher: eye icon opens a menu; pick a view → body[data-inuse] ---
+  var segBtns = document.querySelectorAll('[data-inuse-switch] [data-inuse-set]');
+  var eyeBtn  = document.querySelector('[data-inuse-eye]');
+  var eyeMenu = document.querySelector('.inuse-eye__menu');
+  function paintSwitch() {
+    var mode = document.body.getAttribute('data-inuse');
+    segBtns.forEach(function (b) { b.classList.toggle('is-on', b.dataset.inuseSet === mode); });
+  }
+  function closeMenu() {
+    if (!eyeMenu) return;
+    eyeMenu.hidden = true;
+    if (eyeBtn) { eyeBtn.classList.remove('is-on'); eyeBtn.setAttribute('aria-expanded', 'false'); }
+  }
+  if (eyeBtn && eyeMenu) {
+    eyeBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = eyeMenu.hidden;
+      eyeMenu.hidden = !open;
+      eyeBtn.classList.toggle('is-on', open);
+      eyeBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', function (e) {
+      if (!eyeMenu.hidden && !eyeMenu.contains(e.target) && !eyeBtn.contains(e.target)) closeMenu();
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+  }
+  segBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.body.setAttribute('data-inuse', b.dataset.inuseSet);
+      paintSwitch();
+      closeMenu();
+    });
+  });
+  paintSwitch();
+
+  // --- In-use lightbox (treatment C) ---
+  var LB = [
+    { img: '../assets/img/inaction/madeline-windwood.jpg',   cap: 'In use — Windwood Equestrian' },
+    { img: '../assets/img/inaction/madeline-windwood-2.jpg', cap: 'In use — Windwood Equestrian' },
+    { img: '../assets/img/inaction/madeline-studio.jpg',     cap: 'Studio detail — Madeline Damask' }
+  ];
+  var lbx = document.querySelector('[data-lbx]');
+  var lbImg = lbx.querySelector('[data-lbximg]'), lbCap = lbx.querySelector('[data-lbxcap]'), lbCur = 0;
+  function lbShow(i) {
+    lbCur = (i + LB.length) % LB.length;
+    lbImg.src = LB[lbCur].img; lbImg.alt = LB[lbCur].cap; lbCap.textContent = LB[lbCur].cap;
+    lbx.classList.add('is-on');
+  }
+  var openBtn = document.querySelector('[data-inaction-open]');
+  if (openBtn) openBtn.addEventListener('click', function () { lbShow(0); });
+  lbx.querySelectorAll('[data-lbxclose]').forEach(function (b) {
+    b.addEventListener('click', function () { lbx.classList.remove('is-on'); });
+  });
+  lbx.querySelector('[data-lbxprev]').addEventListener('click', function () { lbShow(lbCur - 1); });
+  lbx.querySelector('[data-lbxnext]').addEventListener('click', function () { lbShow(lbCur + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (!lbx.classList.contains('is-on')) return;
+    if (e.key === 'Escape') lbx.classList.remove('is-on');
+    if (e.key === 'ArrowLeft') lbShow(lbCur - 1);
+    if (e.key === 'ArrowRight') lbShow(lbCur + 1);
+  });
+})();
+</script>
+<script>
+  // header search icon reveals the inline search bar
+  document.querySelectorAll('[data-headsearch]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var s = document.querySelector('.headsearch');
+      if (!s) return;
+      s.hidden = !s.hidden;
+      if (!s.hidden) { var i = s.querySelector('input'); if (i) i.focus(); }
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Request a Quote &middot; Decor To Adore</title>
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="../assets/base.css">
+<link rel="stylesheet" href="../assets/brand-dta.css">
+<!-- goes in the ss-launch `custom-css` section -->
+<link rel="stylesheet" href="../assets/custom-css.css">
+<link rel="stylesheet" href="../assets/present.css">
+<style>
+  /* Request a Quote — multi-step intake, built on the Events-page design.
+     Reuses the plan.html intake vocabulary (.fld, .f2, .f3, .needgrid) and adds
+     a stepper + review panel. Every field group is annotated with the Current
+     RMS key it writes to (see dta/docs/CRMS-QUOTE-INTAKE-DATA-KEY-MAP.md), so the
+     form doubles as the client-facing explanation of the data map. */
+
+  /* full-image hero to match About / Contact / the other interior pages */
+  .hero--page h1.qr__h1 { font-family: var(--shell-font-family-heading);
+    font-style: normal; font-weight: 500;
+    font-size: clamp(2.05rem, 4.1vw, 3.15rem); max-width: none; white-space: nowrap; }
+  @media (max-width: 560px) { .hero--page h1.qr__h1 { white-space: normal; font-size: clamp(2rem, 8vw, 2.6rem); } }
+
+  /* layout: form + reassurance rail (matches plan.html .intake) */
+  .qr { display: grid; grid-template-columns: 1.6fr 1fr; gap: 2.6rem; align-items: start; }
+  @media (max-width: 900px) { .qr { grid-template-columns: 1fr; } }
+  .qr__form { background: var(--shell-surface-light); border: 1px solid var(--shell-hairline); padding: 1.8rem 1.9rem 2rem; }
+
+  /* stepper */
+  .stepper { display: flex; gap: .5rem; margin: 0 0 1.7rem; padding: 0; list-style: none; }
+  .stepper li { flex: 1 1 0; font-size: var(--proto-fs-chip, .7rem); letter-spacing: .05em; text-transform: uppercase;
+    color: var(--shell-text-body); padding: .55rem .3rem .6rem; border-top: 3px solid var(--shell-hairline);
+    text-align: center; opacity: .55; transition: all .2s; }
+  .stepper li .n { display: block; font-family: var(--shell-font-family-heading); font-size: 1.15rem; opacity: .8;
+    letter-spacing: 0; text-transform: none; }
+  .stepper li.is-on { opacity: 1; border-top-color: var(--shell-accent); color: var(--shell-text-dark); }
+  .stepper li.is-done { opacity: 1; border-top-color: var(--shell-accent-3); color: var(--shell-text-dark); }
+  .stepper li.is-done .n::before { content: "\2713\00a0"; color: var(--shell-accent-3); }
+
+  .qstep { display: none; }
+  .qstep.is-on { display: block; animation: qfade .25s ease; }
+  @keyframes qfade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .qstep > h2 { font-family: var(--shell-font-family-heading); font-weight: var(--proto-fw-heading);
+    font-size: 1.6rem; color: var(--shell-text-dark); margin: 0 0 .2rem; }
+  .qstep__lead { font-size: var(--proto-fs-small); color: var(--shell-text-body); margin: 0 0 1.3rem; }
+
+  /* fields (shared vocabulary with plan.html) */
+  .fld { display: block; margin: 0 0 1rem; }
+  .fld > span { display: block; font-size: var(--proto-fs-small); color: var(--shell-text-dark);
+    margin: 0 0 .35rem; font-weight: 500; }
+  .fld select, .fld textarea, .fld input { width: 100%; padding: .7rem .8rem; border: 1px solid var(--shell-hairline);
+    background: var(--shell-surface-card); color: var(--shell-text-dark); font: inherit; }
+  .fld select:focus, .fld textarea:focus, .fld input:focus { outline: none; border-color: var(--shell-accent); }
+  .f2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
+  .f3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0 1rem; }
+  @media (max-width: 620px) { .f2, .f3 { grid-template-columns: 1fr; } }
+
+  /* CRMS key annotation under a field group */
+  .maps { font-size: .64rem; letter-spacing: .03em; color: var(--shell-text-muted, #8a857c);
+    margin: -.4rem 0 1.1rem; display: flex; align-items: center; gap: .4rem; }
+  .maps code { font-family: ui-monospace, Menlo, monospace; font-size: .64rem; background: var(--shell-surface-warm);
+    padding: .08rem .35rem; color: var(--shell-text-body); }
+  .maps b { color: var(--shell-accent-3); font-weight: 600; }
+
+  /* product picker — checkbox + qty per requested item, each carries an item_id */
+  .pgrid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem .9rem; margin: .3rem 0 .4rem; }
+  @media (max-width: 620px) { .pgrid { grid-template-columns: 1fr; } }
+  .pitem { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: .5rem;
+    border: 1px solid var(--shell-hairline); background: var(--shell-surface-card); padding: .55rem .7rem; }
+  .pitem.is-on { border-color: var(--shell-accent); background: var(--shell-surface-warm); }
+  .pitem label { display: flex; align-items: center; gap: .55rem; font-size: var(--proto-fs-small);
+    color: var(--shell-text-body); cursor: pointer; }
+  .pitem input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--shell-accent); flex: none; }
+  .pitem .qty { width: 62px; padding: .35rem .4rem; border: 1px solid var(--shell-hairline);
+    background: var(--shell-surface-light); color: var(--shell-text-dark); font: inherit; text-align: center; }
+  .pitem .qty[hidden] { visibility: hidden; }
+  /* provisional-mapping flag */
+  .pid { font-size: .58rem; letter-spacing: .03em; margin-left: .1rem; padding: .05rem .3rem;
+    font-family: ui-monospace, Menlo, monospace; }
+  .pid--ok { color: var(--shell-accent-3); }
+  .pid--prov { color: #b07a1e; cursor: help; }
+  .provnote { font-size: .68rem; color: var(--shell-text-body); background: var(--shell-surface-warm);
+    border-left: 3px solid #d9a84a; padding: .6rem .8rem; margin: .6rem 0 0; }
+  .provnote b { color: #9a6c14; }
+
+  /* nav */
+  .qnav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1.6rem;
+    border-top: 1px solid var(--shell-hairline); padding-top: 1.3rem; }
+  .qnav .spacer { flex: 1; }
+
+  /* review panel */
+  .review { display: grid; gap: 1rem; }
+  .rcard { border: 1px solid var(--shell-hairline); background: var(--shell-surface-card); padding: 1rem 1.1rem; }
+  .rcard h3 { font-family: var(--shell-font-family-heading); font-weight: var(--proto-fw-heading);
+    font-size: 1.15rem; margin: 0 0 .5rem; color: var(--shell-text-dark); }
+  .rcard h3 .rkey { font-family: ui-monospace, Menlo, monospace; font-size: .62rem; color: var(--shell-text-body);
+    letter-spacing: .02em; margin-left: .5rem; font-weight: 400; }
+  .rrow { display: flex; justify-content: space-between; gap: 1rem; font-size: var(--proto-fs-small);
+    padding: .3rem 0; border-bottom: 1px dashed var(--shell-hairline); }
+  .rrow:last-child { border-bottom: 0; }
+  .rrow .k { color: var(--shell-text-body); }
+  .rrow .v { color: var(--shell-text-dark); text-align: right; font-weight: 500; }
+  .rrow .v em { font-style: normal; color: var(--shell-text-muted, #8a857c); font-weight: 400; }
+  .payload { font-family: ui-monospace, Menlo, monospace; font-size: .68rem; line-height: 1.5;
+    background: #2b2f34; color: #e8e4da; padding: 1rem 1.1rem; overflow-x: auto; white-space: pre;
+    border: 1px solid var(--shell-hairline); }
+  .payload .c { color: #8fb98f; }         /* comment / confirmed */
+  .payload .p { color: #e0b365; }         /* provisional */
+
+  /* reassurance rail */
+  .qr__side h3 { font-family: var(--shell-font-family-heading); font-weight: var(--proto-fw-heading);
+    font-size: 1.3rem; color: var(--shell-text-dark); margin: 0 0 .6rem; }
+  .qr__side .steps { list-style: none; margin: 0 0 1.6rem; padding: 0; counter-reset: s; }
+  .qr__side .steps li { position: relative; padding: 0 0 1rem 2.4rem; font-size: var(--proto-fs-small); color: var(--shell-text-body); }
+  .qr__side .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 0; top: -2px;
+    width: 26px; height: 26px; display: grid; place-items: center; background: var(--shell-accent);
+    color: var(--shell-text-inverted); font-size: .8rem; font-weight: 600; }
+  .qr__card { border: 1px solid var(--shell-hairline); background: var(--shell-surface-light); padding: 1.1rem 1.2rem; margin-bottom: 1rem; }
+  .qr__card p { margin: 0 0 .6rem; font-size: var(--proto-fs-small); color: var(--shell-text-body); }
+  .qr__card p:last-child { margin-bottom: 0; }
+  .qr__card a { color: var(--shell-accent); }
+  .qr__card--rms { border-left: 3px solid var(--shell-accent-3); }
+
+  /* success */
+  .qdone { display: none; text-align: center; padding: 2rem 1rem 1rem; }
+  .qdone.is-on { display: block; }
+  .qdone .tick { width: 60px; height: 60px; margin: 0 auto 1rem; border-radius: 50%;
+    background: var(--shell-accent-3); color: #fff; display: grid; place-items: center; font-size: 1.8rem; }
+  /* keep the required asterisk inline (base.css `.fld span{display:block}` otherwise drops it to its own line) */
+  .fld .req { display: inline; color: var(--shell-accent); }
+</style>
+</head>
+<body data-brand="dta" data-page="quote-request" data-base="../">
+
+<template id="present-extras">
+  <a href="../aer/quote.html">Alabama Event Rentals &rarr;</a>
+</template>
+
+<header class="chrome" data-ssla-section="chrome"><div class="wrap chrome__inner">
+  <a class="brandmark" href="index.html"><img src="../assets/img/site/logo-dta.png" alt="Decor To Adore" style="height:50px;width:auto"></a>
+  <nav class="nav"><a href="../shop.html">Inventory</a><a href="about.html">About</a><a href="social.html">Social</a><a href="contact.html">Contact</a></nav>
+  <div class="chrome__icons">
+    <button class="iconlink" type="button" data-headsearch aria-label="Search" title="Search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button>
+    <a class="iconlink" href="#login" aria-label="Log in" title="Log in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg></a>
+    <a class="btn quotepill" href="quote.html">Quote<span data-quote-count class="is-empty"></span></a>
+  </div>
+</div></header>
+
+<div class="headsearch" hidden><div class="wrap">
+  <form class="headsearch__form" onsubmit="location.href='../shop.html#q='+encodeURIComponent(this.q.value||'');return false;">
+    <input name="q" type="search" placeholder="Search the inventory &mdash; a color, a fabric, a piece&hellip;" aria-label="Search the inventory">
+    <button class="btn btn--solid" type="submit">Search</button>
+  </form>
+</div></div>
+
+<!-- full-image hero banner — matches About / Social / Contact (event photo) -->
+<section class="hero hero--bg hero--page" data-ssla-section="g-page-hero"
+         style="--proto-page-photo:url(../assets/img/site/stg-reception2.jpg)">
+  <div class="hero__media"></div>
+  <div class="wrap hero__body">
+    <p class="eyebrow">Start Your Event</p>
+    <h1 class="qr__h1">Request a quote</h1>
+    <p>Tell us about your celebration and the pieces you have in mind &mdash; your request lands in our system as a real, itemized quote, ready for our team to price.</p>
+  </div>
+</section>
+
+<main class="sec" data-ssla="g-form"><div class="wrap">
+  <div class="qr">
+    <!-- ===== FORM ===== -->
+    <form class="qr__form" data-qform onsubmit="return false" novalidate>
+      <ol class="stepper" data-stepper>
+        <li class="is-on"><span class="n">1</span>Your event</li>
+        <li><span class="n">2</span>What you need</li>
+        <li><span class="n">3</span>About you</li>
+        <li><span class="n">4</span>Review</li>
+      </ol>
+
+      <!-- STEP 1 — event details → Opportunity -->
+      <section class="qstep is-on" data-step="0">
+        <h2>Your event</h2>
+        <p class="qstep__lead">The essentials so we can check availability and build the right look.</p>
+
+        <label class="fld"><span>What can we help you with? <span class="req">*</span></span>
+          <select data-f="event_type">
+            <option value="">Choose&hellip;</option>
+            <option>Wedding</option>
+            <option>Rehearsal Dinner</option>
+            <option>Private Party</option>
+            <option>Fundraiser</option>
+          </select></label>
+        <p class="maps">writes to <code>opportunity.custom_fields.event_type</code> <b>&#10003; field exists</b></p>
+
+        <div class="f2">
+          <label class="fld"><span>Event date <span class="req">*</span></span><input type="date" data-f="event_date"></label>
+          <label class="fld"><span>Guest count</span><input type="number" min="1" placeholder="120" data-f="guests"></label>
+        </div>
+        <div class="f2">
+          <label class="fld"><span>Start time</span><input type="time" data-f="start_time"></label>
+          <label class="fld"><span>End time</span><input type="time" data-f="end_time"></label>
+        </div>
+        <p class="maps">event date + times &rarr; <code>opportunity.starts_at</code> / <code>opportunity.ends_at</code> (ISO 8601)</p>
+
+        <div class="f2">
+          <label class="fld"><span>Venue name</span><input type="text" placeholder="Ballroom, barn, backyard&hellip;" data-f="venue_name"></label>
+          <label class="fld"><span>Venue city</span><input type="text" placeholder="Birmingham, AL" data-f="venue_city"></label>
+        </div>
+        <p class="maps">venue &rarr; <code>opportunity.venue_id</code> (lookup / create) &middot; state from <code>primary_address.county</code></p>
+      </section>
+
+      <!-- STEP 2 — requested products → opportunity_items -->
+      <section class="qstep" data-step="1">
+        <h2>What you need</h2>
+        <p class="qstep__lead">Pick the pieces you're considering and roughly how many. Each becomes a real, priced line item on your quote &mdash; nothing is committed.</p>
+
+        <div class="pgrid" data-pgrid><!-- product rows injected by JS --></div>
+
+        <p class="provnote"><b>Provisional mapping &mdash; client to confirm.</b> Each option is wired to a Current&nbsp;RMS product / product-group id. <b>Table Linens</b> below is shown mapped to the one id we verified live (<code>2892 &middot; Madeline Damask Kiwi</code>). The remaining categories carry placeholder ids flagged <span class="pid pid--prov">?</span> until Decor&nbsp;To&nbsp;Adore confirms the product-id&nbsp;&harr;&nbsp;category map for all 14 options.</p>
+
+        <label class="fld" style="margin-top:1.2rem"><span>Color palette &amp; style</span><input type="text" placeholder="Blush &amp; gold, garden romantic&hellip;" data-f="palette"></label>
+        <p class="maps">appended to <code>opportunity.description</code> (free text is fine here)</p>
+      </section>
+
+      <!-- STEP 3 — contact → Member -->
+      <section class="qstep" data-step="2">
+        <h2>About you</h2>
+        <p class="qstep__lead">So we can send your tailored recommendations and pricing.</p>
+
+        <div class="f2">
+          <label class="fld"><span>First name <span class="req">*</span></span><input type="text" data-f="first_name"></label>
+          <label class="fld"><span>Last name <span class="req">*</span></span><input type="text" data-f="last_name"></label>
+        </div>
+        <div class="f2">
+          <label class="fld"><span>Email <span class="req">*</span></span><input type="email" placeholder="you@example.com" data-f="email"></label>
+          <label class="fld"><span>Confirm email</span><input type="email" placeholder="you@example.com" data-f="email2"></label>
+        </div>
+        <label class="fld"><span>Phone</span><input type="tel" placeholder="(205) 555-0100" data-f="phone"></label>
+        <p class="maps">name &rarr; <code>member.name</code> &middot; email &rarr; <code>member.emails[]</code> &middot; phone &rarr; <code>member.phones[]</code> <b>&#10003; de-duped by email</b></p>
+
+        <label class="fld"><span>Tell us more about your event</span><textarea rows="4" placeholder="Timeline, must-haves, inspiration links&hellip;" data-f="notes"></textarea></label>
+        <label class="fld"><span>How did you hear about us?</span>
+          <select data-f="heard">
+            <option value="">Choose&hellip;</option>
+            <option>Google search</option>
+            <option>Instagram / Facebook</option>
+            <option>A friend or family member</option>
+            <option>A venue or planner</option>
+            <option>We're a returning client</option>
+            <option>Other</option>
+          </select></label>
+        <p class="maps">notes &rarr; <code>opportunity.description</code> &middot; how-heard &rarr; <code>opportunity.tag_list</code></p>
+      </section>
+
+      <!-- STEP 4 — review -->
+      <section class="qstep" data-step="3">
+        <h2>Review your request</h2>
+        <p class="qstep__lead">Here's exactly what lands in Current&nbsp;RMS &mdash; a contact, an itemized opportunity, and one linked line item per piece. Structured, not a block of text.</p>
+        <div class="review" data-review><!-- summary + payload injected by JS --></div>
+      </section>
+
+      <!-- nav -->
+      <div class="qnav">
+        <button class="btn" type="button" data-back hidden>&larr; Back</button>
+        <span class="spacer"></span>
+        <button class="btn btn--solid" type="button" data-next>Continue &rarr;</button>
+        <button class="btn btn--solid" type="button" data-submit hidden>Submit request</button>
+      </div>
+
+      <!-- success -->
+      <div class="qdone" data-done>
+        <div class="tick">&#10003;</div>
+        <h2 style="font-family:var(--shell-font-family-heading);font-weight:var(--proto-fw-heading);margin:0 0 .4rem">Request received</h2>
+        <p class="sec__note">Prototype &mdash; nothing was sent. On the live site this creates the Current&nbsp;RMS opportunity shown above and routes it to your store. We'd follow up within one business day.</p>
+        <p style="margin-top:1rem"><a class="btn" href="index.html">Back to home</a> <a class="btn btn--solid" href="../shop.html">Browse inventory</a></p>
+      </div>
+    </form>
+
+    <!-- ===== REASSURANCE RAIL ===== -->
+    <aside class="qr__side">
+      <h3>What happens next</h3>
+      <ol class="steps">
+        <li>We review your request and check availability for your date.</li>
+        <li>You get tailored linen, seating and styling recommendations with pricing.</li>
+        <li>We confirm the details, delivery and setup &mdash; and lock it in.</li>
+      </ol>
+      <div class="qr__card qr__card--rms">
+        <p><strong>Straight into our quote engine.</strong> Every piece you pick arrives as a linked, priced line item in Current&nbsp;RMS &mdash; replacing the re-keying we do today.</p>
+      </div>
+      <div class="qr__card">
+        <p><strong>Prefer to talk?</strong></p>
+        <p><a href="mailto:info@decortoadore.com">info@decortoadore.com</a><br><a href="tel:205.637.8695">205.637.8695</a></p>
+        <p>Irondale, Alabama &middot; by appointment</p>
+      </div>
+    </aside>
+  </div>
+</div></main>
+
+<section class="strip" data-ssla="g-cta"><div class="wrap strip__inner">
+  <div><h2>Not sure where to start?</h2><p>Browse the collection for inspiration, then send us your favorites.</p></div>
+  <a class="btn" href="../shop.html">Browse inventory</a>
+</div></section>
+
+<footer class="foot" data-ssla-section="footer-expanded"><div class="wrap">
+  <div class="foot__grid">
+    <div class="foot__brand">
+      <a class="brandmark" href="index.html"><img src="../assets/img/site/logo-dta.png" alt="Decor To Adore" style="height:50px;width:auto"></a>
+      <p class="foot__blurb">A family-owned Alabama business dedicated to beautifully styled weddings, events and celebrations &mdash; created with care, and delivered with intention.</p>
+      <div class="foot__social">
+        <a href="https://instagram.com/decor2adore" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://facebook.com/Decor2Adore" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      </div>
+    </div>
+    <div><h4>Explore</h4><ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="../shop.html">Inventory</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li><li><a href="quote-request.html">Request a Quote</a></li></ul></div>
+    <div><h4>By Event</h4><ul><li><a href="../shop.html#event=wedding">Weddings</a></li><li><a href="../shop.html#event=corporate">Corporate &amp; Galas</a></li><li><a href="../shop.html#event=celebration">Celebrations</a></li><li><a href="../shop.html#event=shower">Showers</a></li><li><a href="../shop.html#event=fundraiser">Fundraisers</a></li></ul></div>
+    <div><h4>Get in touch</h4><ul>
+      <li><a href="mailto:info@decortoadore.com">info@decortoadore.com</a></li>
+      <li><a href="tel:205.637.8695">205.637.8695</a></li>
+      <li>Irondale, Alabama</li>
+      <li>By appointment</li></ul>
+      <form class="foot__sub" onsubmit="return false">
+        <input type="email" placeholder="Stay connected" aria-label="Email address">
+        <button class="btn" type="submit">Join</button>
+      </form>
+    </div>
+  </div>
+  <div class="foot__base">
+    <small>&copy; 2026 Decor To Adore. Prototype for design review &mdash; not a live site.</small>
+  </div>
+</div></footer>
+
+<script>
+/* Request-a-Quote wizard.
+   Self-contained: step navigation, live product picker, and a review step that
+   renders the exact Current RMS payload (Member + Opportunity + opportunity_items)
+   this form would POST. Product ids are PROVISIONAL except Table Linens (2892,
+   verified live) — see dta/docs/CRMS-QUOTE-INTAKE-DATA-KEY-MAP.md. */
+(function () {
+  // 14 form options from the data-key map. pid = confirmed catalog id; null = provisional.
+  var PRODUCTS = [
+    { label: 'Table Linens',                  pid: 2892 },
+    { label: 'Chair Covers',                  pid: null },
+    { label: 'Napkins',                       pid: null },
+    { label: 'Runners',                       pid: null },
+    { label: 'Sashes',                        pid: null },
+    { label: 'Chargers',                      pid: null },
+    { label: 'Drapery',                       pid: null },
+    { label: 'Tables',                        pid: null },
+    { label: 'Chairs',                        pid: null },
+    { label: 'Pews',                          pid: null },
+    { label: 'China / Flatware / Glassware',  pid: null },
+    { label: 'Catering Items',                pid: null },
+    { label: 'Dance Floor',                   pid: null },
+    { label: 'Stage',                         pid: null }
+  ];
+
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+    return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); };
+
+  var form = document.querySelector('[data-qform]');
+  var steps = [].slice.call(form.querySelectorAll('.qstep'));
+  var chips = [].slice.call(form.querySelectorAll('[data-stepper] li'));
+  var backBtn = form.querySelector('[data-back]');
+  var nextBtn = form.querySelector('[data-next]');
+  var subBtn  = form.querySelector('[data-submit]');
+  var done    = form.querySelector('[data-done]');
+  var cur = 0;
+
+  // build product rows
+  var pgrid = form.querySelector('[data-pgrid]');
+  pgrid.innerHTML = PRODUCTS.map(function (p, i) {
+    var flag = p.pid
+      ? '<span class="pid pid--ok" title="Confirmed live: catalog item ' + p.pid + '">#' + p.pid + '</span>'
+      : '<span class="pid pid--prov" title="Provisional id — client to confirm the product/category mapping">?</span>';
+    return '<div class="pitem" data-i="' + i + '">' +
+      '<label><input type="checkbox" data-pick> ' + esc(p.label) + ' ' + flag + '</label>' +
+      '<input class="qty" type="number" min="1" value="1" aria-label="Quantity" data-qty hidden></div>';
+  }).join('');
+  pgrid.addEventListener('change', function (e) {
+    var box = e.target.closest('[data-pick]'); if (!box) return;
+    var row = box.closest('.pitem');
+    row.classList.toggle('is-on', box.checked);
+    row.querySelector('[data-qty]').hidden = !box.checked;
+  });
+
+  function val(name) { var el = form.querySelector('[data-f="' + name + '"]'); return el ? el.value.trim() : ''; }
+
+  function picked() {
+    return [].slice.call(pgrid.querySelectorAll('.pitem')).filter(function (row) {
+      return row.querySelector('[data-pick]').checked;
+    }).map(function (row) {
+      var p = PRODUCTS[+row.dataset.i];
+      return { label: p.label, pid: p.pid, qty: +row.querySelector('[data-qty]').value || 1 };
+    });
+  }
+
+  // lightweight per-step required-field check
+  function validStep(i) {
+    if (i === 0) return val('event_type') && val('event_date');
+    if (i === 2) {
+      var okEmail = /.+@.+\..+/.test(val('email'));
+      var match = !val('email2') || val('email2') === val('email');
+      return val('first_name') && val('last_name') && okEmail && match;
+    }
+    return true;
+  }
+
+  function iso(dateStr, timeStr) {
+    if (!dateStr) return null;
+    return dateStr + 'T' + (timeStr || '09:00') + ':00';
+  }
+
+  function subject() {
+    var name = (val('first_name') + ' ' + val('last_name')).trim();
+    return [val('event_date') || 'TBD', name || 'New enquiry', val('event_type') || 'Event'].join(' · ');
+  }
+
+  // build the CRMS payload object the POST would send
+  function payload() {
+    var items = picked().map(function (p) {
+      return {
+        item_id: p.pid,                 // null => provisional, needs client mapping
+        item_type: 'Product',
+        name: p.label,
+        quantity: p.qty,
+        starts_at: iso(val('event_date'), val('start_time')),
+        ends_at: iso(val('event_date'), val('end_time') || val('start_time'))
+      };
+    });
+    var descParts = [];
+    if (val('palette')) descParts.push('Palette/style: ' + val('palette'));
+    if (val('notes'))   descParts.push(val('notes'));
+    return {
+      member: {
+        name: (val('first_name') + ' ' + val('last_name')).trim(),
+        membership_type: 'Contact',
+        emails: val('email') ? [{ address: val('email') }] : [],
+        phones: val('phone') ? [{ number: val('phone') }] : []
+      },
+      opportunity: {
+        state: 0,                        // 0 = Inquiry
+        store_id: 1,
+        subject: subject(),
+        starts_at: iso(val('event_date'), val('start_time')),
+        ends_at: iso(val('event_date'), val('end_time') || val('start_time')),
+        description: descParts.join('\n') || null,
+        custom_fields: { event_type: val('event_type') || null },
+        venue_id: val('venue_name') ? '‹lookup/create›' : null,
+        tag_list: val('heard') ? [val('heard')] : []
+      },
+      opportunity_items: items
+    };
+  }
+
+  // pretty-print with provisional/confirmed coloring
+  function payloadHTML() {
+    var pl = payload();
+    var raw = JSON.stringify(pl, null, 2);
+    raw = esc(raw);
+    // flag provisional item_id: null lines
+    raw = raw.replace(/("item_id": )(null)/g, function (_, a) {
+      return a + '<span class="p">null  ← provisional, confirm mapping</span>';
+    });
+    raw = raw.replace(/("item_id": )(\d+)/g, function (_, a, b) {
+      return a + '<span class="c">' + b + '  ← confirmed live</span>';
+    });
+    return raw;
+  }
+
+  function renderReview() {
+    var pl = payload();
+    var items = pl.opportunity_items;
+    var money = items.length
+      ? items.map(function (it) {
+          var idTag = it.item_id
+            ? '<em>item ' + it.item_id + '</em>'
+            : '<em>id&nbsp;pending</em>';
+          return '<div class="rrow"><span class="k">' + esc(it.name) + ' &times;' + it.quantity + '</span><span class="v">' + idTag + '</span></div>';
+        }).join('')
+      : '<div class="rrow"><span class="k">No pieces selected yet</span><span class="v"><em>&mdash;</em></span></div>';
+
+    var host = form.querySelector('[data-review]');
+    host.innerHTML =
+      '<div class="rcard"><h3>Contact <span class="rkey">&rarr; Member</span></h3>' +
+        '<div class="rrow"><span class="k">Name</span><span class="v">' + (esc(pl.member.name) || '<em>&mdash;</em>') + '</span></div>' +
+        '<div class="rrow"><span class="k">Email</span><span class="v">' + (esc(val('email')) || '<em>&mdash;</em>') + '</span></div>' +
+        '<div class="rrow"><span class="k">Phone</span><span class="v">' + (esc(val('phone')) || '<em>&mdash;</em>') + '</span></div></div>' +
+      '<div class="rcard"><h3>Event <span class="rkey">&rarr; Opportunity (state 0 &middot; Inquiry)</span></h3>' +
+        '<div class="rrow"><span class="k">Type</span><span class="v">' + (esc(val('event_type')) || '<em>&mdash;</em>') + '</span></div>' +
+        '<div class="rrow"><span class="k">Date</span><span class="v">' + (esc(val('event_date')) || '<em>&mdash;</em>') + '</span></div>' +
+        '<div class="rrow"><span class="k">Venue</span><span class="v">' + (esc(val('venue_name')) || '<em>&mdash;</em>') + '</span></div>' +
+        '<div class="rrow"><span class="k">Subject</span><span class="v">' + esc(pl.opportunity.subject) + '</span></div></div>' +
+      '<div class="rcard"><h3>Requested pieces <span class="rkey">&rarr; opportunity_items</span></h3>' + money + '</div>' +
+      '<div><p class="maps" style="margin:.2rem 0 .5rem">The exact object the site would POST:</p>' +
+        '<div class="payload">' + payloadHTML() + '</div></div>';
+  }
+
+  function show(i) {
+    cur = i;
+    steps.forEach(function (s, n) { s.classList.toggle('is-on', n === i); });
+    chips.forEach(function (c, n) {
+      c.classList.toggle('is-on', n === i);
+      c.classList.toggle('is-done', n < i);
+    });
+    backBtn.hidden = i === 0;
+    nextBtn.hidden = i === steps.length - 1;
+    subBtn.hidden  = i !== steps.length - 1;
+    if (i === steps.length - 1) renderReview();
+    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function flashInvalid() {
+    var s = steps[cur];
+    [].slice.call(s.querySelectorAll('[data-f]')).forEach(function (el) {
+      el.style.borderColor = '';
+    });
+    // mark empties on required steps
+    if (cur === 0) ['event_type', 'event_date'].forEach(mark);
+    if (cur === 2) {
+      ['first_name', 'last_name', 'email'].forEach(mark);
+      if (val('email2') && val('email2') !== val('email')) mark('email2');
+    }
+    function mark(n) { var el = form.querySelector('[data-f="' + n + '"]'); if (el && !el.value.trim()) el.style.borderColor = 'var(--shell-accent)'; }
+  }
+
+  nextBtn.addEventListener('click', function () {
+    if (!validStep(cur)) { flashInvalid(); return; }
+    if (cur < steps.length - 1) show(cur + 1);
+  });
+  backBtn.addEventListener('click', function () { if (cur > 0) show(cur - 1); });
+
+  subBtn.addEventListener('click', function () {
+    // surface the payload to the console for the demo, then show success
+    try { console.log('[DTA quote → Current RMS payload]', payload()); } catch (e) {}
+    steps.forEach(function (s) { s.classList.remove('is-on'); });
+    form.querySelector('[data-review]').closest('.qstep');
+    form.querySelector('.qnav').style.display = 'none';
+    done.classList.add('is-on');
+    var t = document.querySelector('.toast');
+    if (!t) { t = document.createElement('div'); t.className = 'toast'; document.body.appendChild(t); }
+    t.textContent = 'Prototype — this would create the Current RMS quote shown.';
+    t.classList.add('is-on'); clearTimeout(t._t); t._t = setTimeout(function () { t.classList.remove('is-on'); }, 2800);
+  });
+
+  // deep-link a piece from the shop: quote-request.html#need=Napkins
+  var m = (location.hash || '').match(/need=([^&]+)/);
+  if (m) {
+    var want = decodeURIComponent(m[1]).toLowerCase();
+    [].slice.call(pgrid.querySelectorAll('.pitem')).forEach(function (row) {
+      if (PRODUCTS[+row.dataset.i].label.toLowerCase().indexOf(want) > -1) {
+        var box = row.querySelector('[data-pick]'); box.checked = true;
+        box.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    });
+  }
+})();
+</script>
+
+<script src="../assets/data/fabrics.js"></script>
+<script src="../assets/data/catalog.js"></script>
+<script src="../assets/data/products.js"></script>
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/present.js?v=2"></script>
+<script>
+  // header search icon reveals the inline search bar
+  document.querySelectorAll('[data-headsearch]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var s = document.querySelector('.headsearch');
+      if (!s) return;
+      s.hidden = !s.hidden;
+      if (!s.hidden) { var i = s.querySelector('input'); if (i) i.focus(); }
+    });
+  });
+</script>
+</body>
+</html>

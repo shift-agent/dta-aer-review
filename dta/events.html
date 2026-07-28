@@ -4,14 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Events &middot; Decor To Adore</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Gilda+Display&family=Montserrat:wght@300;400;500&family=Mr+De+Haviland&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/fonts.css">
 <link rel="stylesheet" href="../assets/base.css">
 <link rel="stylesheet" href="../assets/brand-dta.css">
 <!-- goes in the ss-launch `custom-css` section -->
 <link rel="stylesheet" href="../assets/custom-css.css">
 <link rel="stylesheet" href="../assets/present.css">
+<style>
+  /* full-image hero to match About / Contact / the other interior pages */
+  .hero--page h1.ev__h1 { font-family: var(--shell-font-family-heading);
+    font-style: normal; font-weight: 500;
+    font-size: clamp(2.05rem, 4.1vw, 3.15rem); max-width: none; white-space: nowrap; }
+  @media (max-width: 640px) { .hero--page h1.ev__h1 { white-space: normal; font-size: clamp(2rem, 8vw, 2.6rem); } }
+</style>
 </head>
 <body data-brand="dta" data-page="events" data-base="../">
 
@@ -19,25 +24,43 @@
   <a href="../aer/events.html">Alabama Event Rentals &rarr;</a>
 </template>
 
-<header class="chrome" data-ssla="chrome (theme)"><div class="wrap chrome__inner">
+<header class="chrome" data-ssla-section="chrome"><div class="wrap chrome__inner">
   <a class="brandmark" href="index.html"><img src="../assets/img/site/logo-dta.png" alt="Decor To Adore" style="height:50px;width:auto"></a>
-  <nav class="nav"><a href="../shop.html">Shop</a><a href="events.html" class="is-active">Events</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
-  <a class="btn quotepill" href="quote.html">Quote<span data-quote-count class="is-empty"></span></a>
+  <nav class="nav"><a href="../shop.html">Inventory</a><a href="about.html">About</a><a href="social.html">Social</a><a href="contact.html">Contact</a></nav>
+  <div class="chrome__icons">
+    <button class="iconlink" type="button" data-headsearch aria-label="Search" title="Search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button>
+    <a class="iconlink" href="#login" aria-label="Log in" title="Log in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg></a>
+    <a class="btn quotepill" href="quote.html">Quote<span data-quote-count class="is-empty"></span></a>
+  </div>
 </div></header>
 
+<div class="headsearch" hidden><div class="wrap">
+  <form class="headsearch__form" onsubmit="location.href='../shop.html#q='+encodeURIComponent(this.q.value||'');return false;">
+    <input name="q" type="search" placeholder="Search the inventory &mdash; a color, a fabric, a piece&hellip;" aria-label="Search the inventory">
+    <button class="btn btn--solid" type="submit">Search</button>
+  </form>
+</div></div>
 
-<section class="pagehead" data-ssla="g-hero"><div class="wrap">
-  <p class="eyebrow">What We Style</p>
-  <h1>Events we're honoured to dress</h1>
-  <p class="pagehead__lead">From first consultation to final breakdown, our team handles linens, seating, tables and full-room styling so the day runs without you thinking about it.</p>
-</div></section>
+
+<!-- full-image hero banner — matches About / Social / Contact -->
+<section class="hero hero--bg hero--page" data-ssla-section="g-page-hero"
+         style="--proto-page-photo:url(../assets/img/site/stg-events.jpg)">
+  <div class="hero__media"></div>
+  <div class="wrap hero__body">
+    <p class="eyebrow">What We Style</p>
+    <h1 class="ev__h1">Events we're honored to dress</h1>
+    <p>From first consultation to final breakdown, our team handles linens, seating, tables and full-room styling so the day runs without you thinking about it.</p>
+  </div>
+</section>
 
 <section class="sec splitsec" data-ssla="g-content-split"><div class="wrap split">
   <div class="split__body">
     <p class="eyebrow">What We Style</p>
     <h2>Three ways we work with you</h2>
     <div class="tracks"><article class="track"><h3>Weddings</h3><p>Romantic, classic, modern or rustic &mdash; your wedding style is our starting point. Whether you're planning a rustic-chic celebration or a black-tie soiree, our linens, covers and seating build the room around you.</p></article><article class="track"><h3>Corporate &amp; Galas</h3><p>From company parties to grand galas, we cover them all. We'll help you plan and implement ideas that align with your brand and your budget.</p></article><article class="track"><h3>Celebrations</h3><p>Showers, birthdays, mitzvahs and intimate gatherings &mdash; done beautifully, at whatever scale suits the moment.</p></article></div>
-    <a class="btn tracks__cta" href="plan.html">Plan Your Event</a>
+    <a class="btn tracks__cta" href="quote-request.html">Plan Your Event</a>
   </div>
   <div class="split__media"><img src="../assets/img/site/stg-reception2.jpg" alt=""></div>
 </div></section>
@@ -50,8 +73,8 @@
     <p>From an empty ballroom to a fully dressed reception, Decor to Adore coordinates every detail so your space feels considered from the first glance. We partner with planners, venues, caterers and florists across Alabama.</p>
     <ul class="ticks"><li>Custom linen selections</li><li>Chair covers &amp; sashes</li><li>Tables, chairs &amp; staging</li><li>Setup and breakdown</li><li>Washing &amp; pressing service</li></ul>
     <p class="split__aside">See how one fabric works in practice:
-       <a href="product.html?f=Dupioni">Dupioni &mdash; 57 colourways, 8 sizes &rarr;</a></p>
-    <a class="btn" href="plan.html">Plan Your Event</a>
+       <a href="product.html?f=Dupioni">Dupioni &mdash; 57 colorways &rarr;</a></p>
+    <a class="btn" href="quote-request.html">Plan Your Event</a>
   </div>
 </div></section>
 
@@ -63,22 +86,28 @@
 
 <section class="strip" data-ssla="g-cta"><div class="wrap strip__inner">
   <div><h2>Planning something lovely?</h2><p>Tell us the date, the venue and the palette. We'll build the look with you.</p></div>
-  <a class="btn" href="plan.html">Plan Your Event</a>
+  <a class="btn" href="quote-request.html">Plan Your Event</a>
 </div></section>
 
-<footer class="foot" data-ssla="chrome (theme)"><div class="wrap">
+<footer class="foot" data-ssla-section="footer-expanded"><div class="wrap">
   <div class="foot__grid">
     <div class="foot__brand">
       <a class="brandmark" href="index.html"><img src="../assets/img/site/logo-dta.png" alt="Decor To Adore" style="height:50px;width:auto"></a>
       <p class="foot__blurb">A family-owned Alabama business dedicated to beautifully styled weddings, events and celebrations &mdash; created with care, and delivered with intention.</p>
+      <div class="foot__social">
+        <a href="https://instagram.com/decor2adore" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://facebook.com/Decor2Adore" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      </div>
     </div>
     <div><h4>Explore</h4><ul>
       <li><a href="index.html">Home</a></li>
-      <li><a href="collections.html">Collections</a></li>
+      <li><a href="../shop.html">Inventory</a></li>
       <li><a href="events.html">Events</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li></ul></div>
-    <div><h4>Collections</h4><ul><li><a href="collections.html?q=Dupioni">Dupioni</a></li><li><a href="collections.html?q=Polyester">Polyester</a></li><li><a href="collections.html?q=Crinkle">Crinkle</a></li><li><a href="collections.html?q=Lamour">Lamour</a></li><li><a href="collections.html?q=Pintuck">Pintuck</a></li></ul></div>
+      <li><a href="contact.html">Contact</a></li><li><a href="quote-request.html">Request a Quote</a></li></ul></div>
+    <div><h4>By Event</h4><ul><li><a href="../shop.html#event=wedding">Weddings</a></li><li><a href="../shop.html#event=corporate">Corporate &amp; Galas</a></li><li><a href="../shop.html#event=celebration">Celebrations</a></li><li><a href="../shop.html#event=shower">Showers</a></li><li><a href="../shop.html#event=fundraiser">Fundraisers</a></li></ul></div>
     <div><h4>Get in touch</h4><ul>
       <li><a href="mailto:info@decortoadore.com">info@decortoadore.com</a></li>
       <li><a href="tel:205.637.8695">205.637.8695</a></li>
@@ -92,7 +121,6 @@
   </div>
   <div class="foot__base">
     <small>&copy; 2026 Decor To Adore. Prototype for design review &mdash; not a live site.</small>
-    <small>67 colourways across 7 fabrics &middot; 1304 size listings</small>
   </div>
 </div></footer>
 
@@ -101,5 +129,16 @@
 <script src="../assets/data/products.js"></script>
 <script src="../assets/js/app.js"></script>
 <script src="../assets/js/present.js?v=2"></script>
+<script>
+  // header search icon reveals the inline search bar
+  document.querySelectorAll('[data-headsearch]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var s = document.querySelector('.headsearch');
+      if (!s) return;
+      s.hidden = !s.hidden;
+      if (!s.hidden) { var i = s.querySelector('input'); if (i) i.focus(); }
+    });
+  });
+</script>
 </body>
 </html>

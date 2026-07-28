@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Path to Completion &middot; Decor To Adore</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/deck.css">
+<link rel="stylesheet" href="assets/present.css">
+<style>
+  .stage__ctl { display:flex; flex-wrap:wrap; gap:.6rem 1.2rem; align-items:center; margin-top:.7rem; }
+  .approve-ck { display:inline-flex; align-items:center; gap:.45rem; font-size:.72rem; font-weight:600;
+    letter-spacing:.04em; text-transform:uppercase; color:var(--muted); cursor:pointer; }
+  .approve-ck input { width:16px; height:16px; accent-color:var(--olive); }
+</style>
+</head>
+<body data-base="" data-deck="path">
+
+<header class="mast"><div class="wrap">
+  <span class="num">07 &middot; Path to Completion</span>
+  <h1>What&rsquo;s left to approve &mdash; and launch</h1>
+  <p>The remaining sign-offs, in order, each with an estimated date. Design, function and the earlier
+     commitments carry forward from the steps to the left; these are the approvals still ahead.</p>
+</div></header>
+
+<main><div class="wrap">
+  <p class="sec-note" style="margin-bottom:1.4rem">Approved so far (from the steps to the left):
+    <span class="pill pill--done">Design direction</span>
+    <span class="pill pill--now">Font &middot; Home &middot; Inventory &mdash; in review</span></p>
+
+  <div class="mlist">
+    <div class="mrow"><span class="mnum">1</span>
+      <div><h3>Approve Quote Engine / Contact forms</h3><p>The website quote writing into Current&nbsp;RMS, and the contact/quote forms &mdash; live once the write-scoped API key is issued.</p>
+        <div class="stage__ctl">
+          <label class="approve-ck"><input type="checkbox" data-persist="a1"> Approved</label>
+          <span class="datefld"><span>Target</span><input type="date" data-persist="d1"></span></div>
+        <textarea class="notes" data-persist="n1" placeholder="Notes / conditions&hellip;"></textarea></div></div>
+
+    <div class="mrow"><span class="mnum">2</span>
+      <div><h3>Approve sub pages and blog / social area</h3><p>About, Stories/Journal, and the remaining interior pages as designed.</p>
+        <div class="stage__ctl">
+          <label class="approve-ck"><input type="checkbox" data-persist="a2"> Approved</label>
+          <span class="datefld"><span>Target</span><input type="date" data-persist="d2"></span></div>
+        <textarea class="notes" data-persist="n2" placeholder="Notes / conditions&hellip;"></textarea></div></div>
+
+    <div class="mrow"><span class="mnum">3</span>
+      <div><h3>Approve all photos and content as displayed</h3><p>Real photography placed to a consistent standard, and final copy across the site.</p>
+        <div class="stage__ctl">
+          <label class="approve-ck"><input type="checkbox" data-persist="a3"> Approved</label>
+          <span class="datefld"><span>Target</span><input type="date" data-persist="d3"></span></div>
+        <textarea class="notes" data-persist="n3" placeholder="Notes / conditions&hellip;"></textarea></div></div>
+
+    <div class="mrow"><span class="mnum">4</span>
+      <div><h3>Final approval on full inventory (by category)</h3><p>The complete catalog, category by category, cleaned up and published.</p>
+        <div class="stage__ctl">
+          <label class="approve-ck"><input type="checkbox" data-persist="a4"> Approved</label>
+          <span class="datefld"><span>Target</span><input type="date" data-persist="d4"></span></div>
+        <textarea class="notes" data-persist="n4" placeholder="Notes / conditions&hellip;"></textarea></div></div>
+
+    <div class="mrow mrow--gold"><span class="mnum">5</span>
+      <div><h3>Site Testing and Launch</h3><p>Full QA, then go live &mdash; the finish line.</p>
+        <div class="stage__ctl">
+          <label class="approve-ck"><input type="checkbox" data-persist="a5"> Approved</label>
+          <span class="datefld"><span>Launch</span><input type="date" data-persist="d5"></span></div>
+        <textarea class="notes" data-persist="n5" placeholder="Notes / conditions&hellip;"></textarea></div></div>
+  </div>
+
+  <div class="bar2"><span class="saved">Dates, approvals &amp; notes saved locally &mdash; no database.</span></div>
+
+  <footer class="deckfoot">Path to Completion &middot; DTA / AER &middot; the remaining approvals, in order, to launch.</footer>
+</div></main>
+
+<script src="assets/js/present.js?v=3"></script>
+<script src="assets/js/deck.js"></script>
+</body>
+</html>

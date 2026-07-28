@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Social &amp; Journal &middot; Decor To Adore</title>
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="../assets/base.css">
+<link rel="stylesheet" href="../assets/brand-dta.css">
+<!-- goes in the ss-launch `custom-css` section -->
+<link rel="stylesheet" href="../assets/custom-css.css">
+<link rel="stylesheet" href="../assets/present.css">
+<style>
+  /* ============================================================
+     SOCIAL / JOURNAL — blog + social hub. Composed from ss-launch
+     sections (g-blog-banner, g-blog-grid, g-social-embed, g-cta).
+     Scoped styles consume the brand --shell-* tokens so the page
+     themes per brand. Squared UI — no radius on cards/tags/tiles.
+     ============================================================ */
+
+  /* ---- 1. MODERATE HERO ---- */
+  .blogbanner { position: relative; display: grid; }
+  .blogbanner__media {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(21,32,43,.55) 0%, rgba(21,32,43,.30) 42%, rgba(21,32,43,.72) 100%),
+      var(--proto-blogbanner-photo) center / cover no-repeat;
+  }
+  .blogbanner__inner {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-block: clamp(3.4rem, 7vw, 5.5rem);
+    min-height: clamp(48vh, 52vh, 560px);
+  }
+  .blogbanner__head { max-width: 46rem; }
+  .blogbanner .eyebrow { color: #fff; margin-bottom: .9rem; }   /* white, to match the About hero */
+  /* match the About banner H1: weight 500, clamp(2.3–3.5rem), italic */
+  .blogbanner h1 {
+    font-family: var(--shell-font-family-heading); font-weight: 500; font-style: normal;
+    font-size: clamp(2.05rem, 4.1vw, 3.15rem); letter-spacing: var(--shell-h1-letter-spacing);
+    line-height: var(--proto-lh-heading); color: #fff; margin: 0 0 .5em; max-width: none; white-space: nowrap;
+  }
+  .blogbanner h1 em { font-style: italic; color: inherit; }   /* no gold — one colour */
+  @media (max-width: 680px) { .blogbanner h1 { white-space: normal; font-size: clamp(2rem, 7vw, 2.6rem); } }
+  .blogbanner__lead { font-size: var(--proto-fs-lead); color: rgba(255,255,255,.9); margin: 0; max-width: 42ch; }
+
+  /* ---- category filter (blog grid) ---- */
+  .filterbtn {
+    display: inline-grid; place-items: center; width: 44px; height: 44px;
+    background: var(--shell-surface-light); border: 1px solid var(--shell-hairline);
+    color: var(--shell-text-body); cursor: pointer; transition: border-color .18s, color .18s;
+  }
+  .filterbtn:hover, .filterbtn.is-on { border-color: var(--shell-accent); color: var(--shell-accent); }
+  .filterbtn svg { width: 19px; height: 19px; }
+  .sec__head .headtools { display: flex; align-items: center; gap: .6rem; }
+  .catbar { display: none; flex-wrap: wrap; gap: .5rem; margin: 0 0 1.8rem; }
+  .catbar.is-on { display: flex; }
+  .catchip {
+    font-family: var(--shell-font-family-body); font-size: .68rem; font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase; cursor: pointer;
+    background: var(--shell-surface-light); border: 1px solid var(--shell-hairline);
+    color: var(--shell-text-body); padding: .5rem .85rem; line-height: 1;
+    transition: background .16s, color .16s, border-color .16s;
+  }
+  .catchip:hover { border-color: var(--shell-accent); color: var(--shell-accent); }
+  .catchip.is-active { background: var(--shell-surface-dark); color: #fff; border-color: var(--shell-surface-dark); }
+  .pcard.is-hidden { display: none; }
+
+  /* shared squared category tag */
+  .ptag {
+    align-self: flex-start; font-family: var(--shell-font-family-body); font-size: .6rem; font-weight: 600;
+    letter-spacing: .16em; text-transform: uppercase; background: var(--shell-surface-dark); color: #fff;
+    padding: .34rem .62rem; line-height: 1;
+  }
+  .ptag--gold { background: var(--shell-accent-on-dark); color: var(--shell-text-dark); }
+  .ptag--sage { background: var(--shell-accent-3); color: #fff; }
+
+  /* ---- 2. BLOG POST GRID ---- */
+  .postgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2.2rem 1.7rem; }
+  .pcard {
+    display: flex; flex-direction: column; color: inherit;
+    background: var(--shell-surface-light); border: 1px solid var(--shell-hairline);
+    transition: box-shadow .2s, transform .2s;
+  }
+  .pcard:hover { box-shadow: 0 14px 34px rgba(21,32,43,.10); transform: translateY(-3px); }
+  .pcard__media { position: relative; aspect-ratio: 3 / 2; overflow: hidden; background: var(--shell-surface-card); }
+  .pcard__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .55s var(--proto-ease); display: block; }
+  .pcard:hover .pcard__media img { transform: scale(1.045); }
+  .pcard__media .ptag { position: absolute; left: 0; top: 0; }
+  .pcard__body { padding: 1.15rem 1.25rem 1.4rem; display: flex; flex-direction: column; gap: .55rem; flex: 1; }
+  .pcard__meta { font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; color: var(--shell-text-muted); }
+  .pcard h3 {
+    font-family: var(--shell-font-family-heading); font-weight: 600; font-size: 1.55rem;
+    line-height: 1.14; color: var(--shell-text-dark); margin: 0;
+  }
+  .pcard p { font-size: .86rem; color: var(--shell-text-body); margin: 0; }
+  .pcard__more {
+    margin-top: auto; padding-top: .5rem; font-size: .68rem; text-transform: uppercase; letter-spacing: .14em;
+    font-weight: 600; color: var(--shell-accent);
+  }
+  .pcard:hover .pcard__more { color: var(--shell-accent-hover); }
+
+  /* ---- 3. INSTAGRAM / SOCIAL EMBED ---- */
+  .igsec { background: var(--shell-surface-warm); }
+  .ig-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.8rem; }
+  .ig-head h2 { font-family: var(--shell-font-family-heading); font-weight: var(--proto-fw-heading);
+    font-size: var(--shell-h2-size); line-height: 1.1; color: var(--shell-text-dark); margin: 0; }
+  .ig-head .eyebrow { margin-bottom: .5rem; }
+  .ig-head p { margin: .4rem 0 0; font-size: var(--proto-fs-small); color: var(--shell-text-body); max-width: 46ch; }
+  /* tight uniform IG mosaic */
+  .galgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 6px; }
+  .shot { position: relative; overflow: hidden; cursor: pointer; background: var(--shell-surface-card); aspect-ratio: 1 / 1; margin: 0; }
+  .shot img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--proto-ease); display: block; }
+  .shot:hover img { transform: scale(1.06); }
+  .shot__cap {
+    position: absolute; left: 0; right: 0; bottom: 0; padding: 1.4rem .9rem .8rem; color: #fff;
+    font-size: var(--proto-fs-small); background: linear-gradient(to top, rgba(20,16,14,.72), transparent);
+    opacity: 0; transition: opacity .2s;
+  }
+  .shot:hover .shot__cap { opacity: 1; }
+  .shot__ig { position: absolute; top: .5rem; right: .5rem; width: 22px; height: 22px; color: #fff; opacity: 0; transition: opacity .2s; filter: drop-shadow(0 1px 2px rgba(0,0,0,.4)); }
+  .shot:hover .shot__ig { opacity: .95; }
+
+  .sociallinks { display: flex; flex-wrap: wrap; gap: .8rem; justify-content: center; margin-top: 2.2rem; }
+  .sociallink {
+    display: inline-flex; align-items: center; gap: .55rem; padding: .7rem 1.2rem;
+    border: 1px solid var(--shell-hairline); background: var(--shell-surface-light); color: var(--shell-text-body);
+    font-size: var(--proto-fs-small); letter-spacing: .04em; transition: border-color .18s, color .18s;
+  }
+  .sociallink:hover { border-color: var(--shell-accent); color: var(--shell-accent); }
+  .sociallink svg { width: 18px; height: 18px; }
+
+  /* ---- lightbox (reused from plan.html) ---- */
+  .lbx { position: fixed; inset: 0; z-index: 300; display: none; place-items: center; padding: 24px; }
+  .lbx.is-on { display: grid; }
+  .lbx__scrim { position: absolute; inset: 0; background: rgba(16,12,10,.82); }
+  .lbx__fig { position: relative; max-width: min(1000px, 94vw); max-height: 88vh; }
+  .lbx__fig img { max-width: 100%; max-height: 82vh; object-fit: contain; display: block; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+  .lbx__cap { color: #fff; font-size: .85rem; text-align: center; margin-top: .8rem; letter-spacing: .02em; }
+  .lbx__x { position: absolute; top: -42px; right: 0; background: transparent; border: 0; color: #fff; font-size: 1.8rem; cursor: pointer; line-height: 1; }
+  .lbx__nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,.14); border: 0; color: #fff; width: 44px; height: 44px; font-size: 1.4rem; cursor: pointer; }
+  .lbx__nav.prev { left: -58px; } .lbx__nav.next { right: -58px; }
+  @media (max-width: 680px) { .lbx__nav.prev { left: 4px; } .lbx__nav.next { right: 4px; } }
+
+  @media (max-width: 620px) {
+    .blogbanner__inner { min-height: clamp(44vh, 48vh, 460px); }
+  }
+</style>
+</head>
+<body data-brand="dta" data-page="social" data-base="../">
+
+<template id="present-extras">
+  <a href="../aer/index.html">Alabama Event Rentals &rarr;</a>
+</template>
+
+<header class="chrome" data-ssla-section="chrome"><div class="wrap chrome__inner">
+  <a class="brandmark" href="index.html"><img src="../assets/img/site/logo-dta.png" alt="Decor To Adore" style="height:50px;width:auto"></a>
+  <nav class="nav"><a href="../shop.html">Inventory</a><a href="about.html">About</a><a href="social.html" class="is-active">Social</a><a href="contact.html">Contact</a></nav>
+  <div class="chrome__icons">
+    <button class="iconlink" type="button" data-headsearch aria-label="Search" title="Search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button>
+    <a class="iconlink" href="#login" aria-label="Log in" title="Log in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg></a>
+    <a class="btn quotepill" href="quote.html">Quote<span data-quote-count class="is-empty"></span></a>
+  </div>
+</div></header>
+
+<div class="headsearch" hidden><div class="wrap">
+  <form class="headsearch__form" onsubmit="location.href='../shop.html#q='+encodeURIComponent(this.q.value||'');return false;">
+    <input name="q" type="search" placeholder="Search the inventory &mdash; a color, a fabric, a piece&hellip;" aria-label="Search the inventory">
+    <button class="btn btn--solid" type="submit">Search</button>
+  </form>
+</div></div>
+
+
+<!-- 1. MODERATE HERO ------------------------------------------------------- -->
+<section class="blogbanner" data-ssla-section="g-blog-banner"
+         style="--proto-blogbanner-photo:url(../assets/img/social/banner-candlelit.jpg)">
+  <div class="blogbanner__media"></div>
+  <div class="wrap blogbanner__inner">
+    <div class="blogbanner__head">
+      <p class="eyebrow">The Journal</p>
+      <h1>Real events, real <em>inspiration.</em></h1>
+      <p class="blogbanner__lead">Follow along as we dress Alabama weddings, galas and celebrations &mdash; behind-the-scenes stories, styling ideas and the details we adore.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- 2. BLOG POST GRID ------------------------------------------------------ -->
+<section class="sec sec--white" data-ssla-section="g-blog-grid"><div class="wrap">
+  <div class="sec__head">
+    <div>
+      <p class="eyebrow">From the journal</p>
+      <h2>Stories, styling &amp; real celebrations</h2>
+    </div>
+    <div class="headtools">
+      <a class="btn" href="#more">View all posts</a>
+      <button class="filterbtn" type="button" data-filtertoggle aria-label="Filter posts by category" aria-expanded="false" title="Filter by category">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="catbar" data-catbar>
+    <button class="catchip is-active" type="button" data-cat="all">All</button>
+    <button class="catchip" type="button" data-cat="Real Wedding">Real Wedding</button>
+    <button class="catchip" type="button" data-cat="Styling Tips">Styling Tips</button>
+    <button class="catchip" type="button" data-cat="Inspiration">Inspiration</button>
+    <button class="catchip" type="button" data-cat="Behind the Scenes">Behind the Scenes</button>
+    <button class="catchip" type="button" data-cat="Planning">Planning</button>
+  </div>
+
+  <div class="postgrid">
+    <a class="pcard" href="story-park-crest.html" data-cat="Real Wedding">
+      <div class="pcard__media"><span class="ptag ptag--gold">Real Wedding</span>
+        <img src="../assets/img/site/bg-wedding.jpg" alt="Catherine and Alex's Park Crest wedding"></div>
+      <div class="pcard__body">
+        <span class="pcard__meta">Real Wedding &middot; Park Crest</span>
+        <h3>Catherine &amp; Alex&rsquo;s Park Crest Wedding</h3>
+        <p>Deep fall color, soft drapery, garland and dupioni linens &mdash; and our favorite finishing touch, flameless candles.</p>
+        <span class="pcard__more">Read the full story &rarr;</span>
+      </div>
+    </a>
+
+    <a class="pcard" href="#post" data-cat="Inspiration">
+      <div class="pcard__media"><span class="ptag">Inspiration</span>
+        <img src="../assets/img/social/post-gold-ivory.jpg" alt="Gold chargers and ivory tablescape"></div>
+      <div class="pcard__body">
+        <span class="pcard__meta">Feb 2, 2026 &middot; Inspiration</span>
+        <h3>Setting the Table: Gold &amp; Ivory</h3>
+        <p>Layered chargers, textured linens and warm metallics for a reception that reads timeless in every photo.</p>
+        <span class="pcard__more">Read more &rarr;</span>
+      </div>
+    </a>
+
+    <a class="pcard" href="#post" data-cat="Styling Tips">
+      <div class="pcard__media"><span class="ptag ptag--sage">Styling Tips</span>
+        <img src="../assets/img/social/post-linens.jpg" alt="Place setting with dark linen and charger"></div>
+      <div class="pcard__body">
+        <span class="pcard__meta">Jan 18, 2026 &middot; Styling Tips</span>
+        <h3>Choosing Linens for Your Palette</h3>
+        <p>From dupioni to crinkle taffeta &mdash; how to match fabric, sheen and color to your venue and your vision.</p>
+        <span class="pcard__more">Read more &rarr;</span>
+      </div>
+    </a>
+
+    <a class="pcard" href="#post" data-cat="Planning">
+      <div class="pcard__media"><span class="ptag">Planning</span>
+        <img src="../assets/img/social/post-ceremony.jpg" alt="Outdoor ceremony aisle under pavilion"></div>
+      <div class="pcard__body">
+        <span class="pcard__meta">Jan 6, 2026 &middot; Planning</span>
+        <h3>Planning an Outdoor Ceremony</h3>
+        <p>Draping, seating and a few weather-proof tricks for a flawless aisle moment, rain or shine.</p>
+        <span class="pcard__more">Read more &rarr;</span>
+      </div>
+    </a>
+
+    <a class="pcard" href="#post" data-cat="Inspiration">
+      <div class="pcard__media"><span class="ptag">Inspiration</span>
+        <img src="../assets/img/social/post-cakes.jpg" alt="Wedding cake with lush florals"></div>
+      <div class="pcard__body">
+        <span class="pcard__meta">Dec 12, 2025 &middot; Inspiration</span>
+        <h3>The Cakes We Loved This Year</h3>
+        <p>Lush florals, fine tiers and the sweet centerpieces that quietly stole the room in 2025.</p>
+        <span class="pcard__more">Read more &rarr;</span>
+      </div>
+    </a>
+
+    <a class="pcard" href="#post" data-cat="Behind the Scenes">
+      <div class="pcard__media"><span class="ptag">Behind the Scenes</span>
+        <img src="../assets/img/social/post-team.jpg" alt="Bright reception styled by the Decor To Adore team"></div>
+      <div class="pcard__body">
+        <span class="pcard__meta">Nov 28, 2025 &middot; Behind the Scenes</span>
+        <h3>Meet the Team Behind Your Event</h3>
+        <p>The family and crew who dress, deliver and style every Decor To Adore celebration &mdash; say hello.</p>
+        <span class="pcard__more">Read more &rarr;</span>
+      </div>
+    </a>
+  </div>
+</div></section>
+
+
+<!-- 3. INSTAGRAM / SOCIAL EMBED -------------------------------------------- -->
+<section class="sec igsec" data-ssla-section="g-social-embed"><div class="wrap">
+  <div class="ig-head">
+    <div>
+      <p class="eyebrow">Follow along</p>
+      <h2>@decor2adore on Instagram</h2>
+      <p>The little details never make it to the blog. See tablescapes, setups and finished rooms as we share them &mdash; tap any photo to view it up close. <em>Live site embeds the real feed.</em></p>
+    </div>
+    <a class="btn btn--solid" href="https://instagram.com/decor2adore" target="_blank" rel="noopener">Follow on Instagram</a>
+  </div>
+
+  <div class="galgrid" data-galgrid></div>
+
+  <div class="sociallinks">
+    <a class="sociallink" href="https://instagram.com/decor2adore" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20" rx="0"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+      Instagram
+    </a>
+    <a class="sociallink" href="https://www.facebook.com/Decor2Adore/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20"/><path d="M15 8h-1.5c-.8 0-1.5.7-1.5 1.5V12H15l-.4 2.6H12V22"/></svg>
+      Facebook
+    </a>
+  </div>
+</div></section>
+
+
+<!-- 4. CONTACT CTA --------------------------------------------------------- -->
+<section class="strip" data-ssla-section="g-cta"><div class="wrap strip__inner">
+  <div><h2>Let's design something beautiful</h2><p>Your vision. Our expertise. A flawless event.</p></div>
+  <a class="btn" href="contact.html">Get In Touch</a>
+</div></section>
+
+
+<footer class="foot" data-ssla-section="footer-expanded"><div class="wrap">
+  <div class="foot__grid">
+    <div class="foot__brand">
+      <a class="brandmark" href="index.html"><img src="../assets/img/site/logo-dta.png" alt="Decor To Adore" style="height:50px;width:auto"></a>
+      <p class="foot__blurb">A family-owned Alabama business dedicated to beautifully styled weddings, events and celebrations &mdash; created with care, and delivered with intention.</p>
+      <div class="foot__social">
+        <a href="https://instagram.com/decor2adore" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://facebook.com/Decor2Adore" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      </div>
+    </div>
+    <div><h4>Explore</h4><ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="../shop.html">Inventory</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li><li><a href="quote-request.html">Request a Quote</a></li></ul></div>
+    <div><h4>By Event</h4><ul><li><a href="../shop.html#event=wedding">Weddings</a></li><li><a href="../shop.html#event=corporate">Corporate &amp; Galas</a></li><li><a href="../shop.html#event=celebration">Celebrations</a></li><li><a href="../shop.html#event=shower">Showers</a></li><li><a href="../shop.html#event=fundraiser">Fundraisers</a></li></ul></div>
+    <div><h4>Get in touch</h4><ul>
+      <li><a href="mailto:info@decortoadore.com">info@decortoadore.com</a></li>
+      <li><a href="tel:205.637.8695">205.637.8695</a></li>
+      <li>Irondale, Alabama</li>
+      <li>By appointment</li></ul>
+      <form class="foot__sub" onsubmit="return false">
+        <input type="email" placeholder="Stay connected" aria-label="Email address">
+        <button class="btn" type="submit">Join</button>
+      </form>
+    </div>
+  </div>
+  <div class="foot__base">
+    <small>&copy; 2026 Decor To Adore. Prototype for design review &mdash; not a live site.</small>
+  </div>
+</div></footer>
+
+<!-- lightbox (reused from plan.html) -->
+<div class="lbx" data-lbx>
+  <div class="lbx__scrim" data-lbxclose></div>
+  <div class="lbx__fig">
+    <button class="lbx__x" data-lbxclose aria-label="Close">&times;</button>
+    <button class="lbx__nav prev" data-lbxprev aria-label="Previous">&#8249;</button>
+    <button class="lbx__nav next" data-lbxnext aria-label="Next">&#8250;</button>
+    <img data-lbximg alt="">
+    <p class="lbx__cap" data-lbxcap></p>
+  </div>
+</div>
+
+<script>
+/* Social / Journal — featured scroller + Instagram grid with lightbox.
+   Self-contained; no build step. Images are curated event photography. */
+(function () {
+  /* --- blog category filter --- */
+  var ftoggle = document.querySelector('[data-filtertoggle]'),
+      catbar = document.querySelector('[data-catbar]');
+  if (ftoggle && catbar) {
+    ftoggle.addEventListener('click', function () {
+      var open = catbar.classList.toggle('is-on');
+      ftoggle.classList.toggle('is-on', open);
+      ftoggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    catbar.addEventListener('click', function (e) {
+      var chip = e.target.closest('.catchip'); if (!chip) return;
+      catbar.querySelectorAll('.catchip').forEach(function (c) { c.classList.remove('is-active'); });
+      chip.classList.add('is-active');
+      var cat = chip.getAttribute('data-cat');
+      document.querySelectorAll('.postgrid .pcard').forEach(function (card) {
+        var show = cat === 'all' || card.getAttribute('data-cat') === cat;
+        card.classList.toggle('is-hidden', !show);
+      });
+    });
+  }
+
+  /* --- Instagram mosaic --- */
+  var B = '../assets/img/social/';
+  var IG = '<svg class="shot__ig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>';
+  var SHOTS = [
+    { img: 'ig-01.jpg', cap: 'Gold-footed urns, garden florals' },
+    { img: 'ig-02.jpg', cap: 'Blue-and-white china, layered' },
+    { img: 'ig-03.jpg', cap: 'A champagne tower moment' },
+    { img: 'ig-04.jpg', cap: 'Coupes ready for the toast' },
+    { img: 'ig-05.jpg', cap: 'Mercury votives and candlelight' },
+    { img: 'ig-06.jpg', cap: 'A crystal centerpiece' },
+    { img: 'ig-07.jpg', cap: 'Peach &amp; ivory blooms' },
+    { img: 'ig-08.jpg', cap: 'All-white roses' },
+    { img: 'ig-09.jpg', cap: 'Striped linens, green glass' },
+    { img: 'ig-10.jpg', cap: 'The invitation suite' },
+    { img: 'ig-11.jpg', cap: 'A garden ceremony arch' },
+    { img: 'ig-12.jpg', cap: 'Color for the head table' }
+  ];
+  var esc = function (s) { return String(s).replace(/[<>"]/g, function (c) { return ({ '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); };
+  var grid = document.querySelector('[data-galgrid]');
+  if (grid) {
+    grid.innerHTML = SHOTS.map(function (s, i) {
+      return '<figure class="shot" data-i="' + i + '">' +
+        '<img src="' + B + s.img + '" alt="' + esc(s.cap) + '" loading="lazy">' + IG +
+        '<figcaption class="shot__cap">' + s.cap + '</figcaption></figure>';
+    }).join('');
+  }
+
+  /* --- lightbox (from plan.html) --- */
+  var lbx = document.querySelector('[data-lbx]'), img = lbx.querySelector('[data-lbximg]'),
+      cap = lbx.querySelector('[data-lbxcap]'), cur = 0;
+  function shotEls() { return [].slice.call(document.querySelectorAll('.shot')); }
+  function show(i) {
+    var els = shotEls(); if (!els.length) return;
+    cur = (i + els.length) % els.length;
+    var idx = +els[cur].dataset.i, s = SHOTS[idx];
+    img.src = B + s.img; img.alt = s.cap.replace(/&amp;/g, '&'); cap.innerHTML = s.cap;
+    lbx.classList.add('is-on');
+  }
+  if (grid) grid.addEventListener('click', function (e) {
+    var sh = e.target.closest('.shot'); if (!sh) return;
+    show(shotEls().indexOf(sh));
+  });
+  lbx.querySelectorAll('[data-lbxclose]').forEach(function (b) { b.addEventListener('click', function () { lbx.classList.remove('is-on'); }); });
+  lbx.querySelector('[data-lbxprev]').addEventListener('click', function () { show(cur - 1); });
+  lbx.querySelector('[data-lbxnext]').addEventListener('click', function () { show(cur + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (!lbx.classList.contains('is-on')) return;
+    if (e.key === 'Escape') lbx.classList.remove('is-on');
+    if (e.key === 'ArrowLeft') show(cur - 1);
+    if (e.key === 'ArrowRight') show(cur + 1);
+  });
+})();
+</script>
+
+<script src="../assets/data/fabrics.js"></script>
+<script src="../assets/data/catalog.js"></script>
+<script src="../assets/data/products.js"></script>
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/present.js?v=2"></script>
+<script>
+  // header search icon reveals the inline search bar
+  document.querySelectorAll('[data-headsearch]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var s = document.querySelector('.headsearch');
+      if (!s) return;
+      s.hidden = !s.hidden;
+      if (!s.hidden) { var i = s.querySelector('input'); if (i) i.focus(); }
+    });
+  });
+</script>
+</body>
+</html>
