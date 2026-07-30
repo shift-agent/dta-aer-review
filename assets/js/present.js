@@ -57,8 +57,8 @@
     if ( /(^|\/)commit2\.html$/.test( path ) )         return 5;
     // Client-facing briefs opened FROM the Commit page (photo naming approval,
     // AI recolor brief, the form field-inventory review, the banner-treatment
-    // mock board) belong to the same Commit stop.
-    if ( /(^|\/)(photo-naming|ai-color-brief|form-review|banner-treatments)\.html$/.test( path ) ) return 5;
+    // mock board, the Current RMS illustration) belong to the same Commit stop.
+    if ( /(^|\/)(photo-naming|ai-color-brief|form-review|banner-treatments|crms-preview)\.html$/.test( path ) ) return 5;
     if ( /(^|\/)(path|milestone2)\.html$/.test( path ) ) return 6;
     return -1; // status.html (full report) + index.html (architecture map) — reachable, not deck steps
   }

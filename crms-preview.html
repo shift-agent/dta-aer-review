@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How it appears in Current RMS &middot; Decor To Adore</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/deck.css">
+<link rel="stylesheet" href="assets/present.css">
+<style>
+  /* ---- page-local: the illustration frame -------------------------- */
+  .illframe { position:relative; border:1px solid var(--line); background:#E9EDF1; padding:2.6rem 1.4rem 1.4rem; margin:0 0 1.2rem; }
+  .illbadge { position:absolute; top:0; left:0; font-size:.62rem; font-weight:700; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--ink); background:var(--gold); padding:.38rem .8rem; }
+
+  /* ---- the Current RMS-style mock: neutral SaaS admin look ---------
+     Deliberately NOT the DTA brand — system sans, light gray chrome,
+     blue accents — so it reads as "their system", not our site.
+     Text labels only; no Current RMS logos or trademark artwork.  ---- */
+  .crms { background:#fff; border:1px solid #C9D2DA; box-shadow:0 10px 30px rgba(21,32,43,.12);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:13px; font-weight:400; color:#333E48; line-height:1.45; }
+  .crms * { box-sizing:border-box; }
+
+  .crms__top { display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    background:#2C3E50; color:#fff; padding:.6rem 1rem; font-size:12.5px; }
+  .crms__top .app { font-weight:700; letter-spacing:.02em; }
+  .crms__top .app span { font-weight:400; color:#9FB2C4; }
+  .crms__top .who { color:#9FB2C4; font-size:12px; }
+
+  .crms__crumb { padding:.55rem 1rem; background:#F4F6F8; border-bottom:1px solid #E1E7EC;
+    color:#7A8894; font-size:12px; }
+  .crms__crumb b { color:#2C7BE5; font-weight:500; }
+
+  .crms__head { display:flex; flex-wrap:wrap; align-items:center; gap:.6rem .8rem; padding:.95rem 1rem .8rem; }
+  .crms__head h2 { margin:0; font-size:17px; font-weight:600; color:#22303C;
+    font-family:inherit; letter-spacing:0; }
+  .crms__num { color:#7A8894; font-weight:400; }
+  .crms__state { font-size:10.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    color:#8A6D1F; background:#FBEEC9; border:1px solid #E8D48E; padding:.18rem .55rem; border-radius:2px; }
+  .crms__headbtns { margin-left:auto; display:flex; gap:.4rem; }
+  .crms__hbtn { font-size:12px; color:#4A5A68; background:#fff; border:1px solid #C9D2DA; padding:.32rem .7rem; border-radius:3px; }
+  .crms__hbtn--blue { color:#fff; background:#2C7BE5; border-color:#2C7BE5; }
+
+  .crms__meta { display:grid; grid-template-columns:repeat(4, 1fr); gap:0; border-top:1px solid #E1E7EC;
+    border-bottom:1px solid #E1E7EC; background:#FBFCFD; }
+  .crms__meta > div { padding:.6rem 1rem; border-right:1px solid #E1E7EC; }
+  .crms__meta > div:last-child { border-right:0; }
+  .crms__meta b { display:block; font-size:10.5px; font-weight:700; letter-spacing:.07em;
+    text-transform:uppercase; color:#93A1AD; margin-bottom:.15rem; }
+  .crms__meta span { color:#22303C; font-size:12.5px; }
+
+  .crms__body { display:grid; grid-template-columns:1fr 218px; gap:1rem; padding:1rem; }
+  .crms__items table { width:100%; border-collapse:collapse; font-size:12.5px; }
+  .crms__items th { text-align:left; font-size:10.5px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+    color:#93A1AD; padding:.45rem .6rem; border-bottom:2px solid #E1E7EC; background:#F4F6F8; }
+  .crms__items th.n, .crms__items td.n { text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .crms__items td { padding:.5rem .6rem; border-bottom:1px solid #EDF1F4; color:#22303C; }
+  .crms__items tr.grp td { background:#EEF3F8; color:#4A5A68; font-weight:600; font-size:12px;
+    border-bottom:1px solid #DCE5EC; }
+  .crms__items tr.grp td::before { content:"\25BE"; margin-right:.4rem; color:#93A1AD; }
+  .crms__items td .sub { display:block; font-size:11px; color:#93A1AD; }
+
+  .crms__totals { border:1px solid #E1E7EC; background:#FBFCFD; align-self:start; }
+  .crms__totals h3 { margin:0; padding:.5rem .8rem; font-size:10.5px; font-weight:700; letter-spacing:.07em;
+    text-transform:uppercase; color:#93A1AD; border-bottom:1px solid #E1E7EC; font-family:inherit; }
+  .crms__totals dl { margin:0; padding:.35rem 0; }
+  .crms__totals .trow { display:flex; justify-content:space-between; gap:.6rem; padding:.28rem .8rem; font-size:12.5px; }
+  .crms__totals .trow dt { color:#4A5A68; } .crms__totals .trow dd { margin:0; color:#22303C; font-variant-numeric:tabular-nums; }
+  .crms__totals .trow--grand { border-top:1px solid #E1E7EC; margin-top:.3rem; padding-top:.55rem; font-weight:700; font-size:13.5px; }
+  .crms__totals .trow--grand dd { color:#22303C; }
+
+  @media (max-width:760px){
+    .crms__meta { grid-template-columns:1fr 1fr; }
+    .crms__meta > div:nth-child(2) { border-right:0; }
+    .crms__body { grid-template-columns:1fr; }
+  }
+
+  /* ---- captions under the mock ------------------------------------- */
+  .caps { display:grid; grid-template-columns:repeat(3, 1fr); gap:.7rem; margin:0 0 1.6rem; }
+  .cap { background:var(--white); border:1px solid var(--line); border-top:3px solid var(--olive); padding:.85rem 1rem; font-size:.86rem; }
+  .cap b { display:block; color:var(--ink); font-family:var(--serif); font-weight:400; font-size:1.05rem; margin-bottom:.15rem; }
+  @media (max-width:700px){ .caps { grid-template-columns:1fr; } }
+</style>
+</head>
+<body data-base="" data-deck="crms-preview">
+
+<header class="mast"><div class="wrap">
+  <span class="num">Today&rsquo;s bonus &middot; live demo &middot; July 30, 2026</span>
+  <h1>How it appears in Current RMS</h1>
+  <p>When someone sends a quote from the new website, this is what lands in your Current RMS &mdash;
+     a real, priced <b style="color:var(--gold)">Draft</b> opportunity, built from your own rental rates,
+     ready for your team to review. Below is an illustration; during today&rsquo;s review we create the
+     real one and you open it yourselves.</p>
+</div></header>
+
+<main><div class="wrap">
+
+  <div class="illframe">
+    <span class="illbadge">Illustration &mdash; we&rsquo;ll open the real one live</span>
+
+    <div class="crms" role="img" aria-label="Illustration of a Current RMS opportunity detail screen">
+      <div class="crms__top">
+        <span class="app">Current RMS <span>&mdash; Opportunities</span></span>
+        <span class="who">Decor To Adore</span>
+      </div>
+      <div class="crms__crumb">Opportunities &rsaquo; <b>Website Quote Demo &mdash; Wedding, Oct 17 2026 (Simpliment)</b></div>
+
+      <div class="crms__head">
+        <h2><span class="crms__num">#2431</span> Website Quote Demo &mdash; Wedding, Oct 17 2026</h2>
+        <span class="crms__state">Draft</span>
+        <span class="crms__headbtns">
+          <span class="crms__hbtn">Actions</span>
+          <span class="crms__hbtn crms__hbtn--blue">Mark as Order</span>
+        </span>
+      </div>
+
+      <div class="crms__meta">
+        <div><b>Customer</b><span>Website Demo &mdash; Simpliment</span></div>
+        <div><b>Event dates</b><span>Sat Oct 17 2026, 2:00pm &rarr; Sun Oct 18 2026, 2:00am</span></div>
+        <div><b>Event type</b><span>Wedding</span></div>
+        <div><b>Created by</b><span>Website quote form &middot; automatic</span></div>
+      </div>
+
+      <div class="crms__body">
+        <div class="crms__items">
+          <table>
+            <thead>
+              <tr><th>Item</th><th class="n">Qty</th><th class="n">Price</th><th class="n">Total</th></tr>
+            </thead>
+            <tbody>
+              <tr class="grp"><td colspan="4">Specialty</td></tr>
+              <tr>
+                <td>108&quot;x156&quot; Madeline Damask Kiwi<span class="sub">Rental &middot; per event</span></td>
+                <td class="n">10</td><td class="n">$97.00</td><td class="n">$970.00</td>
+              </tr>
+              <tr>
+                <td>120&quot; Madeline Damask Kiwi<span class="sub">Rental &middot; per event</span></td>
+                <td class="n">4</td><td class="n">$60.00</td><td class="n">$240.00</td>
+              </tr>
+              <tr>
+                <td>120&quot; Madeline Damask Black<span class="sub">Rental &middot; per event</span></td>
+                <td class="n">2</td><td class="n">$60.00</td><td class="n">$120.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="crms__totals">
+          <h3>Charges</h3>
+          <dl>
+            <div class="trow"><dt>Rental</dt><dd>$1,330.00</dd></div>
+            <div class="trow"><dt>Delivery</dt><dd>&mdash;</dd></div>
+            <div class="trow trow--grand"><dt>Rental total</dt><dd>$1,330.00</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="caps">
+    <div class="cap"><b>Created automatically</b>
+      The website quote writes this opportunity itself &mdash; no copying, no re-keying, no missed requests.</div>
+    <div class="cap"><b>Priced from your real rates</b>
+      Every line reads your live rental rates at the moment of the quote, so the total is always yours.</div>
+    <div class="cap"><b>Lands as a Draft</b>
+      Nothing is committed &mdash; it arrives as a Draft for your team to review, adjust and confirm.</div>
+  </div>
+
+  <p class="sec-note" style="max-width:74ch">The screen above is a labeled illustration &mdash; layout
+     approximate, numbers real. The opportunity number is assigned by your Current RMS when the real
+     one is created during the review.</p>
+
+  <footer class="deckfoot">How it appears in Current RMS &middot; DTA &middot; part of today&rsquo;s
+    &ldquo;Live into Current RMS&rdquo; bonus &mdash; opened from Design Review 2.</footer>
+</div></main>
+
+<script src="assets/js/present.js?v=3"></script>
+</body>
+</html>
