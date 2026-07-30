@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Naming your photos &middot; For approval</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/deck.css">
+<link rel="stylesheet" href="assets/present.css">
+<style>
+  /* page-local: filename chips, the color-rule callout, the Madeline table */
+  .fn { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.84em;
+    color:var(--ink); background:var(--warm); border:1px solid var(--line); padding:.06rem .34rem; white-space:nowrap; }
+  .mrow .fn, .callout .fn { background:#fff; }
+  .ex { margin:.5rem 0 0; padding:0; list-style:none; display:grid; gap:.3rem; font-size:.88rem; }
+  .ex li b { color:var(--ink); font-weight:600; }
+  .callout { border:1px solid var(--line); border-left:4px solid var(--gold); background:var(--white);
+    padding:1.2rem 1.4rem; margin:1.6rem 0; }
+  .callout h3 { font-family:var(--serif); font-weight:400; font-size:1.3rem; color:var(--ink); margin:0 0 .4rem; }
+  .callout h3 .pill { margin-left:.4rem; }
+  .callout p { font-size:.9rem; margin:.4rem 0 0; }
+  .ctable { width:100%; border-collapse:collapse; margin-top:1rem; font-size:.84rem; }
+  .ctable th { font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted);
+    font-weight:700; text-align:left; padding:.4rem .6rem; border-bottom:1px solid var(--line); }
+  .ctable td { padding:.55rem .6rem; border-bottom:1px solid var(--line); vertical-align:middle; }
+  .ctable td:first-child { font-weight:600; color:var(--ink); white-space:nowrap; }
+  .ctable img { width:52px; height:52px; object-fit:cover; display:block; border:1px solid var(--line); }
+  .cellimg { display:flex; align-items:center; gap:.6rem; }
+  .ctable-scroll { overflow-x:auto; }
+  .dont { display:grid; grid-template-columns:auto 1fr; gap:.7rem; align-items:start;
+    background:var(--white); border:1px solid var(--line); padding:.8rem 1rem; }
+  .dont .x { color:var(--red); font-weight:700; font-size:1rem; line-height:1.4; }
+  .dont p { margin:0; font-size:.88rem; }
+  .dont b { color:var(--ink); }
+  .ok-note { border:1px solid var(--line); border-left:4px solid var(--olive); background:var(--white);
+    padding:1rem 1.2rem; margin:1rem 0 1.6rem; font-size:.9rem; }
+  .ok-note b { color:var(--ink); }
+</style>
+</head>
+<body data-base="" data-deck="photo-naming">
+
+<header class="mast"><div class="wrap">
+  <span class="num">For approval today &middot; July 30, 2026</span>
+  <h1>Naming your photos</h1>
+  <p>One simple naming pattern means every photo you send files itself &mdash; onto the right product,
+     in the right spot, on the website and in the rental system. No guessing, no manual sorting.</p>
+</div></header>
+
+<main><div class="wrap">
+
+  <h2 class="sec">Why the name matters</h2>
+  <p class="sec-note" style="max-width:70ch">
+    Photos flow into the system automatically only when the filename tells the system two things:
+    <b style="color:var(--ink)">which product</b> the photo shows, and
+    <b style="color:var(--ink)">what kind of photo</b> it is. When the name carries both, the photo
+    places itself the moment it arrives &mdash; nobody has to open it, recognize the linen, and file it
+    by hand. When the name doesn&rsquo;t, a person has to guess, and guesses are how photos end up on
+    the wrong product or in no product at all.</p>
+
+  <h2 class="sec">The three kinds of photos &mdash; and how to name each</h2>
+  <p class="sec-note">Every photo you&rsquo;ll ever send is one of these three.</p>
+
+  <div class="mlist">
+    <div class="mrow"><span class="mnum">1</span>
+      <div><h3>The 12 category images</h3>
+        <p>The circle images on the home page &mdash; one per category. Name them
+           <span class="fn">category-</span> plus the category name, with hyphens instead of spaces.</p>
+        <ul class="ex">
+          <li><span class="fn">category-linens.jpg</span> &mdash; the Linens circle</li>
+          <li><span class="fn">category-dance-floor.jpg</span> &mdash; the Dance Floor circle</li>
+        </ul></div></div>
+
+    <div class="mrow"><span class="mnum">2</span>
+      <div><h3>Product images &mdash; one per color</h3>
+        <p>The main photo of the product itself (the fabric shot). Name it the product&rsquo;s name
+           <em>including its color</em>, all lowercase with hyphens, then <span class="fn">_swatch</span>.
+           No sizes in the name &mdash; the size lives in the rental system.</p>
+        <ul class="ex">
+          <li><span class="fn">madeline-damask-kiwi_swatch.jpg</span> &mdash; the Madeline Damask in Kiwi</li>
+          <li><span class="fn">gold-chiavari-barstool_swatch.jpg</span> &mdash; works for every product, not just linens</li>
+        </ul></div></div>
+
+    <div class="mrow"><span class="mnum">3</span>
+      <div><h3>In-place images &mdash; the product at a real event</h3>
+        <p>The styled &ldquo;in action&rdquo; photos. Same product-and-color name, then
+           <span class="fn">_inplace1</span>, <span class="fn">_inplace2</span>&hellip; numbered when
+           there&rsquo;s more than one.</p>
+        <ul class="ex">
+          <li><span class="fn">madeline-damask-kiwi_inplace1.jpg</span> &mdash; Kiwi on a styled table</li>
+          <li><span class="fn">madeline-damask-kiwi_inplace2.jpg</span> &mdash; a second event photo of the same linen</li>
+        </ul></div></div>
+  </div>
+
+  <div class="callout">
+    <h3>The color is part of the name <span class="pill pill--gold">The key rule</span></h3>
+    <p><span class="fn">madeline-damask-kiwi_inplace1.jpg</span> and
+       <span class="fn">madeline-damask-black_inplace1.jpg</span> are different names &mdash; and that
+       is exactly what lets the website show a <b style="color:var(--ink)">different event photo for each
+       color</b> a visitor clicks. Pick Kiwi, see Kiwi on a real table; pick Black, see Black. If a
+       photo isn&rsquo;t named with its color, the site has no way to know which color chip it belongs
+       to &mdash; the photo exists, but the website can&rsquo;t use it.</p>
+    <p>Here&rsquo;s the whole system on one product &mdash; your Madeline Damask in its three colors:</p>
+    <div class="ctable-scroll"><table class="ctable">
+      <tr><th>Color</th><th>Product image</th><th>In-place image</th></tr>
+      <tr><td>Kiwi</td>
+        <td><span class="cellimg"><img src="assets/img/madeline/swatch-kiwi.jpg" alt="Madeline Damask Kiwi swatch"><span class="fn">madeline-damask-kiwi_swatch.jpg</span></span></td>
+        <td><span class="cellimg"><img src="assets/img/madeline/inuse-kiwi-1.jpg" alt="Madeline Damask Kiwi at an event"><span class="fn">madeline-damask-kiwi_inplace1.jpg</span></span></td></tr>
+      <tr><td>Black</td>
+        <td><span class="cellimg"><img src="assets/img/madeline/swatch-black.jpg" alt="Madeline Damask Black swatch"><span class="fn">madeline-damask-black_swatch.jpg</span></span></td>
+        <td><span class="cellimg"><img src="assets/img/madeline/inuse-black-1.jpg" alt="Madeline Damask Black at an event"><span class="fn">madeline-damask-black_inplace1.jpg</span></span></td></tr>
+      <tr><td>Ivory</td>
+        <td><span class="cellimg"><img src="assets/img/madeline/swatch-ivory.jpg" alt="Madeline Damask Ivory swatch"><span class="fn">madeline-damask-ivory_swatch.jpg</span></span></td>
+        <td><span class="cellimg"><img src="assets/img/madeline/inuse-ivory-1.jpg" alt="Madeline Damask Ivory at an event"><span class="fn">madeline-damask-ivory_inplace1.jpg</span></span></td></tr>
+    </table></div>
+  </div>
+
+  <h2 class="sec">The five don&rsquo;ts</h2>
+  <p class="sec-note">Five habits to drop &mdash; each one breaks the automatic filing.</p>
+
+  <div class="mlist">
+    <div class="dont"><span class="x">1</span>
+      <p><b>No spaces or capitals.</b> <span class="fn">Madeline Damask Kiwi.jpg</span> &#10007; &nbsp;&rarr;&nbsp;
+         <span class="fn">madeline-damask-kiwi_swatch.jpg</span> &#10003;</p></div>
+    <div class="dont"><span class="x">2</span>
+      <p><b>No &ldquo;Copy of&rdquo; or &ldquo;(1)&rdquo;.</b> A second photo of the same kind gets the next
+         number instead: <span class="fn">&hellip;_inplace2.jpg</span></p></div>
+    <div class="dont"><span class="x">3</span>
+      <p><b>No sizes in the name.</b> No <span class="fn">120"</span> or <span class="fn">8'</span> &mdash;
+         sizes live in the rental system, and one photo serves every size of the same linen.</p></div>
+    <div class="dont"><span class="x">4</span>
+      <p><b>No iPhone HEIC files or huge originals if you can help it.</b> Export as JPG. Big files
+         still work &mdash; we shrink them &mdash; they&rsquo;re just slower.</p></div>
+    <div class="dont"><span class="x">5</span>
+      <p><b>Don&rsquo;t invent a name.</b> Use the product&rsquo;s name exactly as it appears on your
+         sheet. If the photo&rsquo;s product isn&rsquo;t on the sheet, tell us instead of guessing.</p></div>
+  </div>
+
+  <div class="ok-note"><b>If you&rsquo;re ever unsure &mdash; send it anyway.</b> A photo whose name we
+    can&rsquo;t match goes onto a &ldquo;needs attention&rdquo; list with our suggested fix, and we sort
+    it out together. Nothing is ever lost or silently skipped &mdash; it just waits for a decision
+    instead of appearing on the site under the wrong product.</div>
+
+  <h2 class="sec">The photos you&rsquo;ve already sent</h2>
+  <p class="sec-note" style="max-width:70ch">
+    Everything already delivered gets renamed <b style="color:var(--ink)">by us</b> &mdash; we migrate the
+    existing photos to this pattern as part of the build, and anything ambiguous comes back to you as a
+    short question list, not homework. This convention is for <b style="color:var(--ink)">new photos going
+    forward</b>: name them this way and they file themselves.</p>
+
+  <section data-decide-sec="open">
+    <h2 class="sec">Today&rsquo;s approval</h2>
+    <div class="mlist">
+      <div class="mrow mrow--gold" data-decide="v-naming" data-decide-group="naming"><span class="mnum">&#9998;</span>
+        <div><h3>Approve the naming convention <span class="pill pill--gold" data-decide-pending>Pending</span></h3>
+          <p>One pattern, three photo kinds, color in the name. Approve it and every photo from here
+             forward files itself. Notes ride along with the decision.</p>
+          <textarea class="notes" data-persist="n-naming" placeholder="Notes on the naming convention&hellip;"></textarea></div></div>
+    </div>
+  </section>
+
+  <section data-decide-sec="accepted" hidden>
+    <h2 class="sec">Accepted</h2>
+    <p class="sec-note">Approved today &mdash; on the record.</p>
+    <div class="mlist" data-decide-zone="accepted"></div>
+  </section>
+
+  <section data-decide-sec="rejected" hidden>
+    <h2 class="sec">Rejected</h2>
+    <p class="sec-note">Not approved today &mdash; kept on the record with the notes.</p>
+    <div class="mlist" data-decide-zone="rejected"></div>
+  </section>
+
+  <div class="bar2"><span class="saved">Saved locally in your browser &mdash; survives reloads. No database.</span></div>
+
+  <footer class="deckfoot">Naming your photos &middot; DTA / AER &middot; part of today&rsquo;s decisions.</footer>
+</div></main>
+
+<script src="assets/js/present.js?v=3"></script>
+<script src="assets/js/deck.js"></script>
+<script src="assets/js/decide.js"></script>
+</body>
+</html>

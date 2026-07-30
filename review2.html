@@ -44,6 +44,16 @@
   .walk__links a { font-size:.82rem; color:var(--ink); background:var(--white); border:1px solid var(--line); padding:.5rem .85rem; text-decoration:none; }
   .walk__links a:hover { border-color:var(--accent); color:var(--accent); }
   footer { border-top:1px solid var(--line); margin-top:2.4rem; padding-top:1.2rem; font-size:.8rem; color:var(--muted); }
+
+  .bonus { display:grid; gap:.7rem; margin:.2rem 0 0; }
+  .brow { display:grid; grid-template-columns:1fr auto; gap:.9rem; align-items:center;
+    background:var(--white); border:1px solid var(--line); border-left:3px solid var(--olive); padding:1rem 1.2rem; }
+  .brow h3 { font-family:var(--serif); font-weight:400; font-size:1.2rem; color:var(--ink); margin:0 0 .12rem; }
+  .brow p { margin:0; font-size:.88rem; color:var(--body); }
+  .brow--live { border-left-color:var(--gold); background:var(--warm); }
+  .badge-live { display:inline-block; font-size:.58rem; letter-spacing:.09em; text-transform:uppercase;
+    font-weight:700; padding:.14rem .5rem; color:var(--ink); background:var(--gold); vertical-align:middle; margin-left:.5rem; }
+  @media (max-width:600px){ .brow { grid-template-columns:1fr; } .brow .appr__view { justify-self:start; } }
   @media (max-width:600px){ .appr { grid-template-columns:auto 1fr; } .appr__view { grid-column:2; justify-self:start; margin-top:.5rem; } }
 </style>
 <link rel="stylesheet" href="assets/present.css">
@@ -86,6 +96,34 @@
       <a href="dta/quote-request.html">Request a Quote</a>
       <a href="dta/contact.html">Contact</a>
     </div>
+  </div>
+
+  <h2 class="sec" style="margin-top:2.2rem;">Today's bonus &mdash; beyond the design</h2>
+  <p class="sec-note">The design is half the story &mdash; these work today:</p>
+
+  <div class="bonus">
+    <div class="brow">
+      <div><h3>The quote form &mdash; every field accounted for</h3>
+        <p>The 4-step form carries every field from your current intake form &mdash; products, event types, contact, dates and times, venue, message, how-you-heard &mdash; and the final Review step shows exactly what will be written into Current RMS.</p></div>
+      <a class="appr__view" href="dta/quote-request.html">View &rarr;</a></div>
+
+    <div class="brow">
+      <div><h3>The quote basket</h3>
+        <p>Build a quote from the inventory, review it as one request.</p></div>
+      <a class="appr__view" href="dta/quote.html">View &rarr;</a></div>
+
+    <div class="brow brow--live">
+      <div><h3>Live into Current RMS<span class="badge-live">Live demo</span></h3>
+        <p>During today's review we'll create a real test opportunity in your Current RMS &mdash; priced line items, real total &mdash; and you can open it yourselves.</p></div></div>
+
+    <div class="brow">
+      <div><h3>Free swatch requests</h3>
+        <p>Request a swatch from the product page &mdash; it lands in the same quote, no charge.</p></div>
+      <a class="appr__view" href="dta/product-madeline-kiwi.html">View &rarr;</a></div>
+
+    <div class="brow">
+      <div><h3>Mobile</h3>
+        <p>Every page collapses to a true mobile experience &mdash; use the Mobile button in the bar above to see any page as a phone.</p></div></div>
   </div>
 
   <footer>Design Review 2 &middot; DTA / AER &middot; the new design — approvals are recorded on the Commit step.</footer>

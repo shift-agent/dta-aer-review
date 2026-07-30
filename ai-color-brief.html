@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Changing a photo&rsquo;s color with AI &middot; Brief</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/deck.css">
+<link rel="stylesheet" href="assets/present.css">
+<style>
+  /* page-local: proof figures, tier cards */
+  .proof { background:var(--white); border:1px solid var(--line); padding:.8rem; margin:0 0 1rem; }
+  .proof img { width:100%; height:auto; display:block; }
+  .proof figcaption { font-size:.8rem; color:var(--body); padding:.6rem .2rem 0; }
+  .proof figcaption b { color:var(--ink); }
+  .tiers { display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; margin:.2rem 0 1.6rem; }
+  @media (max-width:820px){ .tiers { grid-template-columns:1fr; } }
+  .tier { background:var(--white); border:1px solid var(--line); border-top:3px solid var(--navy); padding:1rem 1.1rem; }
+  .tier--now { border-top-color:var(--olive); }
+  .tier--gold { border-top-color:var(--gold); }
+  .tier h3 { font-family:var(--serif); font-weight:400; font-size:1.16rem; color:var(--ink); margin:0 0 .2rem; }
+  .tier .cost { display:inline-block; font-size:.62rem; letter-spacing:.1em; text-transform:uppercase;
+    font-weight:700; color:var(--ink); background:var(--warm); border:1px solid var(--line);
+    padding:.16rem .5rem; margin:.15rem 0 .5rem; }
+  .tier--now .cost { background:var(--olive); border-color:var(--olive); color:#fff; }
+  .tier--gold .cost { background:var(--gold); border-color:var(--gold); }
+  .tier p { margin:0; font-size:.86rem; }
+  .read { border:1px solid var(--line); border-left:4px solid var(--navy); background:var(--white);
+    padding:1rem 1.2rem; margin:0 0 1.6rem; font-size:.9rem; }
+  .read b { color:var(--ink); }
+  .close-note { border:1px solid var(--line); border-left:4px solid var(--olive); background:var(--white);
+    padding:1rem 1.2rem; margin:1.4rem 0; font-size:.92rem; }
+  .close-note b { color:var(--ink); }
+</style>
+</head>
+<body data-base="" data-deck="ai-color-brief">
+
+<header class="mast"><div class="wrap">
+  <span class="num">Also today &middot; a five-minute brief</span>
+  <h1>Changing a photo&rsquo;s color with AI &mdash; what&rsquo;s involved</h1>
+  <p>Could one great event photo stand in for every color of a linen? We tested it on your own
+     photos this week. Here&rsquo;s what it is, what convinced us, where it falls short, and what
+     it would cost &mdash; in plain terms.</p>
+</div></header>
+
+<main><div class="wrap">
+
+  <h2 class="sec">What it is</h2>
+  <p class="sec-note" style="max-width:70ch">
+    Take <b style="color:var(--ink)">one real photo</b> &mdash; say, your Madeline Damask in Kiwi on a
+    styled table &mdash; and digitally recolor <em>just the fabric</em> into the other colorways. Same
+    photo, same folds, same styling; only the linen&rsquo;s color changes. Done well, it means one
+    photographed colorway could give every color chip on the website its own in-place picture.</p>
+
+  <h2 class="sec">What we proved &mdash; on your photos</h2>
+  <p class="sec-note" style="max-width:70ch">
+    We recolored your real Kiwi close-up into ivory and black, then put each result next to the photo
+    of the <em>real</em> linen in that color. Judge for yourself:</p>
+
+  <figure class="proof">
+    <img src="assets/img/recolor/sheet-ivory.jpg" alt="Three panels: the original kiwi photo, the same photo recolored to ivory, and the real photographed ivory linen">
+    <figcaption><b>Our test, kiwi &rarr; ivory:</b> the original green photo (left), our recolor (center),
+      and the real photographed ivory linen (right). The light colorway is genuinely convincing at
+      website size.</figcaption>
+  </figure>
+
+  <figure class="proof">
+    <img src="assets/img/recolor/sheet-black.jpg" alt="Three panels: the original kiwi photo, the same photo recolored to black, and the real photographed black linen">
+    <figcaption><b>Our test, kiwi &rarr; black:</b> the same original (left), recolored to black (center),
+      and the real black colorway (right). The pattern holds in the well-lit areas, but the shadowed
+      side drags dark and the flash-hit spots stay cream &mdash; the dark colorway shows the limits.</figcaption>
+  </figure>
+
+  <div class="read">
+    <b>Our honest read:</b> light colors convince; dark colors reveal the limits &mdash; shadows and
+    camera flash in event photos confuse the recoloring, and the mood of the original photo never
+    changes (a recolor is &ldquo;this photo in another color,&rdquo; never the photo you&rsquo;d have
+    taken of the other color). And one line we won&rsquo;t cross: <b>the pattern must stay true.</b>
+    We never let AI redraw the damask itself &mdash; your customer receives the physical linen, so the
+    motif on the website must be exactly the motif on the table. Tools that &ldquo;imagine&rdquo; a black
+    tablecloth can quietly invent a similar-but-wrong pattern, and we treat that as unacceptable for a
+    rental catalog.</div>
+
+  <h2 class="sec">The three practical tiers</h2>
+  <p class="sec-note">From free to full pipeline &mdash; each tier is real, and none is required.</p>
+
+  <div class="tiers">
+    <div class="tier tier--now">
+      <h3>Photograph real colorways</h3>
+      <span class="cost">Today&rsquo;s model &middot; $0</span>
+      <p>What you do now: shoot the colorways that get styled at real events, and the website swaps
+         <em>photos</em>, not pixels. Perfect fidelity, authentic lighting. This remains the plan for
+         most of the catalog.</p>
+    </div>
+    <div class="tier tier--gold">
+      <h3>Professional mask per hero photo</h3>
+      <span class="cost">~$25&ndash;50 one-time per photo</span>
+      <p>For featured pieces: a retoucher hand-isolates the fabric in your best photo once. After
+         that, <em>every</em> colorway of that photo is essentially free &mdash; the mask is a reusable
+         asset. Highest quality of any approach.</p>
+    </div>
+    <div class="tier">
+      <h3>Automated pipeline</h3>
+      <span class="cost">Later &middot; at scale</span>
+      <p>A real engineering project that recolors across the whole catalog with human approval on
+         every image. Only worth building if per-color photos become a storefront-wide feature.
+         The door stays open; nothing commits us today.</p>
+    </div>
+  </div>
+
+  <h2 class="sec">The two asks of you &mdash; today, free</h2>
+  <p class="sec-note">Neither costs a dollar; both keep every future option open.</p>
+
+  <div class="mlist">
+    <div class="mrow mrow--gold"><span class="mnum">1</span>
+      <div><h3>Shoot the most colorful version as the master</h3>
+        <p>When a linen gets photographed in place, make sure the <b>most colorful</b> colorway is the
+           one you shoot. A color-rich photo (Kiwi) can be recolored into ivory or black; an ivory
+           photo can never be recolored into Kiwi &mdash; the color information just isn&rsquo;t there.</p></div></div>
+    <div class="mrow mrow--gold"><span class="mnum">2</span>
+      <div><h3>Shoot in flat, even light</h3>
+        <p>No harsh shadows, no direct flash on the fabric. Dramatic event lighting is beautiful, but
+           it&rsquo;s exactly what breaks recoloring &mdash; our test photo&rsquo;s shadowed half is where
+           the black version fell apart. Even light keeps the photo usable both ways.</p></div></div>
+  </div>
+
+  <div class="close-note"><b>This stays optional.</b> The website works fully with real photos and
+    swatches &mdash; exactly as designed. Recoloring is a door we can open later for featured pieces,
+    and today&rsquo;s two asks simply keep that door open at no cost.</div>
+
+  <textarea class="notes" data-persist="n-recolor" placeholder="Notes from today&rsquo;s discussion&hellip;"></textarea>
+
+  <div class="bar2"><span class="saved">Saved locally in your browser &mdash; survives reloads. No database.</span></div>
+
+  <footer class="deckfoot">AI recolor brief &middot; DTA / AER &middot; informational &mdash; no decision required.</footer>
+</div></main>
+
+<script src="assets/js/present.js?v=3"></script>
+<script src="assets/js/deck.js"></script>
+</body>
+</html>

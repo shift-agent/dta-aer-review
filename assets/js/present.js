@@ -55,6 +55,9 @@
     if ( /(^|\/)milestone1\.html$/.test( path ) )      return 3;
     if ( /(^|\/)review2\.html$/.test( path ) )         return 4;
     if ( /(^|\/)commit2\.html$/.test( path ) )         return 5;
+    // Client-facing briefs opened FROM the Commit page (photo naming approval,
+    // AI recolor brief) belong to the same Commit stop.
+    if ( /(^|\/)(photo-naming|ai-color-brief)\.html$/.test( path ) ) return 5;
     if ( /(^|\/)(path|milestone2)\.html$/.test( path ) ) return 6;
     return -1; // status.html (full report) + index.html (architecture map) — reachable, not deck steps
   }
