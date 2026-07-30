@@ -20,7 +20,7 @@
   var css = document.createElement('style');
   css.textContent =
     '.decide{display:flex;gap:.5rem;margin-top:.65rem}'
-    + '.decide[hidden]{display:none}'
+    + '.decide[hidden],[data-decide-pending][hidden]{display:none}'
     + '.decide button{font:inherit;font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.5rem 1rem;cursor:pointer}'
     + '.decide__accept{background:var(--olive);border:1px solid var(--olive);color:#fff}'
     + '.decide__accept:hover{background:#5c7449;border-color:#5c7449}'
