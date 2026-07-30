@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portrait photos as banners &middot; Pick a treatment</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/deck.css">
+<link rel="stylesheet" href="assets/present.css">
+<style>
+  /* page-local: the problem figure, the banner strips, the treatment cards */
+  .problem { display:grid; grid-template-columns:auto 1fr; gap:1.2rem; align-items:start;
+    background:var(--white); border:1px solid var(--line); padding:1rem 1.2rem; margin:0 0 1.6rem; }
+  .problem img { width:150px; height:auto; display:block; border:1px solid var(--line); }
+  .problem p { margin:0 0 .5rem; font-size:.9rem; }
+  .problem b { color:var(--ink); }
+  @media (max-width:640px){ .problem { grid-template-columns:1fr; } .problem img { width:120px; } }
+
+  /* one treatment = title row + a REAL wide strip + trade-off line */
+  .treat { background:var(--white); border:1px solid var(--line); padding:1rem 1.2rem 1.1rem; margin:0 0 1.1rem; }
+  .treat--rec { border-left:4px solid var(--gold); }
+  .treat__head { display:flex; align-items:baseline; gap:.6rem; flex-wrap:wrap; margin:0 0 .7rem; }
+  .treat__head .tnum { width:26px; height:26px; flex:none; display:grid; place-items:center; align-self:center;
+    background:var(--navy); color:#fff; font-family:var(--serif); font-size:.95rem; line-height:1; }
+  .treat--rec .treat__head .tnum { background:var(--gold); color:var(--ink); }
+  .treat__head h3 { font-family:var(--serif); font-weight:400; font-size:1.24rem; color:var(--ink); margin:0; }
+  .strip-band { position:relative; aspect-ratio:1280/420; overflow:hidden; border:1px solid var(--line); background:var(--warm); }
+  .strip-band img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+  .strip-band--pair { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--paper); }
+  .strip-band--pair span { position:relative; overflow:hidden; }
+  .strip-band--pair img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .treat__trade { display:flex; gap:.5rem; align-items:baseline; margin:.6rem 0 0; font-size:.86rem; }
+  .treat__trade b { flex:none; color:var(--ink); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; }
+  .treat__trade p { margin:0; }
+
+  /* note card (treatment considered, not rendered) */
+  .notecard { background:var(--warm); border:1px solid var(--line); border-left:4px solid var(--navy);
+    padding:1rem 1.2rem; margin:0 0 1.6rem; font-size:.9rem; }
+  .notecard h3 { font-family:var(--serif); font-weight:400; font-size:1.24rem; color:var(--ink); margin:0 0 .3rem; }
+  .notecard p { margin:.3rem 0 0; }
+  .notecard b { color:var(--ink); }
+  .notecard a { color:var(--accent); }
+
+  /* the pick — verdict-style radio row */
+  .pickrow { display:flex; gap:.5rem; flex-wrap:wrap; margin:.2rem 0 .4rem; }
+  .pickrow label { display:inline-flex; align-items:center; gap:.45rem; font-size:.74rem; font-weight:600;
+    letter-spacing:.04em; text-transform:uppercase; color:var(--muted); background:var(--white);
+    border:1px solid var(--line); padding:.5rem .8rem; cursor:pointer; }
+  .pickrow input { accent-color:var(--olive); }
+  .pickrow label:has(input:checked) { color:var(--ink); border-color:var(--accent); background:var(--warm); }
+</style>
+</head>
+<body data-base="" data-deck="banner-treatments">
+
+<header class="mast"><div class="wrap">
+  <span class="num">For decision today &middot; July 30, 2026</span>
+  <h1>Making portrait photos work as banners</h1>
+  <p>Your event photos are shot tall &mdash; and they should be. But the &ldquo;banner across the top&rdquo;
+     placement on a product page is a wide strip, and a tall photo forced into a wide strip gets
+     cropped hard. Here are four real treatments of the same Kiwi ballroom photo, rendered at true
+     banner shape, so we can pick the house style.</p>
+</div></header>
+
+<main><div class="wrap">
+
+  <h2 class="sec">The problem in one picture</h2>
+  <div class="problem">
+    <img src="assets/img/madeline/inuse-kiwi-2.jpg" alt="The original portrait photo — a tall frame showing chandelier, windows and three draped tables">
+    <div>
+      <p><b>The photo is tall; the banner is wide.</b> The original frame (left) is about
+         three units tall for every two wide. The banner slot is about three units <em>wide</em>
+         for every one tall &mdash; the strip can only ever show a thin horizontal slice of it.</p>
+      <p>Which slice, and how it&rsquo;s treated, is the whole decision. The four candidates below are
+         the same photo &mdash; only the treatment changes.</p>
+    </div>
+  </div>
+
+  <h2 class="sec">The four candidates &mdash; rendered for real</h2>
+  <p class="sec-note">Each strip below is the actual banner shape (about 3:1), built from the real photos &mdash; not a sketch.</p>
+
+  <div class="treat">
+    <div class="treat__head"><span class="tnum">1</span><h3>Straight crop</h3>
+      <span class="pill pill--next">Today&rsquo;s behavior</span></div>
+    <div class="strip-band">
+      <img src="assets/img/madeline/inuse-kiwi-2.jpg" style="object-position:center 72%" alt="The portrait photo center-cropped straight into the wide band — table tops and room context cut away">
+    </div>
+    <div class="treat__trade"><b>Trade-off</b>
+      <p>Zero work &mdash; but the band is an accidental slice: flowers, table edges and the room&rsquo;s
+         height are lost, and every new photo needs its crop point hand-checked.</p></div>
+  </div>
+
+  <div class="treat">
+    <div class="treat__head"><span class="tnum">2</span><h3>Smart landscape band</h3></div>
+    <div class="strip-band">
+      <img src="assets/img/madeline/banner-kiwi-smartcrop.jpg" alt="A hand-chosen horizontal band from the same photo — all three draped tables with their florals intact">
+    </div>
+    <div class="treat__trade"><b>Trade-off</b>
+      <p>The best-looking single image &mdash; a deliberate band with all three tables and their florals.
+         But it&rsquo;s hand-tuned per photo: someone must choose the band for every image, every time.</p></div>
+  </div>
+
+  <div class="treat treat--rec">
+    <div class="treat__head"><span class="tnum">3</span><h3>Blurred-fill</h3>
+      <span class="pill pill--gold">Recommended</span></div>
+    <div class="strip-band">
+      <img src="assets/img/madeline/banner-kiwi-blurfill.jpg" alt="The whole portrait photo centered in the band, sitting on a softly blurred and darkened wash of itself">
+    </div>
+    <div class="treat__trade"><b>Trade-off</b>
+      <p>The whole photo survives &mdash; chandelier to floor &mdash; on an elegant blurred wash of its own
+         colors. Fully automatic: works on <em>every</em> portrait photo with no per-image tuning. The
+         cost: the photo itself reads smaller inside the band.</p></div>
+  </div>
+
+  <div class="treat">
+    <div class="treat__head"><span class="tnum">4</span><h3>Paired portraits</h3></div>
+    <div class="strip-band strip-band--pair">
+      <span><img src="assets/img/madeline/inuse-kiwi-1.jpg" style="object-position:center 42%" alt="Close-up detail of the Kiwi damask with a monogrammed tambourine"></span>
+      <span><img src="assets/img/madeline/inuse-kiwi-2.jpg" style="object-position:center 65%" alt="The ballroom with three draped Kiwi tables"></span>
+    </div>
+    <div class="treat__trade"><b>Trade-off</b>
+      <p>Two verticals make one band &mdash; detail beside context, a classic editorial pairing. Each
+         half crops far more gently than the full-width slice. But it needs <em>two</em> good photos
+         per color, and some colors only have one.</p></div>
+  </div>
+
+  <div class="notecard">
+    <h3>Considered, not rendered: AI scene extension <span class="pill pill--next">No render</span></h3>
+    <p>&ldquo;Outpainting&rdquo; &mdash; AI generatively extends the photo sideways, inventing more ballroom
+       left and right until the frame is wide. It can look seamless, and it&rsquo;s a real option for a
+       hero image or two. But it&rsquo;s the costly path: every result needs human review, and it carries
+       the same line we drew in the <a href="ai-color-brief.html">AI recolor brief</a> &mdash; the AI must
+       never redraw the damask itself. Anywhere the invented area touches linen, the pattern can drift
+       from the fabric your customer actually receives. A per-image tool for special cases, not a house
+       style.</p>
+  </div>
+
+  <h2 class="sec">Today&rsquo;s pick</h2>
+  <p class="sec-note">Which treatment becomes the house style for in-place banners? Notes ride along with the decision.</p>
+  <div class="pickrow">
+    <label><input type="radio" name="bn-treatment" value="straight" data-persist="bn-treatment"> 1 &middot; Straight crop</label>
+    <label><input type="radio" name="bn-treatment" value="smartcrop" data-persist="bn-treatment"> 2 &middot; Smart band</label>
+    <label><input type="radio" name="bn-treatment" value="blurfill" data-persist="bn-treatment"> 3 &middot; Blurred-fill</label>
+    <label><input type="radio" name="bn-treatment" value="diptych" data-persist="bn-treatment"> 4 &middot; Paired portraits</label>
+  </div>
+  <textarea class="notes" data-persist="n-banner" placeholder="Notes on the banner treatment&hellip;"></textarea>
+
+  <div class="bar2"><span class="saved">Saved locally in your browser &mdash; survives reloads. No database.</span></div>
+
+  <footer class="deckfoot">Banner treatments &middot; DTA / AER &middot; part of today&rsquo;s decisions.</footer>
+</div></main>
+
+<script src="assets/js/present.js?v=3"></script>
+<script src="assets/js/deck.js"></script>
+</body>
+</html>

@@ -135,6 +135,17 @@ body[data-inuse="below"]  .inuse-below  { display: block; }
 .lbx__cap { color: #fff; font-size: .85rem; text-align: center; margin-top: .8rem; letter-spacing: .02em; }
 .lbx__x { position: absolute; top: -42px; right: 0; background: transparent; border: 0;
   color: #fff; font-size: 1.8rem; cursor: pointer; line-height: 1; }
+/* Modal color-scroll — prev/next arrows at the sides of the modal cycle the
+   in-place photo through ALL colors (Kiwi → Ivory → Black, wrapping).
+   Squared, currentColor — matches the site's squared UI. */
+.lbx__nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  display: grid; place-items: center; width: 44px; height: 44px;
+  background: rgba(16,12,10,.35); border: 1px solid currentColor; color: #fff;
+  font-size: 1.35rem; line-height: 1; cursor: pointer;
+  transition: background .15s ease; }
+.lbx__nav:hover { background: rgba(255,255,255,.18); }
+.lbx__nav--prev { left: clamp(8px, 2.5vw, 28px); }
+.lbx__nav--next { right: clamp(8px, 2.5vw, 28px); }
 </style>
 </head>
 <body data-brand="dta" data-page="product" data-base="../" data-inuse="button" data-swatch="on">
@@ -318,7 +329,8 @@ body[data-inuse="below"]  .inuse-below  { display: block; }
   </div>
 </div></footer>
 
-<!-- Click-to-enlarge lightbox for the main photo -->
+<!-- Click-to-enlarge lightbox for the main photo. The prev/next arrows scroll
+     the in-place photo through ALL colors without touching the chip selection. -->
 <div class="lbx" data-lbx>
   <div class="lbx__scrim" data-lbxclose></div>
   <div class="lbx__fig">
@@ -326,6 +338,8 @@ body[data-inuse="below"]  .inuse-below  { display: block; }
     <img data-lbximg alt="">
     <p class="lbx__cap" data-lbxcap></p>
   </div>
+  <button class="lbx__nav lbx__nav--prev" type="button" data-lbxprev aria-label="Previous color">&#8592;</button>
+  <button class="lbx__nav lbx__nav--next" type="button" data-lbxnext aria-label="Next color">&#8594;</button>
 </div>
 
 <script src="../assets/data/fabrics.js"></script>
@@ -458,16 +472,39 @@ body[data-inuse="below"]  .inuse-below  { display: block; }
     toast('Added a free ' + color + ' swatch to your quote');
   });
   // --- "View in place" (PRODUCTION): opens the modal with the full picture --
+  // EXTENSION 2026-07-30: the modal scrolls through ALL colors — prev/next
+  // arrows + left/right keys cycle Kiwi → Ivory → Black (wrapping), with the
+  // caption following. Opening starts at the selected chip's color. Cycling
+  // inside the modal changes NOTHING outside it — the chips, the main product
+  // photo and the preview-eye placements are untouched.
   var lbx = document.querySelector('[data-lbx]');
   var lbImg = lbx.querySelector('[data-lbximg]'), lbCap = lbx.querySelector('[data-lbxcap]');
-  document.querySelector('[data-inplace]').addEventListener('click', function () {
-    var shot = INPLACE[color] || INPLACE.Kiwi;
+  var LBORDER = ['Kiwi', 'Ivory', 'Black'];
+  var lbxAt = 0;
+  function lbxShow(c) {
+    lbxAt = Math.max(0, LBORDER.indexOf(c));
+    var shot = INPLACE[LBORDER[lbxAt]] || INPLACE.Kiwi;
     lbImg.src = shot.img; lbImg.alt = shot.alt; lbCap.textContent = shot.cap;
+  }
+  function lbxStep(d) { lbxShow(LBORDER[(lbxAt + d + LBORDER.length) % LBORDER.length]); }
+  document.querySelector('[data-inplace]').addEventListener('click', function () {
+    lbxShow(color);
     lbx.classList.add('is-on');
   });
+  lbx.querySelector('[data-lbxprev]').addEventListener('click', function () { lbxStep(-1); });
+  lbx.querySelector('[data-lbxnext]').addEventListener('click', function () { lbxStep(1); });
   lbx.querySelectorAll('[data-lbxclose]').forEach(function (b) {
     b.addEventListener('click', function () { lbx.classList.remove('is-on'); });
   });
+  // Left/right keys page the modal's colors while it is open. CAPTURE phase,
+  // with stopPropagation: the deck bar's own arrow-key walk (present.js,
+  // bubble phase on document) must never navigate away under the modal.
+  document.addEventListener('keydown', function (e) {
+    if (!lbx.classList.contains('is-on')) return;
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    e.preventDefault(); e.stopPropagation();
+    lbxStep(e.key === 'ArrowRight' ? 1 : -1);
+  }, true);
 
   // --- PREVIEW eye (review tooling — Glenn's simplification 2026-07-30) ----
   // ONE icon, the original eye. Each click CYCLES the in-place photo
