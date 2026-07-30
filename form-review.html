@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Form review &middot; For approval</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/deck.css">
+<link rel="stylesheet" href="assets/present.css">
+<style>
+  /* page-local: field-inventory tables, key tags, per-field notes, add-box */
+  .key { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.72rem;
+    color:var(--ink); background:var(--warm); border:1px solid var(--line); padding:.06rem .34rem; white-space:nowrap; }
+  .key--ok { border-color:var(--olive); color:var(--olive); }
+  .key--todo { border-color:var(--amber); color:var(--amber); }
+  .ftable-scroll { overflow-x:auto; background:var(--white); border:1px solid var(--line); margin:0 0 1rem; }
+  .ftable { width:100%; border-collapse:collapse; font-size:.84rem; min-width:700px; }
+  .ftable th { font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted);
+    font-weight:700; text-align:left; padding:.55rem .7rem; border-bottom:1px solid var(--line); background:var(--white); }
+  .ftable td { padding:.55rem .7rem; border-bottom:1px solid var(--line); vertical-align:top; }
+  .ftable tr:last-child td { border-bottom:0; }
+  .ftable td.fname { font-weight:600; color:var(--ink); min-width:130px; }
+  .ftable td.ftype { min-width:110px; }
+  .ftable td.fdest .why { display:block; margin-bottom:.15rem; }
+  .ftable td.fdest { min-width:220px; }
+  .ftable td:last-child { min-width:180px; }
+  .ftable td .key { white-space:normal; }
+  .steprow td { background:var(--navy-dk); color:#fff; font-family:var(--serif); font-size:.95rem;
+    padding:.5rem .7rem; border-bottom:0; }
+  .steprow td .stepno { display:inline-grid; place-items:center; width:22px; height:22px; background:var(--gold);
+    color:var(--ink); font-size:.85rem; margin-right:.55rem; vertical-align:middle; }
+  .subrow td { background:var(--warm); font-size:.8rem; color:var(--body); border-bottom:1px solid var(--line); }
+  .subrow b { color:var(--ink); }
+  .req-yes { font-size:.66rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); white-space:nowrap; }
+  .req-no { font-size:.66rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+  .fnote { width:100%; min-width:150px; font:inherit; font-size:.8rem; color:var(--ink); background:var(--paper);
+    border:1px solid var(--line); padding:.35rem .5rem; }
+  .fnote:focus { outline:none; border-color:var(--accent); background:#fff; }
+  .addbox { background:var(--white); border:1px solid var(--line); border-left:3px solid var(--gold);
+    padding:1rem 1.2rem; margin:0 0 1.4rem; }
+  .addbox h3 { font-family:var(--serif); font-weight:400; font-size:1.15rem; color:var(--ink); margin:0 0 .25rem; }
+  .addbox p { margin:0 0 .4rem; font-size:.86rem; }
+  .legend { display:flex; flex-wrap:wrap; gap:.5rem 1.2rem; align-items:center; font-size:.8rem;
+    background:var(--white); border:1px solid var(--line); padding:.7rem 1rem; margin:0 0 1.6rem; }
+  .seelive { font-size:.78rem; color:var(--accent); text-decoration:none; border:1px solid var(--line);
+    padding:.35rem .7rem; white-space:nowrap; }
+  .seelive:hover { border-color:var(--accent); }
+  .sechead { display:flex; flex-wrap:wrap; gap:.6rem 1rem; align-items:baseline; justify-content:space-between; }
+</style>
+</head>
+<body data-base="" data-deck="form-review">
+
+<header class="mast"><div class="wrap">
+  <span class="num">For approval today &middot; July 30, 2026</span>
+  <h1>Form review</h1>
+  <p>The two forms on the new site &mdash; the quote form and the contact form &mdash; reviewed as
+     field inventories. You&rsquo;re approving the fields themselves here, so each form can go live
+     knowing it asks for exactly what you want, and writes it exactly where it should go.</p>
+</div></header>
+
+<main><div class="wrap">
+
+  <p class="sec-note" style="max-width:74ch">
+    Every field is listed with what a visitor sees, what kind of answer it takes, whether it&rsquo;s
+    required, and where the answer lands in <b style="color:var(--ink)">Current&nbsp;RMS</b>. Use the
+    notes box on any row to ask for a change (&ldquo;add&rdquo;, &ldquo;reword&rdquo;,
+    &ldquo;remove&rdquo;, &ldquo;make required&rdquo;&hellip;), list anything missing in the
+    &ldquo;fields to add&rdquo; box, then approve each form at the end of its section.</p>
+
+  <div class="legend">
+    <span><span class="key">opportunity.starts_at</span> &mdash; the exact Current&nbsp;RMS field it writes to</span>
+    <span><span class="key key--ok">&#10003; verified</span> &mdash; confirmed live in your system</span>
+    <span><span class="key key--todo">to confirm</span> &mdash; mapping still to be confirmed with you</span>
+  </div>
+
+  <!-- ================= SECTION 1 — QUOTE FORM ================= -->
+  <section id="quote">
+    <div class="sechead">
+      <h2 class="sec">Section 1 &mdash; The quote form</h2>
+      <a class="seelive" href="dta/quote-request.html">See it live &rarr;</a>
+    </div>
+    <p class="sec-note" style="max-width:74ch">
+      &ldquo;Request a Quote&rdquo; is a four-step form: <b style="color:var(--ink)">1&nbsp;Your event
+      &middot; 2&nbsp;What you need &middot; 3&nbsp;About you &middot; 4&nbsp;Review</b>. It carries
+      every field from your current intake form, and each answer becomes structured data &mdash; a
+      contact, an event, and one priced line per piece &mdash; not a block of text to re-key.</p>
+
+    <div class="ftable-scroll"><table class="ftable">
+      <tr><th>Field</th><th>Answer type</th><th>Required</th><th>Where it goes in Current&nbsp;RMS</th><th>Your notes</th></tr>
+
+      <tr class="steprow"><td colspan="5"><span class="stepno">1</span>Your event</td></tr>
+      <tr>
+        <td class="fname">What can we help you with?</td>
+        <td class="ftype">Dropdown &mdash; Wedding &middot; Rehearsal Dinner &middot; Private Party &middot; Fundraiser</td>
+        <td><span class="req-yes">Required</span></td>
+        <td class="fdest"><span class="why">The event type on the opportunity</span>
+          <span class="key">opportunity.custom_fields.event_type</span> <span class="key key--ok">&#10003; verified</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-q-event_type" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr>
+        <td class="fname">Event date</td>
+        <td class="ftype">Date picker</td>
+        <td><span class="req-yes">Required</span></td>
+        <td class="fdest"><span class="why">Sets when the event starts and ends</span>
+          <span class="key">opportunity.starts_at / ends_at</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-q-event_date" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr>
+        <td class="fname">Guest count</td>
+        <td class="ftype">Number</td>
+        <td><span class="req-no">Optional</span></td>
+        <td class="fdest"><span class="why">Collected for context &mdash; not yet written into the system</span>
+          <span class="key key--todo">not mapped yet &mdash; tell us where you&rsquo;d like it</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-q-guests" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr>
+        <td class="fname">Start time</td>
+        <td class="ftype">Time</td>
+        <td><span class="req-no">Optional</span></td>
+        <td class="fdest"><span class="why">Folded into the event&rsquo;s start</span>
+          <span class="key">opportunity.starts_at</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-q-start_time" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr>
+        <td class="fname">End time</td>
+        <td class="ftype">Time</td>
+        <td><span class="req-no">Optional</span></td>
+        <td class="fdest"><span class="why">Folded into the event&rsquo;s end</span>
+          <span class="key">opportunity.ends_at</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-q-end_time" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr>
+        <td class="fname">Venue name</td>
+        <td class="ftype">Text</td>
+        <td><span class="req-no">Optional</span></td>
+        <td class="fdest"><span class="why">Matches or creates the venue on the opportunity</span>
+          <span class="key">opportunity.venue_id</span> (lookup / create)</td>
+        <td><input class="fnote" type="text" data-persist="fr-q-venue_name" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr>
+        <td class="fname">Venue city</td>
+        <td class="ftype">Text</td>
+        <td><span class="req-no">Optional</span></td>
+        <td class="fdest"><span class="why">Helps match the right venue record</span>
+          <span class="key">venue lookup &middot; primary_address</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-q-venue_city" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+
+      <tr class="steprow"><td colspan="5"><span class="stepno">2</span>What you need</td></tr>
+      <tr>
+        <td class="fname">Pieces you&rsquo;re considering</td>
+        <td class="ftype">14 checkboxes, each with a quantity</td>
+        <td><span class="req-no">Optional</span></td>
+        <td class="fdest"><span class="why">One real, priced line item per piece on your quote</span>
+          <span class="key">opportunity_items[] &middot; item_id + quantity</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-q-products" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr class="subrow"><td colspan="5">
+        The 14 options: <b>Table Linens &middot; Chair Covers &middot; Napkins &middot; Runners &middot;
+        Sashes &middot; Chargers &middot; Drapery &middot; Tables &middot; Chairs &middot; Pews &middot;
+        China / Flatware / Glassware &middot; Catering Items &middot; Dance Floor &middot; Stage</b>.
+        Table Linens is wired to a product we verified live in your system
+        (<span class="key key--ok">&#10003; 2892 &middot; Madeline Damask Kiwi</span>); the other 13 carry
+        <span class="key key--todo">to confirm</span> ids until you confirm which product or category
+        each option should map to.</td></tr>
+      <tr>
+        <td class="fname">Color palette &amp; style</td>
+        <td class="ftype">Text</td>
+        <td><span class="req-no">Optional</span></td>
+        <td class="fdest"><span class="why">Added to the event&rsquo;s description</span>
+          <span class="key">opportunity.description</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-q-palette" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+
+      <tr class="steprow"><td colspan="5"><span class="stepno">3</span>About you</td></tr>
+      <tr>
+        <td class="fname">First name</td>
+        <td class="ftype">Text</td>
+        <td><span class="req-yes">Required</span></td>
+        <td class="fdest"><span class="why">The contact&rsquo;s name</span>
+          <span class="key">member.name</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-q-first_name" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr>
+        <td class="fname">Last name</td>
+        <td class="ftype">Text</td>
+        <td><span class="req-yes">Required</span></td>
+        <td class="fdest"><span class="why">The contact&rsquo;s name</span>
+          <span class="key">member.name</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-q-last_name" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr>
+        <td class="fname">Email</td>
+        <td class="ftype">Email</td>
+        <td><span class="req-yes">Required</span></td>
+        <td class="fdest"><span class="why">The contact&rsquo;s email &mdash; also how returning clients are recognized, so nobody is duplicated</span>
+          <span class="key">member.emails[]</span> <span class="key key--ok">&#10003; de-duped</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-q-email" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr>
+        <td class="fname">Confirm email</td>
+        <td class="ftype">Email</td>
+        <td><span class="req-no">Optional</span></td>
+        <td class="fdest"><span class="why">Typo check only &mdash; never sent anywhere</span>
+          <span class="key">validation only</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-q-email2" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr>
+        <td class="fname">Phone</td>
+        <td class="ftype">Phone number</td>
+        <td><span class="req-no">Optional</span></td>
+        <td class="fdest"><span class="why">The contact&rsquo;s phone</span>
+          <span class="key">member.phones[]</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-q-phone" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr>
+        <td class="fname">Tell us more about your event</td>
+        <td class="ftype">Multi-line text</td>
+        <td><span class="req-no">Optional</span></td>
+        <td class="fdest"><span class="why">Added to the event&rsquo;s description</span>
+          <span class="key">opportunity.description</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-q-notes" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr>
+        <td class="fname">How did you hear about us?</td>
+        <td class="ftype">Dropdown &mdash; Google &middot; Instagram/Facebook &middot; friend/family &middot; venue/planner &middot; returning client &middot; other</td>
+        <td><span class="req-no">Optional</span></td>
+        <td class="fdest"><span class="why">Tagged on the opportunity, so you can report on it</span>
+          <span class="key">opportunity.tag_list</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-q-heard" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+
+      <tr class="steprow"><td colspan="5"><span class="stepno">4</span>Review</td></tr>
+      <tr class="subrow"><td colspan="5">
+        <b>No new fields on step 4.</b> Before sending, the visitor sees exactly what will be sent
+        &mdash; their contact details, the event, and every requested piece as its own line &mdash;
+        the same structure that lands in Current&nbsp;RMS. A subject line is built automatically from
+        the date, name and event type (<span class="key">opportunity.subject</span>).</td></tr>
+    </table></div>
+
+    <div class="addbox">
+      <h3>Fields to add &mdash; quote form</h3>
+      <p>Anything the quote form should ask that isn&rsquo;t in the list above? Budget range,
+         delivery address, planner&rsquo;s name&hellip; list it here.</p>
+      <textarea class="notes" data-persist="fr-q-add" placeholder="Fields to add to the quote form&hellip;"></textarea>
+    </div>
+
+    <div data-decide-sec="open">
+      <div class="mlist">
+        <div class="mrow mrow--gold" data-decide="v-quote-form" data-decide-group="forms"><span class="mnum">&#9998;</span>
+          <div><h3>Approve the quote form <span class="pill pill--gold" data-decide-pending>Pending</span></h3>
+            <p>Sixteen fields across four steps, plus the 14-piece picker &mdash; every answer landing
+               as structured data in Current&nbsp;RMS. Approve it as listed, or reject with notes and
+               we&rsquo;ll revise. Row notes and the add-list ride along either way.</p>
+            <textarea class="notes" data-persist="n-quote-form" placeholder="Notes on the quote form&hellip;"></textarea></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 2 — CONTACT FORM ================= -->
+  <section id="contact">
+    <div class="sechead">
+      <h2 class="sec">Section 2 &mdash; The contact form</h2>
+      <a class="seelive" href="dta/contact.html">See it live &rarr;</a>
+    </div>
+    <p class="sec-note" style="max-width:74ch">
+      The Contact page carries a shorter, single-step &ldquo;Getting started&rdquo; form &mdash; for
+      the visitor who wants to reach out without walking the full quote wizard. It lands as a simple
+      inquiry with the same destinations as the quote form (mappings marked
+      <span class="key key--todo">to confirm</span> until you&rsquo;ve approved them).</p>
+
+    <div class="ftable-scroll"><table class="ftable">
+      <tr><th>Field</th><th>Answer type</th><th>Required</th><th>Where it goes in Current&nbsp;RMS</th><th>Your notes</th></tr>
+      <tr>
+        <td class="fname">Name</td>
+        <td class="ftype">Text</td>
+        <td><span class="req-no">Optional</span></td>
+        <td class="fdest"><span class="why">The contact&rsquo;s name</span>
+          <span class="key">member.name</span> <span class="key key--todo">to confirm</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-c-name" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr>
+        <td class="fname">Email</td>
+        <td class="ftype">Email</td>
+        <td><span class="req-no">Optional</span></td>
+        <td class="fdest"><span class="why">The contact&rsquo;s email &mdash; de-duped against returning clients</span>
+          <span class="key">member.emails[]</span> <span class="key key--todo">to confirm</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-c-email" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr>
+        <td class="fname">Event date</td>
+        <td class="ftype">Date picker</td>
+        <td><span class="req-no">Optional</span></td>
+        <td class="fdest"><span class="why">Sets when the event starts</span>
+          <span class="key">opportunity.starts_at</span> <span class="key key--todo">to confirm</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-c-event_date" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr>
+        <td class="fname">Venue</td>
+        <td class="ftype">Text</td>
+        <td><span class="req-no">Optional</span></td>
+        <td class="fdest"><span class="why">Matches or creates the venue</span>
+          <span class="key">opportunity.venue_id</span> <span class="key key--todo">to confirm</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-c-venue" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr>
+        <td class="fname">Guest count</td>
+        <td class="ftype">Number</td>
+        <td><span class="req-no">Optional</span></td>
+        <td class="fdest"><span class="why">Collected for context &mdash; not yet written into the system</span>
+          <span class="key key--todo">not mapped yet &mdash; tell us where you&rsquo;d like it</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-c-guests" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr>
+        <td class="fname">Tell us about the event</td>
+        <td class="ftype">Multi-line text</td>
+        <td><span class="req-no">Optional</span></td>
+        <td class="fdest"><span class="why">Added to the inquiry&rsquo;s description</span>
+          <span class="key">opportunity.description</span> <span class="key key--todo">to confirm</span></td>
+        <td><input class="fnote" type="text" data-persist="fr-c-message" placeholder="Add / change / remove&hellip;"></td>
+      </tr>
+      <tr class="subrow"><td colspan="5">
+        <b>Worth deciding:</b> none of the contact form&rsquo;s fields are currently required &mdash;
+        a visitor could send it empty. If you&rsquo;d like name, email or anything else to be
+        required, note it on the row above.</td></tr>
+    </table></div>
+
+    <div class="addbox">
+      <h3>Fields to add &mdash; contact form</h3>
+      <p>Anything the contact form should ask that isn&rsquo;t in the list above? Phone number,
+         how-did-you-hear&hellip; list it here.</p>
+      <textarea class="notes" data-persist="fr-c-add" placeholder="Fields to add to the contact form&hellip;"></textarea>
+    </div>
+
+    <div data-decide-sec="open">
+      <div class="mlist">
+        <div class="mrow mrow--gold" data-decide="v-contact-form" data-decide-group="forms"><span class="mnum">&#9998;</span>
+          <div><h3>Approve the contact form <span class="pill pill--gold" data-decide-pending>Pending</span></h3>
+            <p>Six fields, one step &mdash; the fast way in for a visitor who just wants to talk.
+               Approve it as listed, or reject with notes and we&rsquo;ll revise. Row notes and the
+               add-list ride along either way.</p>
+            <textarea class="notes" data-persist="n-contact-form" placeholder="Notes on the contact form&hellip;"></textarea></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section data-decide-sec="accepted" hidden>
+    <h2 class="sec">Accepted</h2>
+    <p class="sec-note">Approved today &mdash; on the record.</p>
+    <div class="mlist" data-decide-zone="accepted"></div>
+  </section>
+
+  <section data-decide-sec="rejected" hidden>
+    <h2 class="sec">Rejected</h2>
+    <p class="sec-note">Not approved today &mdash; kept on the record with the notes.</p>
+    <div class="mlist" data-decide-zone="rejected"></div>
+  </section>
+
+  <div class="bar2"><span class="saved">Saved locally in your browser &mdash; survives reloads. No database.</span></div>
+
+  <footer class="deckfoot">Form review &middot; DTA / AER &middot; part of today&rsquo;s decisions.</footer>
+</div></main>
+
+<script src="assets/js/present.js?v=3"></script>
+<script src="assets/js/deck.js"></script>
+<script src="assets/js/decide.js"></script>
+</body>
+</html>
