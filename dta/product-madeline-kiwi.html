@@ -175,9 +175,13 @@ body[data-inuse="below"]  .inuse-below  { display: block; }
 
 
 <!-- PREVIEW placement A (banner): full-bleed in-place photo across the top.
-     Hidden in production (data-inuse="button"); the preview eye flips it. -->
+     Hidden in production (data-inuse="button"); the preview eye flips it.
+     Glenn's pick 2026-07-30 (banner-treatments.html option 2, SMART LANDSCAPE
+     BAND): Kiwi uses the pre-rendered 1280x420 hand-tuned band — all three
+     draped tables — NOT a CSS crop of the portrait. Kiwi only for now; the JS
+     BANNER map below is the per-color seam. -->
 <figure class="inuse-banner">
-  <img data-inuse-img src="../assets/img/madeline/inuse-kiwi-2.jpg" style="object-position:center 72%" alt="Madeline Damask Kiwi linens dressed for a ballroom reception">
+  <img data-inuse-img src="../assets/img/madeline/banner-kiwi-smartcrop.jpg" style="object-position:center" alt="Madeline Damask Kiwi linens dressed for a ballroom reception">
   <figcaption><div class="wrap">In place &mdash; <b data-inuse-cap>Madeline Damask Kiwi</b></div></figcaption>
 </figure>
 
@@ -385,6 +389,16 @@ body[data-inuse="below"]  .inuse-below  { display: block; }
     Black: { img: MIMG + 'inuse-black-1.jpg', cap: 'Madeline Damask Black', pos: 'center 62%' },
     Ivory: { img: MIMG + 'inuse-ivory-1.jpg', cap: 'Madeline Damask Ivory', pos: 'center 60%' }
   };
+  // BANNER-TOP override — Glenn's pick 2026-07-30 (banner-treatments.html
+  // option 2, SMART LANDSCAPE BAND): the banner placement shows the
+  // pre-rendered hand-tuned 1280x420 band instead of CSS-cropping the
+  // portrait. PER-COLOR SEAM: only Kiwi has a smartcrop asset today, so
+  // Black/Ivory fall back to their BAND entry (current portrait-crop
+  // behavior); when their smartcrop bands are rendered, add them here.
+  // Applies to the top banner ONLY — the "below" placement keeps BAND.
+  var BANNER = {
+    Kiwi: { img: MIMG + 'banner-kiwi-smartcrop.jpg', cap: 'Madeline Damask Kiwi', pos: 'center' }
+  };
   var mainImg = document.querySelector('[data-main-img]');
   var capLbl  = document.querySelector('[data-cap-label]');
   var color   = 'Kiwi';
@@ -400,9 +414,12 @@ body[data-inuse="below"]  .inuse-below  { display: block; }
   function paintBand() {
     var lead = BAND[color] || BAND.Kiwi;
     document.querySelectorAll('[data-inuse-img]').forEach(function (im) {
-      im.src = lead.img;
-      im.alt = lead.cap + ' linens dressed for an event';
-      im.style.objectPosition = lead.pos;
+      // Top banner prefers the pre-rendered smartcrop band when this color
+      // has one (Kiwi today — see the BANNER per-color seam above).
+      var use = (im.closest('.inuse-banner') && BANNER[color]) || lead;
+      im.src = use.img;
+      im.alt = use.cap + ' linens dressed for an event';
+      im.style.objectPosition = use.pos;
     });
     document.querySelectorAll('[data-inuse-cap]').forEach(function (el) { el.textContent = lead.cap; });
   }
