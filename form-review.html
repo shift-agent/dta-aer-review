@@ -46,14 +46,15 @@
     padding:.35rem .7rem; white-space:nowrap; }
   .seelive:hover { border-color:var(--accent); }
   .sechead { display:flex; flex-wrap:wrap; gap:.6rem 1rem; align-items:baseline; justify-content:space-between; }
-  /* guest-count placement picker */
-  .guestpick { background:var(--warm); border:1px solid var(--line); border-left:3px solid var(--accent);
-    padding:1rem 1.2rem; margin:0 0 1.4rem; }
+  /* guest-count CRMS mapping picker */
+  .ftable td.gp-cell { padding:0; }
+  .guestpick { background:var(--warm); border-left:3px solid var(--accent);
+    padding:1rem 1.2rem; margin:0; }
   .guestpick h3 { font-family:var(--serif); font-weight:400; font-size:1.15rem; color:var(--ink); margin:0 0 .25rem; }
   .guestpick > p { margin:0 0 .7rem; font-size:.86rem; }
   .gp-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:.8rem; margin:0 0 .8rem; }
   .gp-card { display:block; background:var(--white); border:1px solid var(--line); padding:.75rem .85rem;
-    cursor:pointer; font-size:.82rem; color:var(--body); }
+    cursor:pointer; font-size:.82rem; color:var(--body); white-space:normal; }
   .gp-card:hover { border-color:var(--accent); }
   .gp-card:has(input:checked) { border-color:var(--accent); outline:1px solid var(--accent); }
   .gp-card input[type="radio"] { accent-color:var(--accent); margin:0 .4rem 0 0; vertical-align:-1px; }
@@ -62,13 +63,16 @@
   .gp-sketch { display:block; background:var(--paper); border:1px solid var(--line); padding:.55rem .6rem; }
   .gp-lbl { display:block; font-size:.56rem; letter-spacing:.1em; text-transform:uppercase; font-weight:700;
     color:var(--muted); margin-bottom:.3rem; }
-  .gp-mock { display:flex; gap:.35rem; align-items:stretch; }
-  .gp-in { flex:1; min-width:0; display:flex; align-items:center; justify-content:space-between; gap:.3rem;
-    background:#fff; border:1px solid var(--line); color:var(--muted); font-size:.62rem; padding:.32rem .42rem;
-    white-space:nowrap; overflow:hidden; }
-  .gp-in--sm { flex:0 0 31%; }
-  .gp-in--area { min-height:2.8rem; align-items:flex-start; white-space:normal; }
-  .gp-caret { flex:0 0 auto; color:var(--ink); }
+  .gp-kv { display:flex; justify-content:space-between; align-items:baseline; gap:.4rem; background:#fff;
+    border:1px solid var(--line); font-size:.64rem; color:var(--muted); padding:.32rem .42rem; margin:0 0 .3rem; }
+  .gp-kv:last-child { margin-bottom:0; }
+  .gp-kv b { color:var(--ink); font-weight:600; }
+  .gp-desc-mock { display:block; background:#fff; border:1px solid var(--line); color:var(--muted);
+    font-size:.64rem; padding:.32rem .42rem; min-height:2.6rem; }
+  .gp-desc-mock b { color:var(--ink); font-weight:600; }
+  .gp-tag { display:inline-block; background:var(--warm); border:1px solid var(--line); color:var(--ink);
+    font-size:.62rem; padding:.2rem .45rem; margin:0 .25rem .25rem 0; }
+  .gp-tag--new { border-color:var(--accent); color:var(--accent); }
 </style>
 </head>
 <body data-base="" data-deck="form-review">
@@ -133,9 +137,62 @@
         <td class="ftype">Number</td>
         <td><span class="req-no">Optional</span></td>
         <td class="fdest"><span class="why">Collected for context &mdash; not yet written into the system</span>
-          <span class="key key--todo">not mapped yet &mdash; tell us where you&rsquo;d like it</span></td>
+          <span class="key key--todo">not mapped yet &mdash; mapping decision below</span></td>
         <td><input class="fnote" type="text" data-persist="fr-q-guests" placeholder="Add / change / remove&hellip;"></td>
       </tr>
+      <tr><td class="gp-cell" colspan="5">
+        <div class="guestpick">
+          <h3>Suggested addition &mdash; Guest count</h3>
+          <p>The quote form collects guest count &mdash; where should it live on the opportunity in
+             Current&nbsp;RMS?</p>
+          <div class="gp-grid">
+
+            <label class="gp-card">
+              <span><input type="radio" name="fr-q-guests-mapping" value="a" data-persist="fr-q-guests-mapping">
+                <span class="gp-head">Option A &mdash; A dedicated custom field</span>
+                <span class="pill pill--gold">Recommended</span></span>
+              <span class="gp-desc">A &ldquo;Guest count&rdquo; custom field on the opportunity
+                (<span class="key">custom_fields.guest_count</span>). One-time setup in Current&nbsp;RMS
+                System Preferences by your team; after that it&rsquo;s a real data field &mdash; visible
+                on every opportunity, reportable, filterable. Same mechanism as Event type, which is
+                already proven.</span>
+              <span class="gp-sketch"><span class="gp-lbl">Opportunity &mdash; custom fields</span>
+                <span class="gp-kv"><span>Event type</span><b>Wedding</b></span>
+                <span class="gp-kv"><span>Guest count</span><b>150</b></span>
+              </span>
+            </label>
+
+            <label class="gp-card">
+              <span><input type="radio" name="fr-q-guests-mapping" value="b" data-persist="fr-q-guests-mapping">
+                <span class="gp-head">Option B &mdash; A line in the description</span></span>
+              <span class="gp-desc">Append &ldquo;Approximate guests: 150&rdquo; to the opportunity
+                description (<span class="key">opportunity.description</span>). Works immediately, zero
+                setup &mdash; but it&rsquo;s free text: readable by staff, not reportable or filterable.
+                Honest note: free-text description is the pattern we&rsquo;re moving away from elsewhere.</span>
+              <span class="gp-sketch"><span class="gp-lbl">Opportunity &mdash; description</span>
+                <span class="gp-desc-mock">Color palette: sage &amp; gold.
+                  <b>Approximate guests: 150</b></span>
+              </span>
+            </label>
+
+            <label class="gp-card">
+              <span><input type="radio" name="fr-q-guests-mapping" value="c" data-persist="fr-q-guests-mapping">
+                <span class="gp-head">Option C &mdash; An opportunity tag</span></span>
+              <span class="gp-desc">Tag the opportunity, e.g. <span class="key">guests-150-300</span>
+                (range buckets, via <span class="key">opportunity.tag_list</span>). Filterable in
+                opportunity lists with no custom-field setup, but coarse &mdash; ranges, not exact
+                numbers &mdash; and tags can drift.</span>
+              <span class="gp-sketch"><span class="gp-lbl">Opportunity &mdash; tags</span>
+                <span class="gp-tag">wedding</span><span class="gp-tag">google</span><span
+                  class="gp-tag gp-tag--new">guests-150-300</span>
+              </span>
+            </label>
+
+          </div>
+          <input class="fnote" type="text" data-persist="fr-q-guests-notes"
+                 placeholder="Notes on guest count mapping&hellip;">
+        </div>
+      </td></tr>
       <tr>
         <td class="fname">Start time</td>
         <td class="ftype">Time</td>
@@ -330,8 +387,8 @@
         <td class="fname">Guest count</td>
         <td class="ftype">Number</td>
         <td><span class="req-no">Optional</span></td>
-        <td class="fdest"><span class="why">Collected for context &mdash; not yet written into the system</span>
-          <span class="key key--todo">not mapped yet &mdash; tell us where you&rsquo;d like it</span></td>
+        <td class="fdest"><span class="why">Collected for context &mdash; follows the mapping decision in Section&nbsp;1</span>
+          <span class="key key--todo">not mapped yet &mdash; mapping decision in Section&nbsp;1</span></td>
         <td><input class="fnote" type="text" data-persist="fr-c-guests" placeholder="Add / change / remove&hellip;"></td>
       </tr>
       <tr>
@@ -347,59 +404,6 @@
         a visitor could send it empty. If you&rsquo;d like name, email or anything else to be
         required, note it on the row above.</td></tr>
     </table></div>
-
-    <div class="guestpick">
-      <h3>Suggested addition &mdash; Guest count</h3>
-      <p>Knowing approximate guest count up front helps us scope the quote &mdash; here are three
-         ways to place it:</p>
-      <div class="gp-grid">
-
-        <label class="gp-card">
-          <span><input type="radio" name="fr-c-guests-placement" value="a" data-persist="fr-c-guests-placement">
-            <span class="gp-head">Option A &mdash; With the event basics</span></span>
-          <span class="gp-desc">A compact &ldquo;Your event&rdquo; row near the top: Event date &middot;
-            Guest count &middot; Venue &mdash; three inputs side by side (numeric guest input).</span>
-          <span class="gp-sketch"><span class="gp-lbl">Your event</span>
-            <span class="gp-mock">
-              <span class="gp-in">Event date</span>
-              <span class="gp-in">Guest count <span class="gp-caret">#</span></span>
-              <span class="gp-in">Venue</span>
-            </span>
-          </span>
-        </label>
-
-        <label class="gp-card">
-          <span><input type="radio" name="fr-c-guests-placement" value="b" data-persist="fr-c-guests-placement">
-            <span class="gp-head">Option B &mdash; Simple range picker</span>
-            <span class="pill pill--gold">Recommended</span></span>
-          <span class="gp-desc">One dropdown after Phone: &ldquo;Approximate guest count&rdquo; with
-            ranges (Under 50 / 50&ndash;150 / 150&ndash;300 / 300+) &mdash; lowest friction, good
-            enough for scoping.</span>
-          <span class="gp-sketch"><span class="gp-lbl">After phone</span>
-            <span class="gp-mock">
-              <span class="gp-in">Approximate guest count &mdash; Under 50 / 50&ndash;150 / 150&ndash;300 / 300+
-                <span class="gp-caret">&#9662;</span></span>
-            </span>
-          </span>
-        </label>
-
-        <label class="gp-card">
-          <span><input type="radio" name="fr-c-guests-placement" value="c" data-persist="fr-c-guests-placement">
-            <span class="gp-head">Option C &mdash; In the message area</span></span>
-          <span class="gp-desc">Keep the form minimal; add a small optional numeric field beside the
-            message box labeled &ldquo;About how many guests?&rdquo;.</span>
-          <span class="gp-sketch"><span class="gp-lbl">Message area</span>
-            <span class="gp-mock">
-              <span class="gp-in gp-in--area">Tell us about the event&hellip;</span>
-              <span class="gp-in gp-in--sm">About how many guests? <span class="gp-caret">#</span></span>
-            </span>
-          </span>
-        </label>
-
-      </div>
-      <input class="fnote" type="text" data-persist="fr-c-guests-notes"
-             placeholder="Notes on guest count placement&hellip;">
-    </div>
 
     <div class="addbox">
       <h3>Fields to add &mdash; contact form</h3>
