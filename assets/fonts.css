@@ -42,34 +42,15 @@
   src: url(fonts/playfair-600.woff2) format("woff2");
 }
 
+/* Montserrat here is the full VARIABLE font (wght axis 100-900) — the
+   four per-weight files shipped 2026-07-28 are byte-identical copies of
+   it. One range declaration maps every requested weight onto the axis,
+   so 700 renders as a true bold instead of clamping at the old 600 cap.
+   (Typography pass 2026-07-30: all Montserrat text bumped +1 weight.) */
 @font-face {
   font-family: "Montserrat";
   font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url(fonts/montserrat-300.woff2) format("woff2");
-}
-
-@font-face {
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 400;
+  font-weight: 100 900;
   font-display: swap;
   src: url(fonts/montserrat-400.woff2) format("woff2");
-}
-
-@font-face {
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(fonts/montserrat-500.woff2) format("woff2");
-}
-
-@font-face {
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(fonts/montserrat-600.woff2) format("woff2");
 }

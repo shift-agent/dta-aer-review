@@ -56,7 +56,7 @@
   --proto-fs-body: .93rem;  --proto-fs-small: .78rem;  --proto-fs-lead: 1.1rem;
   --proto-fs-nav: .70rem;   --proto-fs-chip: .68rem;   --proto-fs-card: 1.14rem;
   --proto-fs-brand: 1.9rem; --proto-fs-script: clamp(2rem, 4vw, 2.9rem);
-  --proto-fw-body: 300;     --proto-fw-heading: 500;   --proto-fw-card: 500;
+  --proto-fw-body: 400;     --proto-fw-heading: 500;   --proto-fw-card: 500;
   --proto-tt-heading: none; --proto-tt-brand: none;    --proto-tt-nav: uppercase;
   --proto-tt-card: none;    --proto-ls-brand: .02em;   --proto-ls-card: .01em;
   --proto-lh-heading: 1.1;

@@ -14,7 +14,7 @@
 }
 * { box-sizing:border-box; }
 body { margin:0; background:var(--paper); color:var(--body); font-family:var(--sans);
-  font-size:15px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  font-size:15px; font-weight:500; line-height:1.6; -webkit-font-smoothing:antialiased; }
 .wrap { width:min(940px, calc(100% - 3rem)); margin-inline:auto; }
 header.mast { background:var(--navy-dk); color:#fff; padding:2.4rem 0 2rem; }
 header.mast .num { display:block; font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.6); margin-bottom:.5rem; }
@@ -24,7 +24,7 @@ main { padding:2.2rem 0 4rem; }
 h2.sec { font-family:var(--serif); font-weight:400; font-size:1.5rem; color:var(--ink); margin:1.8rem 0 .3rem; }
 h2.sec:first-child { margin-top:0; }
 .sec-note { font-size:.9rem; color:var(--body); margin:0 0 1.2rem; }
-.btn { font:inherit; font-size:.82rem; font-weight:600; padding:.55rem 1rem; cursor:pointer;
+.btn { font:inherit; font-size:.82rem; font-weight:700; padding:.55rem 1rem; cursor:pointer;
   border:1px solid var(--line); background:var(--white); color:var(--ink); text-decoration:none; display:inline-flex; align-items:center; gap:.4rem; }
 .btn:hover { border-color:var(--navy); }
 .btn--primary { background:var(--accent); border-color:var(--accent); color:#fff; }
@@ -59,7 +59,7 @@ footer.deckfoot { border-top:1px solid var(--line); margin-top:2.4rem; padding-t
 /* date + notes controls */
 .ctl { display:flex; flex-wrap:wrap; gap:.6rem 1rem; margin-top:.7rem; align-items:center; }
 .datefld { display:flex; align-items:center; gap:.4rem; font-size:.7rem; letter-spacing:.08em;
-  text-transform:uppercase; color:var(--muted); font-weight:600; }
+  text-transform:uppercase; color:var(--muted); font-weight:700; }
 .datefld input { font:inherit; font-size:.82rem; letter-spacing:0; text-transform:none; color:var(--ink);
   background:var(--paper); border:1px solid var(--line); padding:.35rem .5rem; }
 .notes { width:100%; font:inherit; font-size:.86rem; color:var(--ink); background:var(--paper);
@@ -68,7 +68,7 @@ footer.deckfoot { border-top:1px solid var(--line); margin-top:2.4rem; padding-t
 
 /* accept / reject decision control */
 .verdict { display:flex; gap:.5rem; margin-top:.7rem; flex-wrap:wrap; }
-.verdict label { display:inline-flex; align-items:center; gap:.4rem; font-size:.72rem; font-weight:600;
+.verdict label { display:inline-flex; align-items:center; gap:.4rem; font-size:.72rem; font-weight:700;
   letter-spacing:.04em; text-transform:uppercase; color:var(--muted); border:1px solid var(--line);
   padding:.4rem .7rem; cursor:pointer; }
 .verdict input { accent-color:var(--olive); }

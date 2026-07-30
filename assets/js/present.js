@@ -86,7 +86,7 @@
   // map stays reachable from the Simplitory pages, alongside the other
   // technical surfaces where it belongs.
   var mark = el( 'a', 'presentbar__mark',
-    '<b>Simpliment</b> <span>&middot; Decor To Adore &amp; Alabama Event Rentals</span>' );
+    '<b>Simpliment</b> <span>&middot; Decor To Adore</span>' );
   mark.href = hrefOf( STEPS[ 0 ] );
   mark.title = 'Back to the start of the deck';
   bar.appendChild( mark );

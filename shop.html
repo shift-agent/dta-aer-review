@@ -69,7 +69,7 @@
   /* ── entry sections (event chooser / browse) ── */
   .entrysec { margin: 0 0 2.4rem; }
   .entrysec__h { font-size: .66rem; letter-spacing: .16em; text-transform: uppercase;
-    color: var(--shell-text-muted); font-weight: 500; margin: 0 0 1rem; }
+    color: var(--shell-text-muted); font-weight: 600; margin: 0 0 1rem; }
 
   .evrow { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
   .evcard { display: flex; flex-direction: column; align-items: flex-start; gap: .3rem; text-align: left;
@@ -91,7 +91,7 @@
   .addon { font: inherit; font-size: var(--proto-fs-chip); letter-spacing: .03em; cursor: pointer;
     padding: .6rem 1.1rem; border: 1px solid var(--shell-hairline); background: var(--shell-surface-light);
     color: var(--shell-text-body); transition: all .15s; }
-  .addon::before { content: "+ "; color: var(--shell-accent); font-weight: 600; }
+  .addon::before { content: "+ "; color: var(--shell-accent); font-weight: 700; }
   .addon:hover { border-color: var(--shell-accent); color: var(--shell-accent); }
 
   /* ── category cards (grid defined above) ── */
@@ -108,7 +108,7 @@
   .catcard__b h3 { font-family: var(--shell-font-family-heading); font-weight: var(--proto-fw-heading);
     font-size: 1.5rem; color: var(--shell-text-dark); margin: 0 0 .25rem; }
   .catcard__b p { font-size: var(--proto-fs-small); color: var(--shell-text-body); margin: 0 0 .6rem; }
-  .catcard__n { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--shell-accent); font-weight: 500; }
+  .catcard__n { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--shell-accent); font-weight: 600; }
 
   /* ── wizard ── */
   .crumb { font-size: .78rem; color: var(--shell-text-muted); margin-bottom: 1.4rem; }
@@ -116,7 +116,7 @@
   .crumb span { margin: 0 .4rem; color: var(--shell-hairline); }
   .wizrow { display: grid; gap: 1.4rem; margin-bottom: 1.2rem; }
   .wizlbl { display: block; font-size: .66rem; letter-spacing: .16em; text-transform: uppercase;
-    color: var(--shell-text-muted); font-weight: 500; margin-bottom: .6rem; }
+    color: var(--shell-text-muted); font-weight: 600; margin-bottom: .6rem; }
   .chips { display: flex; flex-wrap: wrap; gap: .5rem; }
   .chip { font-family: var(--shell-font-family-body); font-size: var(--proto-fs-chip);
     letter-spacing: .04em; padding: .5rem 1rem; border: 1px solid var(--shell-hairline);
@@ -152,10 +152,10 @@
   .rc__m .ph { position: absolute; inset: 0; display: grid; place-items: center;
     font-family: var(--shell-font-family-heading); font-size: 2rem; color: var(--shell-text-muted); opacity: .5; }
   .pop { position: absolute; top: .5rem; left: .5rem; font-size: .58rem; letter-spacing: .1em; text-transform: uppercase;
-    font-weight: 600; padding: .28rem .5rem; background: var(--shell-accent); color: var(--shell-text-inverted); }
+    font-weight: 700; padding: .28rem .5rem; background: var(--shell-accent); color: var(--shell-text-inverted); }
   .pop.mid { background: var(--shell-surface-dark); }
   .avail { position: absolute; bottom: .5rem; left: .5rem; font-size: .6rem; letter-spacing: .06em;
-    font-weight: 600; padding: .28rem .5rem; }
+    font-weight: 700; padding: .28rem .5rem; }
   .avail.yes { background: rgba(23,134,79,.94); color: #fff; }
   .avail.no  { background: rgba(179,38,30,.94); color: #fff; }
   .rc__b { padding: .8rem .85rem 1rem; }

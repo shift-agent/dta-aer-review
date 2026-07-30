@@ -200,7 +200,7 @@ html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility; }
 /* ONE eyebrow system for launch: single color + single size everywhere.
    Body (light backgrounds) = green; dark backgrounds (hero photos, navy band) = white. */
-.eyebrow { color: var(--shell-accent-3); font-weight: 600; letter-spacing: .16em; font-size: .68rem; }
+.eyebrow { color: var(--shell-accent-3); font-weight: 700; letter-spacing: .16em; font-size: .68rem; }
 .hero--page .eyebrow, .blogbanner .eyebrow, .splitsec--navy .eyebrow { color: #fff; }
 /* hero eyebrows (About + Social) unified to one compromise size */
 .hero--page .eyebrow, .blogbanner .eyebrow { font-size: .72rem; }
@@ -247,7 +247,7 @@ body[data-page="events"] .strip {
 .herolook { position: absolute; z-index: 6; top: 1.1rem; right: 1.4rem;
   background: rgba(255,255,255,.86); color: var(--shell-text-dark);
   border: 1px solid var(--shell-hairline); padding: .55rem .95rem;
-  font-family: var(--shell-font-family-body); font-size: .64rem; font-weight: 600;
+  font-family: var(--shell-font-family-body); font-size: .64rem; font-weight: 700;
   letter-spacing: .14em; text-transform: uppercase; cursor: pointer; }
 .herolook:hover { background: #fff; }
 .hero--full.hero--dark .herolook { background: rgba(22,25,29,.55); color: #fff; border-color: rgba(255,255,255,.5); }
@@ -373,7 +373,7 @@ body.has-present .mnav__close { top: calc(var(--present-h, 0px) + 12px); }
   .quotepill__icon { display: block; }
   .quotepill__icon svg { width: 24px; height: 24px; display: block; }
   .chrome .quotepill:has(.quotepill__icon) [data-quote-count] { position: absolute;
-    top: -3px; right: -5px; margin: 0; font-size: 10px; font-weight: 600;
+    top: -3px; right: -5px; margin: 0; font-size: 10px; font-weight: 700;
     line-height: 1.4; min-width: 15px; padding: .05em .3em; }
   .mnav-open { display: flex; align-items: center; justify-content: center;
     min-width: 44px; min-height: 44px; padding: 12px;
