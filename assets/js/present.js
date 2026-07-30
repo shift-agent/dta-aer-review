@@ -125,6 +125,81 @@
     extras.appendChild( toggle );
   }
 
+  // Mobile preview — a centered phone frame (~390×844, squared corners, dark
+  // scrim) holding an iframe of the CURRENT page URL, so real media queries
+  // engage at the iframe's width. Dependency-free; exposed as window.SS_PHONE
+  // so page-level controls (the PDP's preview-eye cluster) can reuse the mechanic.
+  function phoneEl() { return document.querySelector( '.pphone' ); }
+  function phoneClose() {
+    var ov = phoneEl();
+    if ( ov ) ov.remove();
+    document.removeEventListener( 'keydown', phoneEsc );
+  }
+  function phoneEsc( e ) { if ( e.key === 'Escape' ) phoneClose(); }
+  function phoneOpen() {
+    // no phone-in-a-phone: inside the preview iframe the toggle is inert
+    if ( window.self !== window.top ) return;
+    if ( phoneEl() ) return;
+    var ov = el( 'div', 'pphone' );
+    ov.innerHTML =
+      '<div class="pphone__scrim"></div>' +
+      '<div class="pphone__frame">' +
+        '<button class="pphone__x" type="button" aria-label="Close mobile preview">&times;</button>' +
+        '<iframe title="Mobile preview"></iframe>' +
+      '</div>';
+    ov.querySelector( 'iframe' ).src = location.href;
+    ov.querySelector( '.pphone__scrim' ).addEventListener( 'click', phoneClose );
+    ov.querySelector( '.pphone__x' ).addEventListener( 'click', phoneClose );
+    document.addEventListener( 'keydown', phoneEsc );
+    document.body.appendChild( ov );
+  }
+  window.SS_PHONE = {
+    isOpen: function () { return !!phoneEl(); },
+    open: phoneOpen, close: phoneClose,
+    toggle: function () { if ( phoneEl() ) phoneClose(); else phoneOpen(); }
+  };
+  // Skip the bar button INSIDE the phone iframe (the framed page runs this
+  // file too); the frame is a desktop demonstration control.
+  if ( window.self === window.top ) {
+    var mob = el( 'button', 'psw pmob' );
+    mob.type = 'button';
+    mob.title = 'Preview this page at phone width';
+    mob.innerHTML = '<span class="pmob__icon"></span><span class="psw__label">Mobile</span>';
+    mob.addEventListener( 'click', function () { window.SS_PHONE.toggle(); } );
+    extras.appendChild( mob );
+  }
+
+  // Swatch toggle — REVIEW option (Glenn 2026-07-30): pages that carry a
+  // "Request a swatch" affordance ([data-swatchline]) get a bar switch that
+  // shows/hides it, so the client can be shown both options. Lives HERE in
+  // the deck bar (review chrome that never ships), not on the page. State
+  // persists to sessionStorage so the phone-frame iframe and reloads keep
+  // the same with/without-swatch view (the page script applies it on load).
+  if ( document.querySelector( '[data-swatchline]' ) ) {
+    var SWKEY = 'ss_swatch_state';
+    var swt = el( 'button', 'psw' );
+    swt.type = 'button';
+    swt.title = 'Review option: show or hide the Request-a-swatch affordance';
+    swt.innerHTML =
+      '<span class="psw__track"><span class="psw__dot"></span></span>' +
+      '<span class="psw__label">Swatch</span>';
+    var swGet = function () {
+      var v = null;
+      try { v = sessionStorage.getItem( SWKEY ); } catch ( e ) {}
+      if ( v !== 'on' && v !== 'off' ) v = document.body.getAttribute( 'data-swatch' ) || 'on';
+      return v;
+    };
+    var swSync = function () { swt.setAttribute( 'aria-pressed', swGet() === 'on' ? 'true' : 'false' ); };
+    swt.addEventListener( 'click', function () {
+      var next = swGet() === 'on' ? 'off' : 'on';
+      document.body.setAttribute( 'data-swatch', next );
+      try { sessionStorage.setItem( SWKEY, next ); } catch ( e ) {}
+      swSync();
+    } );
+    swSync();
+    extras.appendChild( swt );
+  }
+
   if ( extrasTpl ) extras.appendChild( extrasTpl.content.cloneNode( true ) );
   if ( extras.childNodes.length ) bar.appendChild( extras );
 

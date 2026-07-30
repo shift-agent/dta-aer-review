@@ -312,6 +312,87 @@ body[data-page="events"] .strip {
 .foot__base { border-top: 1px solid rgba(255,255,255,.22); }
 .foot__base small { color: rgba(255,255,255,.72); }
 
+/* ---- 9. MOBILE CHROME COLLAPSE (Simple Theme parity) ----------
+   Mirrors ss-theme assets/css/chrome.css (v1.32.x mobile block) for the
+   prototype's shared header: at ≤768px the inline nav hides and a bare
+   3-BAR hamburger (drawn in currentColor via layered linear-gradients,
+   20×14 field, 2px bars, 44×44 tap target, no box/border/radius) becomes
+   the only nav surface. Tapping it opens a full-viewport overlay painted
+   with the header's own colors (solid chrome ground + chrome text),
+   24px padding, 44×44 close top-right; items keep the desktop nav
+   typography (uppercase + tracked) with hairline rules and 44px targets.
+   The search/login icons + Quote pill stay in the collapsed bar beside
+   the hamburger (they fit at 390px), matching the theme's icon-sibling
+   pattern. Tagline hides at mobile; logo scales to 32px.
+   DESKTOP IS UNTOUCHED: every rule is scoped to ≤768px except the
+   default-hidden states and the .is-open/.mnav-lock open-state rules,
+   which can only engage after the (mobile-only) hamburger opened them.
+   Markup is injected by assets/js/app.js (mobile-nav block). */
+.mnav-open { display: none; }              /* hamburger: desktop hidden (theme parity) */
+.quotepill__icon { display: none; }        /* handbag icon: desktop hidden — text pill unchanged */
+.mnav { display: none; }                   /* overlay: closed by default */
+.mnav.is-open { display: block; position: fixed; inset: 0; z-index: 120;
+  background: rgb(250,247,241);            /* solid chrome ground (--proto-chrome-bg base) */
+  color: var(--shell-text-dark); padding: 24px; overflow-y: auto; }
+body.has-present .mnav.is-open { padding-top: calc(var(--present-h, 0px) + 24px); }
+body.mnav-lock { overflow: hidden; }
+.mnav__close { position: absolute; top: 12px; right: 12px; min-width: 44px; min-height: 44px;
+  display: grid; place-items: center; background: transparent; border: 0; border-radius: 0;
+  color: var(--shell-text-body); font-size: 1.7rem; line-height: 1; cursor: pointer; }
+body.has-present .mnav__close { top: calc(var(--present-h, 0px) + 12px); }
+.mnav__list { display: flex; flex-direction: column; gap: 0;
+  width: 100%; max-width: 480px; margin: 44px auto 0; }
+.mnav__list a { display: flex; align-items: center; min-height: 44px; padding: 14px 4px;
+  border-bottom: 1px solid var(--shell-hairline);
+  font-family: var(--shell-font-family-body); font-size: 15px;
+  letter-spacing: var(--shell-eyebrow-letter-spacing); text-transform: var(--proto-tt-nav);
+  color: var(--shell-text-body); }
+.mnav__list a.is-active, .mnav__list a:hover { color: var(--shell-accent); }
+@media (max-width: 768px) {
+  .chrome .nav { display: none; }          /* inline nav links hide */
+  .chrome__icons { margin-left: auto; }    /* icons right-align without the nav's auto margin */
+  .chrome .brandmark small { display: none; }   /* tagline hides at mobile */
+  .chrome .brandmark img { max-height: 32px; }  /* logo scales down (max-height beats inline height) */
+  /* fit search + login + Quote + hamburger beside the logo at 390px:
+     tighten the bar's gaps (theme keeps the icon siblings beside the
+     hamburger; so do we) */
+  .chrome__inner { gap: .8rem; flex-wrap: nowrap; }
+  .chrome__icons { gap: .55rem; }
+  /* QUOTE PILL → HANDBAG ICON: the text pill collapses to a bare 24×24
+     handbag line icon (injected by the chrome seam — app.js everywhere,
+     shop.js on the two shop pages) that matches the search/login icons;
+     the same count badge rides the bag's top-right corner. Same <a>, same
+     quote.html route. font-size:0 hides the "Quote" text node; the badge
+     restores its own size. Guarded with :has() so a pill that somehow
+     missed the injection stays a visible text pill instead of vanishing. */
+  .chrome .quotepill:has(.quotepill__icon) { font-size: 0; padding: 0;
+    width: 34px; height: 34px; display: inline-grid; place-items: center;
+    background: transparent; border: 0; color: var(--shell-text-body); }
+  .chrome .quotepill:has(.quotepill__icon):hover { background: transparent; color: var(--shell-accent); }
+  .chrome .quotepill:not(:has(.quotepill__icon)) { padding: .45rem .7rem; }
+  .quotepill__icon { display: block; }
+  .quotepill__icon svg { width: 24px; height: 24px; display: block; }
+  .chrome .quotepill:has(.quotepill__icon) [data-quote-count] { position: absolute;
+    top: -3px; right: -5px; margin: 0; font-size: 10px; font-weight: 600;
+    line-height: 1.4; min-width: 15px; padding: .05em .3em; }
+  .mnav-open { display: flex; align-items: center; justify-content: center;
+    min-width: 44px; min-height: 44px; padding: 12px;
+    background: transparent; border: 0; border-radius: 0;
+    color: var(--shell-text-body); cursor: pointer; }
+  .mnav-open::before { content: ""; display: block; width: 20px; height: 14px;
+    background:
+      linear-gradient(currentColor 0 0) top    / 100% 2px no-repeat,
+      linear-gradient(currentColor 0 0) center / 100% 2px no-repeat,
+      linear-gradient(currentColor 0 0) bottom / 100% 2px no-repeat; }
+}
+@media (max-width: 480px) {
+  /* phone-width: a touch tighter so brand + 2 icons + pill + hamburger all
+     sit on one 390px row (44px tap targets preserved via the burger; the
+     29px iconlinks keep their 19px glyphs) */
+  .chrome__icons { gap: .45rem; }
+  .iconlink { width: 29px; height: 29px; }
+}
+
 /* ---- 6. MOBILE HERO CLAMP -------------------------------------
    .hero__body is a grid item (min-width:auto by default), so a child
    with a desktop max-width wider than the phone viewport (the search

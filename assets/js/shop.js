@@ -99,21 +99,72 @@
   // nothing else. Widen DEMO_CATS (or clear it) to restore the full catalog.
   var DEMO_CATS = ['linens'];
   // DEMO tightening (client review): narrow the working catalog to a SINGLE
-  // proof-of-concept product so the client approves one tight version. Opening
-  // Linens then lists ONLY the Madeline Damask ("Madeline Kiwi") linen — the
-  // showcase piece (Current RMS catalog id 2892, slug 'madeline-damask-kiwi').
-  // The Linens landing card still says Linens; pagination stays intact (one
-  // product = one page); "Completes the look" pairings are unaffected (they
-  // resolve from SS_PAIRINGS, not this filtered set).
-  // To WIDEN later: set DEMO_ONLY_PRODUCT to null/'' to restore the full linen
-  // set, or comment out the filter block below entirely.
-  var DEMO_ONLY_PRODUCT = 'madeline-damask-kiwi';
+  // proof-of-concept product family so the client approves one tight version.
+  // Opening Linens then lists ONE card — "Madeline Damask" — folding the
+  // client sheet's three colorways (kiwi / ivory / black) into one family
+  // that routes to the showcase PDP (the PDP carries the color chips).
+  // The Linens landing card still says Linens; pagination stays intact;
+  // "Completes the look" pairings are unaffected (they resolve from
+  // SS_PAIRINGS, not this filtered set).
+  // To WIDEN later: set DEMO_FAMILY to null to restore the full linen set.
+  // NOTE this constant scopes BOTH pools: the raw catalog (PRODUCTS, below)
+  // and the client-sheet specialty styles (SPTAGS, folded right after it is
+  // built) — the Linens listing, search and counts all run on SPTAGS when
+  // the sheet is wired.
+  var DEMO_FAMILY = {
+    base: 'Madeline Damask',
+    slug: 'madeline-damask-kiwi',   // lead slug → SHOWCASE_PDP route
+    slugs: ['madeline-damask-kiwi', 'madeline-damask-ivory', 'madeline-damask-black']
+  };
   function demoCats() { return TOPCATS.filter(function (c) { return DEMO_CATS.indexOf(c.key) > -1; }); }
   if (DEMO_CATS.length) {
     PRODUCTS = PRODUCTS.filter(function (p) { return DEMO_CATS.indexOf(g2cat[p.group]) > -1; });
   }
-  if (DEMO_ONLY_PRODUCT) {
-    PRODUCTS = PRODUCTS.filter(function (p) { return p.slug === DEMO_ONLY_PRODUCT; });
+  if (DEMO_FAMILY) {
+    PRODUCTS = PRODUCTS.filter(function (p) { return DEMO_FAMILY.slugs.indexOf(p.slug) > -1; });
+  }
+
+  /* ── CLIENT SPECIALTY TAXONOMY (SPECIALTY TAGS FOR WEBSITE.xlsx) ─────
+     The client's own merchandising sheet: one card per linen STYLE
+     (sizes stay in Current RMS — one universal product, no sizes, no
+     prices), with THEIR facet vocabulary (Fabric / Design / Color) and
+     THEIR row order ("PLEASE DO NOT REORGANIZE" — sheet_order wins).
+     When this data is present it drives the Linens listing: facets and
+     product order come from the sheet, not from derived tags. */
+  var SPTAGS = ( function () {
+    var src = (window.SS_SPECIALTY && window.SS_SPECIALTY.styles) || [];
+    return src.filter(function (r) { return !r.exclude; }).map(function (r) {
+      return { slug: r.slug, base: r.display_name, group: 'Specialty',
+               img: r.img || null, variants: [], nvar: 1,
+               tags: [].concat(r.fabric || [], r.design || [], r.color || []),
+               sp: r };
+    });
+  } )();
+  // DEMO tightening (same scope as above): the sheet-driven pool powers the
+  // Linens listing, the live search and the category counts, so it folds to
+  // the one showcase FAMILY card too — three sheet styles merged into a
+  // single "Madeline Damask · 3 colors" card whose facets are the union of
+  // the colorways'. Lift DEMO_FAMILY and the full 228-style sheet order
+  // flows straight back in — no other change needed.
+  if (DEMO_FAMILY) {
+    var famRows = SPTAGS.filter(function (r) { return DEMO_FAMILY.slugs.indexOf(r.slug) > -1; });
+    if (famRows.length) {
+      var famLead = famRows.filter(function (r) { return r.slug === DEMO_FAMILY.slug; })[0] || famRows[0];
+      var famSet = function (k) {
+        var out = [];
+        famRows.forEach(function (r) { (r.sp[k] || []).forEach(function (v) { if (out.indexOf(v) < 0) out.push(v); }); });
+        return out;
+      };
+      var famSp = { fabric: famSet('fabric'), design: famSet('design'), color: famSet('color') };
+      SPTAGS = [{
+        slug: DEMO_FAMILY.slug, base: DEMO_FAMILY.base, group: 'Specialty',
+        img: famLead.img,
+        variants: famRows.map(function (r) { return { name: r.base, img: r.img }; }),
+        nvar: famRows.length,
+        tags: [].concat(famSp.fabric, famSp.design, famSp.color),
+        sp: famSp
+      }];
+    }
   }
 
   /* ── EVENT-LED entry (the "uber-simple decision space") ──────────────
@@ -209,7 +260,7 @@
   function availIsLive(p) { return !!(AVAIL[p.slug] && AVAIL[p.slug].owned != null); }
 
   /* ── State ─────────────────────────────────────────────────── */
-  var state = { view: 'category', cat: null, style: null, color: null, date: '', pop: false, q: '', page: 1 };
+  var state = { view: 'category', cat: null, style: null, fabric: null, design: null, color: null, date: '', pop: false, q: '', page: 1 };
 
   // Pagination — never render more than PAGE_SIZE product cards at once.
   var PAGE_SIZE = 20;
@@ -231,10 +282,13 @@
     return (norm(p.base) + ' ' + norm(p.group) + ' ' + tagset(p).join(' ') + ' ' +
             productColors(p).map(norm).join(' ') + ' ' + productStyles(p).map(norm).join(' '));
   }
+  // The searchable universe: the client's specialty styles when the sheet is
+  // wired (the demo browses Linens/Specialty), else the working catalog.
+  function searchPool() { return SPTAGS.length ? SPTAGS : PRODUCTS; }
   function searchRows(q) {
     var toks = norm(q).split(/\s+/).filter(Boolean);
     if (!toks.length) return [];
-    return PRODUCTS.filter(function (p) { var h = searchHay(p); return toks.every(function (t) { return h.indexOf(t) > -1; }); });
+    return searchPool().filter(function (p) { var h = searchHay(p); return toks.every(function (t) { return h.indexOf(t) > -1; }); });
   }
   // One result card — shared everywhere, so source-gating (rents-often /
   // availability badges) is identical across category, event and search.
@@ -287,13 +341,17 @@
 
   /* ── Category tiles ────────────────────────────────────────── */
   function catCounts() {
-    var counts = {}; PRODUCTS.forEach(function (p) { var c = catOf(p); if (c) counts[c] = (counts[c] || 0) + 1; }); return counts;
+    var counts = {}; PRODUCTS.forEach(function (p) { var c = catOf(p); if (c) counts[c] = (counts[c] || 0) + 1; });
+    // the Linens card counts the client's specialty styles when the sheet drives them
+    if (SPTAGS.length) counts.linens = SPTAGS.length;
+    return counts;
   }
   function catCard(key, withBlurb, counts) {
     var c = TOPCATS.filter(function (t) { return t.key === key; })[0]; if (!c) return '';
     // skip CAD floor-plans / non-product artwork as a category hero (gap 9.4)
     var CAD = /lighting|floor ?plan|layout|diagram|pavilion/i;
-    var rep = PRODUCTS.filter(function (p) { return catOf(p) === key && p.img && !CAD.test(p.base); })
+    var repSrc = (key === 'linens' && SPTAGS.length) ? SPTAGS : PRODUCTS;
+    var rep = repSrc.filter(function (p) { return (p.sp || catOf(p) === key) && p.img && !CAD.test(p.base); })
                       .sort(function (a, b) { return rentScore(b) - rentScore(a); })[0];
     var media = rep ? '<img src="' + BASE + 'assets/img/' + esc(rep.img) + '" alt="">' :
                       '<span class="ph">' + esc(c.label[0]) + '</span>';
@@ -301,7 +359,7 @@
       '<div class="catcard__m">' + media + '</div>' +
       '<div class="catcard__b"><h3>' + esc(c.label) + '</h3>' +
       (withBlurb ? '<p>' + esc(c.blurb) + '</p>' : '') +
-      '<span class="catcard__n">' + (counts[c.key] || 0) + ' products</span></div></a>';
+      '<span class="catcard__n">' + (counts[c.key] || 0) + ' product' + ((counts[c.key] || 0) === 1 ? '' : 's') + '</span></div></a>';
   }
 
   var FUNNEL  = '<svg viewBox="0 0 24 24"><path d="M3 5h18l-7 8v5l-4 2v-7z"/></svg>';
@@ -332,7 +390,7 @@
     var ft = root.querySelector('[data-filtertoggle]'); if (ft) ft.classList.remove('is-open');
   }
 
-  function goCat(key) { state.q = ''; state.cat = key; state.style = state.color = null; state.page = 1; viewWizard(); }
+  function goCat(key) { state.q = ''; state.cat = key; state.style = state.fabric = state.design = state.color = null; state.page = 1; viewWizard(); }
   function openSearch(q) { viewHome(); var i = root.querySelector('[data-q]'); if (i) { i.value = q; live(); i.focus(); } }
 
   /* ── VIEW: landing — browse by category / by event, with live search ── */
@@ -344,7 +402,11 @@
     }).join('');
     root.innerHTML =
       '<div class="shophead"><p class="eyebrow">Browse Inventory</p><h1>What are you dressing?</h1>' +
-        '<p class="shoplede">Browse the linen collection, then narrow it down by color and fabric.</p></div>' +
+        // Demo state reads as a deliberate curation, not a thin catalog: while
+        // DEMO_FAMILY narrows the pool to the showcase linen family, say so.
+        '<p class="shoplede">' + (DEMO_FAMILY
+          ? 'A first look at the linen collection &mdash; one featured linen, shown the way every style will be.'
+          : 'Browse the linen collection, then narrow it down by color and fabric.') + '</p></div>' +
       '<div class="shopbar">' +
         '<div class="viewtoggle">' +
           '<button class="vt" data-view="category">By product</button>' +
@@ -443,22 +505,50 @@
   function viewWizard() {
     var cat = TOPCATS.filter(function (c) { return c.key === state.cat; })[0];
     if (!cat) return viewHome();
-    var pool = PRODUCTS.filter(function (p) { return catOf(p) === state.cat; });
+    // The client sheet drives the Linens browse: their styles, their order.
+    var isSp = state.cat === 'linens' && SPTAGS.length > 0;
+    var pool = isSp ? SPTAGS : PRODUCTS.filter(function (p) { return catOf(p) === state.cat; });
 
-    // facets present in THIS category only
-    var styleSet = {}, colorSet = {};
-    pool.forEach(function (p) {
-      productStyles(p).forEach(function (s) { styleSet[s] = (styleSet[s] || 0) + 1; });
-      productColors(p).forEach(function (c) { colorSet[c] = (colorSet[c] || 0) + 1; });
-    });
-    var styles = Object.keys(styleSet).sort(function (a, b) { return styleSet[b] - styleSet[a]; });
-    var colors = COLORS.filter(function (c) { return colorSet[c]; });
     function chip(kind, val, n) {
       var on = state[kind] === val;
       return '<button class="chip' + (on ? ' is-on' : '') + '" data-' + kind + '="' + esc(val) + '">' +
         esc(val) + (n != null ? ' <em>' + n + '</em>' : '') + '</button>';
     }
-    var filtered = !!(state.style || state.color);
+    var facetHtml, filtered;
+    if (isSp) {
+      // Fabric / Design / Color — the client's own vocabulary from the sheet,
+      // counted across the styles in this listing. (bbjlatavola model.)
+      var spSets = { fabric: {}, design: {}, color: {} };
+      pool.forEach(function (p) {
+        ['fabric', 'design', 'color'].forEach(function (k) {
+          (p.sp[k] || []).forEach(function (v) { spSets[k][v] = (spSets[k][v] || 0) + 1; });
+        });
+      });
+      facetHtml = ['fabric', 'design', 'color'].map(function (k) {
+        var vals = Object.keys(spSets[k]).sort(function (a, b) { return spSets[k][b] - spSets[k][a]; });
+        return '<div class="filterpop__sec"><span class="wizlbl">' + k.charAt(0).toUpperCase() + k.slice(1) + '</span><div class="chips">' +
+          '<button class="chip' + (!state[k] ? ' is-on' : '') + '" data-' + k + '="">Any</button>' +
+          vals.map(function (v) { return chip(k, v, spSets[k][v]); }).join('') + '</div></div>';
+      }).join('');
+      filtered = !!(state.fabric || state.design || state.color);
+    } else {
+      // facets present in THIS category only (derived from catalog tags)
+      var styleSet = {}, colorSet = {};
+      pool.forEach(function (p) {
+        productStyles(p).forEach(function (s) { styleSet[s] = (styleSet[s] || 0) + 1; });
+        productColors(p).forEach(function (c) { colorSet[c] = (colorSet[c] || 0) + 1; });
+      });
+      var styles = Object.keys(styleSet).sort(function (a, b) { return styleSet[b] - styleSet[a]; });
+      var colors = COLORS.filter(function (c) { return colorSet[c]; });
+      facetHtml =
+        '<div class="filterpop__sec"><span class="wizlbl">Style</span><div class="chips">' +
+          '<button class="chip' + (!state.style ? ' is-on' : '') + '" data-style="">Any</button>' +
+          styles.map(function (s) { return chip('style', s, styleSet[s]); }).join('') + '</div></div>' +
+        '<div class="filterpop__sec"><span class="wizlbl">Color</span><div class="chips">' +
+          '<button class="chip' + (!state.color ? ' is-on' : '') + '" data-color="">Any</button>' +
+          colors.map(function (c) { return chip('color', c, colorSet[c]); }).join('') + '</div></div>';
+      filtered = !!(state.style || state.color);
+    }
 
     root.innerHTML =
       '<div class="crumb"><a href="#" data-home>All categories</a> <span>/</span> <b>' + esc(cat.label) + '</b></div>' +
@@ -471,14 +561,7 @@
         '<div class="filterwrap">' +
           '<button class="filtbtn' + (filtered ? ' is-active' : '') + '" data-filtertoggle aria-label="Filter">' + FUNNEL +
             '<span>Filter' + (filtered ? ' <em>•</em>' : '') + '</span></button>' +
-          '<div class="filterpop filterpop--wide" data-filterpop hidden>' +
-            '<div class="filterpop__sec"><span class="wizlbl">Style</span><div class="chips">' +
-              '<button class="chip' + (!state.style ? ' is-on' : '') + '" data-style="">Any</button>' +
-              styles.map(function (s) { return chip('style', s, styleSet[s]); }).join('') + '</div></div>' +
-            '<div class="filterpop__sec"><span class="wizlbl">Color</span><div class="chips">' +
-              '<button class="chip' + (!state.color ? ' is-on' : '') + '" data-color="">Any</button>' +
-              colors.map(function (c) { return chip('color', c, colorSet[c]); }).join('') + '</div></div>' +
-          '</div>' +
+          '<div class="filterpop filterpop--wide" data-filterpop hidden>' + facetHtml + '</div>' +
         '</div>' +
       '</div>' +
       '<p class="rescount" data-rescount></p>' +
@@ -488,10 +571,10 @@
 
     root.querySelector('[data-home]').addEventListener('click', function (e) { e.preventDefault(); state.view = 'category'; viewHome(); });
     bindFilter(); wireDismiss();
-    root.querySelectorAll('[data-style]').forEach(function (b) {
-      b.addEventListener('click', function () { state.style = b.dataset.style || null; state.page = 1; viewWizard(); }); });
-    root.querySelectorAll('[data-color]').forEach(function (b) {
-      b.addEventListener('click', function () { state.color = b.dataset.color || null; state.page = 1; viewWizard(); }); });
+    ['style', 'fabric', 'design', 'color'].forEach(function (kind) {
+      root.querySelectorAll('[data-' + kind + ']').forEach(function (b) {
+        b.addEventListener('click', function () { state[kind] = b.dataset[kind] || null; state.page = 1; viewWizard(); }); });
+    });
     var dEl = root.querySelector('[data-date]'); if (dEl) dEl.addEventListener('input', function (e) { state.date = e.target.value; renderResults(pool); });
     var pEl = root.querySelector('[data-pop]'); if (pEl) pEl.addEventListener('change', function (e) { state.pop = e.target.checked; renderResults(pool); });
     var qEl = root.querySelector('[data-q]'); if (qEl) qEl.addEventListener('input', function (e) { state.q = e.target.value.trim(); state.page = 1; renderResults(pool); });
@@ -505,8 +588,15 @@
     var max = Math.max.apply(null, pool.map(rentScore));
     var toks = state.q ? norm(state.q).split(/\s+/).filter(Boolean) : [];
     var rows = pool.filter(function (p) {
-      if (state.style && productStyles(p).indexOf(state.style) < 0) return false;
-      if (state.color && productColors(p).indexOf(state.color) < 0) return false;
+      if (p.sp) {
+        // client-sheet facets (Fabric / Design / Color), exact values
+        if (state.fabric && p.sp.fabric.indexOf(state.fabric) < 0) return false;
+        if (state.design && p.sp.design.indexOf(state.design) < 0) return false;
+        if (state.color && p.sp.color.indexOf(state.color) < 0) return false;
+      } else {
+        if (state.style && productStyles(p).indexOf(state.style) < 0) return false;
+        if (state.color && productColors(p).indexOf(state.color) < 0) return false;
+      }
       if (toks.length) { var h = searchHay(p); if (!toks.every(function (t) { return h.indexOf(t) > -1; })) return false; }
       return true;
     });
@@ -570,4 +660,73 @@
   }
 
   if (root && PRODUCTS.length) { if (!openFromHash()) viewHome(); }
+} )();
+
+/* ============================================================
+   CHROME SEAM (shop pages) — shop.html + aer/shop.html load THIS
+   file instead of app.js, so app.js's injected chrome (the mobile
+   hamburger/overlay and the mobile quote handbag icon) never ran
+   here and the collapsed bar had no nav surface and no quote
+   affordance at ≤768px. Same two injectors as assets/js/app.js
+   (keep the two copies in step — the guards make a double include
+   harmless). Styles: custom-css.css section 9.
+   ============================================================ */
+( function () {
+  'use strict';
+  /* only inject where the styles live (custom-css.css section 9): DTA's
+     shop.html loads it, aer/shop.html does not (pre-existing — that page
+     never had the section-9 mobile chrome), and unstyled injected chrome
+     would show on desktop there. */
+  if ( !document.querySelector( 'link[href*="custom-css"]' ) ) return;
+  /* mobile quote handbag icon (24×24 line icon, currentColor) */
+  var BAG =
+    '<span class="quotepill__icon" aria-hidden="true">'
+    + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"'
+    + ' stroke-linecap="round" stroke-linejoin="round">'
+    + '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>'
+    + '<path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>';
+  document.querySelectorAll( '.chrome .quotepill' ).forEach( function ( pill ) {
+    if ( pill.querySelector( '.quotepill__icon' ) ) return;
+    pill.setAttribute( 'aria-label', 'Quote' );
+    pill.insertAdjacentHTML( 'afterbegin', BAG );
+  } );
+
+  /* mobile chrome collapse — hamburger + overlay (mirror of app.js) */
+  var chrome = document.querySelector( '.chrome' );
+  if ( !chrome || document.querySelector( '.mnav' ) ) return;
+  var nav = chrome.querySelector( '.nav' );
+  if ( !nav ) return;
+  var host = chrome.querySelector( '.chrome__icons' ) || chrome.querySelector( '.chrome__inner' ) || chrome;
+
+  var burger = document.createElement( 'button' );
+  burger.type = 'button';
+  burger.className = 'mnav-open';
+  burger.setAttribute( 'aria-label', 'Menu' );
+  burger.setAttribute( 'aria-expanded', 'false' );
+  host.appendChild( burger );
+
+  var panel = document.createElement( 'div' );
+  panel.className = 'mnav';
+  var close = document.createElement( 'button' );
+  close.type = 'button';
+  close.className = 'mnav__close';
+  close.setAttribute( 'aria-label', 'Close menu' );
+  close.innerHTML = '&times;';
+  var list = document.createElement( 'nav' );
+  list.className = 'mnav__list';
+  list.setAttribute( 'aria-label', 'Menu' );
+  nav.querySelectorAll( 'a' ).forEach( function ( a ) { list.appendChild( a.cloneNode( true ) ); } );
+  panel.appendChild( close );
+  panel.appendChild( list );
+  document.body.appendChild( panel );
+
+  function set( open ) {
+    panel.classList.toggle( 'is-open', open );
+    document.body.classList.toggle( 'mnav-lock', open );
+    burger.setAttribute( 'aria-expanded', open ? 'true' : 'false' );
+  }
+  burger.addEventListener( 'click', function () { set( !panel.classList.contains( 'is-open' ) ); } );
+  close.addEventListener( 'click', function () { set( false ); } );
+  list.addEventListener( 'click', function ( e ) { if ( e.target.closest( 'a' ) ) set( false ); } );
+  document.addEventListener( 'keydown', function ( e ) { if ( e.key === 'Escape' ) set( false ); } );
 } )();

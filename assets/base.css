@@ -374,6 +374,12 @@ body.show-sections [data-ssla-section]::before { opacity: 1; }
 .qt td strong { color: var(--shell-text-dark); font-weight: 500; }
 .qt__img { width: 72px; }
 .qt__img img { width: 64px; height: 64px; object-fit: cover; border-radius: var(--proto-radius); }
+/* swatch line tag (bbj model: $0 "<Product> Swatch" request-cart line) —
+   squared, quiet, sits beside the item name on quote.html */
+.qt__tag { display: inline-block; margin-left: .45rem; padding: .12rem .4rem;
+  vertical-align: middle; font-family: var(--shell-font-family-body);
+  font-size: .6rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--shell-text-muted); border: 1px solid var(--shell-hairline); }
 .qt__foot { margin-top: 2rem; display: flex; gap: 1.5rem; align-items: center; justify-content: space-between; flex-wrap: wrap; }
 .qt__foot .detail__note { margin: 0; flex: 1 1 340px; }
 .linkbtn { background: none; border: 0; color: var(--shell-text-muted); cursor: pointer;

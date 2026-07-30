@@ -102,6 +102,26 @@ body.has-present { padding-top: var(--present-h); }
 
 .presentbar a { text-decoration: none; }
 
+/* Mobile preview — centered phone frame (~390×844) over a dark scrim.
+   Squared corners per the design system; the iframe loads the current page
+   so real media queries engage at phone width. Opened by the bar's Mobile
+   control (and by page-level controls via window.SS_PHONE). */
+.pmob__icon { width: 11px; height: 17px; flex: 0 0 11px; display: block;
+  border: 1.5px solid currentColor; }
+.pphone { position: fixed; inset: 0; z-index: 9500; display: grid; place-items: center; }
+.pphone__scrim { position: absolute; inset: 0; background: rgba(10,13,17,.72); }
+.pphone__frame { position: relative; width: min(390px, calc(100vw - 32px));
+  height: min(844px, calc(100vh - 56px));
+  background: #fff; border: 1px solid rgba(255,255,255,.28);
+  box-shadow: 0 30px 80px rgba(0,0,0,.55); }
+.pphone__frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+.pphone__x { position: absolute; top: -2px; right: -46px; width: 40px; height: 40px;
+  display: grid; place-items: center; background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.3); color: #fff; font-size: 1.5rem;
+  line-height: 1; cursor: pointer; }
+.pphone__x:hover { background: rgba(255,255,255,.22); }
+@media (max-width: 480px) { .pphone__x { top: -46px; right: 0; } }
+
 /* The prototype's own dev bar is folded into the presentation bar. */
 .protobar { display: none !important; }
 

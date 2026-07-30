@@ -301,9 +301,16 @@
     const rows = b.map((it, i) => {
       const f = FABRICS.find(x => x.fabric === it.fabric);
       const c = f && f.colours.find(x => x.name === it.colour);
+      // a line may carry its own thumbnail path (the PDP's swatch lines do —
+      // Madeline is not in the curated fabrics.json set)
+      const img = it.img ? BASE + it.img : (c ? BASE + 'assets/img/' + c.img : '');
+      // swatch lines (bbj model): flagged $0 color samples — tagged, no price
+      // shown anywhere (site-wide no-prices rule), qty pinned to 1 at source
+      const tag = it.swatch ? ' <span class="qt__tag">Swatch</span>' : '';
+      const sub = esc(it.colour) + (it.swatch ? ' &mdash; free color sample' : '');
       return `<tr>
-        <td class="qt__img">${c ? `<img src="${BASE}assets/img/${c.img}" alt="">` : ''}</td>
-        <td><strong>${esc(it.fabric)}</strong><br><small>${esc(it.colour)}</small></td>
+        <td class="qt__img">${img ? `<img src="${img}" alt="">` : ''}</td>
+        <td><strong>${esc(it.fabric)}</strong>${tag}<br><small>${sub}</small></td>
         <td>${esc(it.size)}</td><td>${it.qty}</td>
         <td><button class="linkbtn" data-rm="${i}">remove</button></td></tr>`;
     }).join('');
@@ -435,3 +442,81 @@
       });
   }
 })();
+
+/* ============================================================
+   MOBILE QUOTE ICON (site chrome, all pages) — at ≤768px the
+   header "Quote" text pill becomes a handbag ICON button (24×24
+   line icon in currentColor, matching the search/login icons;
+   NOT a supermarket cart) with the same count badge, routing to
+   quote.html identically. Desktop keeps the text pill unchanged.
+   The SVG is injected here (chrome seam) so the 20 chrome pages
+   need no edits; custom-css.css section 9 shows the icon and
+   hides the pill text ONLY inside the ≤768px media query.
+   ============================================================ */
+( function () {
+  'use strict';
+  // only inject where the styles live (custom-css.css section 9) — a page
+  // that doesn't load it (aer/shop.html) would render the icon unstyled
+  if ( !document.querySelector( 'link[href*="custom-css"]' ) ) return;
+  var BAG =
+    '<span class="quotepill__icon" aria-hidden="true">'
+    + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"'
+    + ' stroke-linecap="round" stroke-linejoin="round">'
+    + '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>'
+    + '<path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>';
+  document.querySelectorAll( '.chrome .quotepill' ).forEach( function ( pill ) {
+    if ( pill.querySelector( '.quotepill__icon' ) ) return;
+    pill.setAttribute( 'aria-label', 'Quote' );
+    pill.insertAdjacentHTML( 'afterbegin', BAG );
+  } );
+} )();
+
+/* ============================================================
+   MOBILE CHROME COLLAPSE (Simple Theme parity) — injects the
+   hamburger + full-viewport overlay panel for the shared header.
+   Behavior mirrors ss-theme chrome.css v1.32.x: at ≤768px the
+   inline .nav hides (CSS, custom-css.css section 9) and this
+   hamburger becomes the only nav surface. All markup is injected
+   so the 20 chrome pages need no edits; desktop is untouched
+   (the hamburger and overlay are display:none above 768px).
+   ============================================================ */
+( function () {
+  'use strict';
+  var chrome = document.querySelector( '.chrome' );
+  if ( !chrome || document.querySelector( '.mnav' ) ) return;
+  var nav = chrome.querySelector( '.nav' );
+  if ( !nav ) return;
+  var host = chrome.querySelector( '.chrome__icons' ) || chrome.querySelector( '.chrome__inner' ) || chrome;
+
+  var burger = document.createElement( 'button' );
+  burger.type = 'button';
+  burger.className = 'mnav-open';
+  burger.setAttribute( 'aria-label', 'Menu' );
+  burger.setAttribute( 'aria-expanded', 'false' );
+  host.appendChild( burger );
+
+  var panel = document.createElement( 'div' );
+  panel.className = 'mnav';
+  var close = document.createElement( 'button' );
+  close.type = 'button';
+  close.className = 'mnav__close';
+  close.setAttribute( 'aria-label', 'Close menu' );
+  close.innerHTML = '&times;';
+  var list = document.createElement( 'nav' );
+  list.className = 'mnav__list';
+  list.setAttribute( 'aria-label', 'Menu' );
+  nav.querySelectorAll( 'a' ).forEach( function ( a ) { list.appendChild( a.cloneNode( true ) ); } );
+  panel.appendChild( close );
+  panel.appendChild( list );
+  document.body.appendChild( panel );
+
+  function set( open ) {
+    panel.classList.toggle( 'is-open', open );
+    document.body.classList.toggle( 'mnav-lock', open );
+    burger.setAttribute( 'aria-expanded', open ? 'true' : 'false' );
+  }
+  burger.addEventListener( 'click', function () { set( !panel.classList.contains( 'is-open' ) ); } );
+  close.addEventListener( 'click', function () { set( false ); } );
+  list.addEventListener( 'click', function ( e ) { if ( e.target.closest( 'a' ) ) set( false ); } );
+  document.addEventListener( 'keydown', function ( e ) { if ( e.key === 'Escape' ) set( false ); } );
+} )();
