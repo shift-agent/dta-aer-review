@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Milestone 2 &middot; Design &amp; Function Lock</title>
 <link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/deck.css">
 <style>
   :root {
     --navy:#2F4D6A; --navy-dk:#22394F; --ink:#15202B; --body:#4B5E71;
@@ -46,7 +47,7 @@
 </style>
 <link rel="stylesheet" href="assets/present.css">
 </head>
-<body data-base="">
+<body data-base="" data-deck="milestone2">
 
 <header class="mast"><div class="wrap">
   <span class="num">07 &middot; Milestone 2</span>
@@ -56,6 +57,57 @@
 </div></header>
 
 <main><div class="wrap">
+  <div class="ctl"><span class="datefld"><span>Reviewed on</span><input type="date" data-persist="date" value="2026-08-04"></span></div>
+
+  <h2 class="sec">Today&rsquo;s review &mdash; August 4</h2>
+  <p class="sec-note"><span data-decide-counter="m2">Five open calls</span> for today&rsquo;s status call &mdash; accept, reject, or leave notes on each.</p>
+
+  <div class="mlist">
+    <div class="mrow mrow--gold" data-decide="m2-categories" data-decide-group="m2"><span class="mnum">1</span>
+      <div><h3>Categories &amp; fulfillment order</h3><p>All six categories are live on staging with real Current RMS
+           counts &mdash; Linens 454, Chairs 49, Tables 121, Tableware 219, Lighting 35, Structures 143 (1,021 listings
+           across 1,174 grouped products). Confirm the order we build out next, category by category.</p>
+        <textarea class="notes" data-persist="n-m2-categories" placeholder="Agreed order&hellip;"></textarea></div></div>
+
+    <div class="mrow mrow--gold" data-decide="m2-offline" data-decide-group="m2"><span class="mnum">2</span>
+      <div><h3>Offline inventory plan</h3><p>Built and proven, not hypothetical: every sync writes a complete new
+           &ldquo;generation&rdquo; and nothing goes live until it fully succeeds &mdash; if Current RMS is unreachable
+           (as it is right now, see #4), the storefront keeps serving the last one that worked. Approved photos now
+           work the same way, live-sync or not.</p>
+        <textarea class="notes" data-persist="n-m2-offline" placeholder="Notes&hellip;"></textarea></div></div>
+
+    <div class="mrow mrow--gold" data-decide="m2-shape" data-decide-group="m2"><span class="mnum">3</span>
+      <div><h3>Category cards &mdash; rectangle vs. circle</h3><p>Rectangle is what&rsquo;s live on staging now &mdash;
+           full-bleed tiles matching the product grid. Circle was the softer, boutique treatment from the original
+           mockups. Rectangle needs no extra crop work per category; circle is a valid call if that softer feel
+           matters more than shipping speed.</p>
+        <textarea class="notes" data-persist="n-m2-shape" placeholder="Rectangle, circle, or notes&hellip;"></textarea></div></div>
+
+    <div class="mrow mrow--gold" data-decide="m2-api" data-decide-group="m2"><span class="mnum">4</span>
+      <div><h3>Inventory API &amp; quote system</h3><p>The quote form itself is fixed and live &mdash; a leftover gap
+           from an earlier migration meant it wasn&rsquo;t rendering; it now runs the full four-step flow. Current RMS
+           itself is not authenticating (401) &mdash; the key on file is several months old and was already due for
+           rotation. Needs a fresh key generated directly from the Current RMS account, handed off outside email/chat.</p>
+        <textarea class="notes" data-persist="n-m2-api" placeholder="Key status&hellip;"></textarea></div></div>
+
+    <div class="mrow mrow--gold" data-decide="m2-naming" data-decide-group="m2"><span class="mnum">5</span>
+      <div><h3>Image naming &amp; next categories</h3><p>One filename pattern carries the product, color, and photo
+           role &mdash; e.g. <code>3428--kiwi--lead--01.jpg</code>. Tested end-to-end today against a real product.
+           ~50 real candidate Linens photos are already sitting in a staging Drive library, ready to rename and
+           approve once this is locked.</p>
+        <textarea class="notes" data-persist="n-m2-naming" placeholder="Approved / changes requested&hellip;"></textarea></div></div>
+  </div>
+
+  <h2 class="sec">Decided today</h2>
+  <p class="sec-note">Accepted calls from above land here, on the record.</p>
+  <div class="mlist" data-decide-zone="accepted"></div>
+
+  <section data-decide-sec="rejected" hidden>
+    <h2 class="sec">Rejected today</h2>
+    <p class="sec-note">Kept on the record with their notes.</p>
+    <div class="mlist" data-decide-zone="rejected"></div>
+  </section>
+
   <h2 class="sec">What Milestone 2 locks</h2>
   <p class="sec-note">The approved design and its working function become the fixed baseline.</p>
   <div class="locks">
@@ -69,20 +121,25 @@
   <p class="sec-note">The build sequence that follows the lock, in order.</p>
   <div class="roadmap">
     <div class="rm"><span class="rm__n">1</span>
-      <div><h3>Quote commit</h3><p>The website quote goes live into Current RMS &mdash; creating real, itemized opportunities.</p></div>
-      <span class="rm__tag">Pending new API key</span></div>
+      <div><h3>Quote commit</h3><p>The form is built and live on staging &mdash; four steps, real submission. It writes into Current RMS as a real, itemized opportunity once the API key below is refreshed.</p></div>
+      <span class="rm__tag">Form live &middot; pending new API key</span></div>
     <div class="rm"><span class="rm__n">2</span>
       <div><h3>Full inventory review &amp; image category order of fulfillment</h3><p>Agree the full catalog and the order categories are photographed and published &mdash; so the most important pieces go live first.</p></div>
-      <span class="rm__tag">Commitment</span></div>
+      <span class="rm__tag">Live: 1,174 products, 6 categories</span></div>
     <div class="rm"><span class="rm__n">3</span>
-      <div><h3>Image conformity</h3><p>Real photography placed to one consistent standard &mdash; crop, tone and framing &mdash; across every product.</p></div></div>
+      <div><h3>Image conformity</h3><p>Real photography placed to one consistent standard &mdash; crop, tone and framing &mdash; across every product.</p></div>
+      <span class="rm__tag">Naming convention proven</span></div>
     <div class="rm"><span class="rm__n">4</span>
       <div><h3>The rest of the static pages</h3><p>Remaining pages built out to the locked design &mdash; the full site, complete.</p></div></div>
   </div>
 
-  <footer>Milestone 2 &middot; DTA / AER &middot; the design &amp; function baseline, and the build order that follows.</footer>
+  <div class="bar2" style="margin:1.4rem 0 0"><span class="saved">Saved locally in your browser &mdash; survives reloads. No database.</span></div>
+
+  <footer class="deckfoot">Milestone 2 &middot; DTA / AER &middot; the design &amp; function baseline, and the build order that follows.</footer>
 </div></main>
 
 <script src="assets/js/present.js?v=2"></script>
+<script src="assets/js/deck.js"></script>
+<script src="assets/js/decide.js"></script>
 </body>
 </html>
