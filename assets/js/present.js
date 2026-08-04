@@ -21,13 +21,14 @@
   // Data-driven milestone list — add/rename/reorder review points here and the
   // bar + the Commit layer follow. (Built generic on purpose: this is the shape
   // Action Studio reuses as a client-facing project-progress view.)
-  // Running order (2026-07-28, Glenn's project-flow): 1 Project Review (status +
+  // Running order (2026-08-04, Glenn's project-flow): 1 Project Review (status +
   // issues; Simplitory + SimpleSuite are LINKED from here, not bar steps) → 2 the
   // original Design Review → 3 Commit (today's meeting notes) → 4 Milestone 1
   // (goals + decisions) → 5 Design Review 2 (the 3 approvals) → 6 Commit (the 3
-  // approvals + key decisions, accept/reject w/ notes) → 7 Path to Completion
-  // (remaining approvals + launch, with dates). Past/approved sit LEFT; the
-  // current step is highlighted. Reordering the meeting is still one array.
+  // approvals + key decisions, accept/reject w/ notes) → 7 Milestone 2 (design +
+  // function lock, accept/reject w/ notes) → 8 Plan to Completion (remaining
+  // approvals + launch, with dates). Past/approved sit LEFT; the current step is
+  // highlighted. Reordering the meeting is still one array.
   var STEPS = [
     { id: 'projreview', label: 'Project Review',     href: 'project-review.html' },
     // Step 2 = the ORIGINAL design as presented today — archived locally in
@@ -38,7 +39,8 @@
     { id: 'milestone1', label: 'Milestone 1',        href: 'milestone1.html'     },
     { id: 'review2',    label: 'Design Review 2',    href: 'review2.html'        },
     { id: 'commit2',    label: 'Commit',             href: 'commit2.html'        },
-    { id: 'path',       label: 'Path to Completion', href: 'path.html'           }
+    { id: 'milestone2', label: 'Milestone 2',        href: 'milestone2.html'     },
+    { id: 'path',       label: 'Plan to Completion', href: 'path.html'           }
   ];
 
   // Which step a page belongs to. First match wins; -1 = not in the deck.
@@ -59,7 +61,8 @@
     // AI recolor brief, the form field-inventory review, the banner-treatment
     // mock board, the Current RMS illustration) belong to the same Commit stop.
     if ( /(^|\/)(photo-naming|ai-color-brief|form-review|banner-treatments|crms-preview)\.html$/.test( path ) ) return 5;
-    if ( /(^|\/)(path|milestone2)\.html$/.test( path ) ) return 6;
+    if ( /(^|\/)milestone2\.html$/.test( path ) )        return 6;
+    if ( /(^|\/)path\.html$/.test( path ) )               return 7;
     return -1; // status.html (full report) + index.html (architecture map) — reachable, not deck steps
   }
 
@@ -298,7 +301,7 @@
       var done = isCommitted( cur.id );
       var when = done ? new Date( commits.phases[ cur.id ].at ).toLocaleDateString( undefined, { month: 'short', day: 'numeric' } ) : '';
       box.innerHTML =
-        '<span class="pcommit__lbl"><b>' + ( done ? 'Committed &middot; ' + when : 'Stage ' + ( current + 1 ) + ' of ' + ( STEPS.length - 1 ) ) + '</b>' + cur.label + '</span>'
+        '<span class="pcommit__lbl"><b>' + ( done ? 'Committed &middot; ' + when : 'Stage ' + ( current + 1 ) + ' of ' + STEPS.length ) + '</b>' + cur.label + '</span>'
         + ( done ? '<button class="pcommit__undo" type="button">Undo</button>'
                  : '<button class="pcommit__btn" type="button">Commit this stage &rarr;</button>' );
       var b = box.querySelector( '.pcommit__btn' );
