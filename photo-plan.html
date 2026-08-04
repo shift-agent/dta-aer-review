@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Photography Plan &middot; Decor To Adore</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/deck.css">
+<style>
+  :root {
+    --navy:#2F4D6A; --navy-dk:#22394F; --ink:#15202B; --body:#4B5E71;
+    --muted:#8A97A5; --paper:#FDF9F5; --warm:#F5EFE7; --white:#fff;
+    --olive:#6F8A5C; --gold:#D9B25F; --line:rgba(21,32,43,.12); --amber:#B8862A;
+    --accent:#1E40AF; --red:#A6483C;
+    --serif:"Playfair Display",Georgia,serif;
+    --sans:"Montserrat",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--body); font-family:var(--sans); font-size:15px; font-weight:500; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .wrap { width:min(920px, calc(100% - 3rem)); margin-inline:auto; }
+  header.mast { background:var(--navy-dk); color:#fff; padding:2.4rem 0 2rem; }
+  header.mast .num { display:block; font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.6); margin-bottom:.5rem; }
+  header.mast h1 { font-family:var(--serif); font-weight:400; font-size:2.3rem; margin:0 0 .5rem; }
+  header.mast p { margin:0; color:rgba(255,255,255,.84); max-width:64ch; }
+  main { padding:2.2rem 0 4rem; }
+  h2.sec { font-family:var(--serif); font-weight:400; font-size:1.5rem; color:var(--ink); margin:2rem 0 .3rem; }
+  h2.sec:first-of-type { margin-top:0; }
+  .sec-note { font-size:.9rem; color:var(--body); margin:0 0 1.3rem; }
+
+  /* Coverage table — the single most important fact on the page, so it reads
+     as data, not decoration: tabular figures, a bar per row. */
+  .cov { width:100%; border-collapse:collapse; background:var(--white); border:1px solid var(--line); margin-bottom:.6rem; }
+  .cov th, .cov td { padding:.6rem .8rem; text-align:left; border-bottom:1px solid var(--line); font-size:.87rem; }
+  .cov th { font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+  .cov td.n { text-align:right; font-variant-numeric:tabular-nums; }
+  .cov tr:last-child td { border-bottom:0; }
+  .cov .name { font-weight:700; color:var(--ink); }
+  .bar { display:block; height:6px; background:var(--warm); position:relative; min-width:90px; }
+  .bar i { display:block; height:100%; background:var(--olive); min-width:2px; }
+  /* Zero coverage stays an EMPTY track — a filled bar, in any color, reads as
+     progress at a glance, which is the opposite of what these rows mean. */
+  .bar.is-zero { box-shadow:inset 0 0 0 1px rgba(166,72,60,.35); }
+  .bar.is-zero i { background:none; }
+  .pctxt { font-size:.72rem; color:var(--muted); font-variant-numeric:tabular-nums; }
+  .pctxt.is-zero { color:var(--red); font-weight:700; }
+
+  .ord { display:grid; gap:.55rem; margin:.2rem 0 1.4rem; }
+  .ord__row { display:grid; grid-template-columns:auto 1fr auto; gap:.9rem; align-items:start;
+    background:var(--white); border:1px solid var(--line); border-left:3px solid var(--olive); padding:.9rem 1.2rem; }
+  .ord__n { width:28px; height:28px; display:grid; place-items:center; background:var(--navy); color:#fff;
+    font-family:var(--serif); font-size:1rem; line-height:1; }
+  .ord__row h3 { font-family:var(--serif); font-weight:400; font-size:1.18rem; color:var(--ink); margin:0 0 .1rem; }
+  .ord__row p { margin:0; font-size:.88rem; color:var(--body); }
+  .ord__tag { font-size:.58rem; letter-spacing:.08em; text-transform:uppercase; color:var(--amber);
+    font-weight:700; white-space:nowrap; align-self:center; }
+  .ord__row--later { border-left-color:var(--line); }
+  .ord__row--later .ord__n { background:var(--warm); color:var(--muted); border:1px solid var(--line); }
+
+  .how { display:grid; gap:.6rem; margin:.2rem 0 1.4rem; }
+  .how__step { background:var(--white); border:1px solid var(--line); padding:1rem 1.2rem; }
+  .how__step h3 { font-family:var(--serif); font-weight:400; font-size:1.2rem; color:var(--ink); margin:0 0 .25rem; }
+  .how__step p { margin:0 0 .4rem; font-size:.89rem; }
+  .how__step p:last-child { margin-bottom:0; }
+  code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.85em; background:var(--warm); padding:.1rem .3rem; }
+
+  .flag { background:var(--white); border:1px solid var(--line); border-left:3px solid var(--amber); padding:1rem 1.2rem; margin-bottom:.55rem; }
+  .flag h3 { font-family:var(--serif); font-weight:400; font-size:1.18rem; color:var(--ink); margin:0 0 .15rem; }
+  .flag p { margin:0; font-size:.88rem; }
+  .flag--stop { border-left-color:var(--red); }
+
+  footer { border-top:1px solid var(--line); margin-top:2.4rem; padding-top:1.2rem; font-size:.8rem; color:var(--muted); }
+  @media (max-width:600px){ .ord__row { grid-template-columns:auto 1fr; } .ord__tag { grid-column:2; } }
+</style>
+<link rel="stylesheet" href="assets/present.css">
+</head>
+<body data-base="" data-deck="photo-plan">
+
+<header class="mast"><div class="wrap">
+  <span class="num">Milestone 2 &middot; supporting detail</span>
+  <h1>Photography plan</h1>
+  <p>Where photo coverage actually stands today, which categories to shoot first, and exactly how to
+     hand the photos over so they appear on the site without any further work.</p>
+</div></header>
+
+<main><div class="wrap">
+
+  <h2 class="sec">Where we stand today</h2>
+  <p class="sec-note">Measured against the live catalog &mdash; every product and color option currently
+     pulled from the rental system. &ldquo;Options&rdquo; counts each color of each product separately,
+     because each one needs its own photograph.</p>
+
+  <table class="cov">
+    <thead><tr><th>Category</th><th class="n">Products</th><th class="n">Options</th><th class="n">Photographed</th><th>Coverage</th></tr></thead>
+    <tbody>
+      <tr><td class="name">Linens</td><td class="n">454</td><td class="n">1,395</td><td class="n">105</td>
+        <td><span class="bar"><i style="width:7.5%"></i></span><span class="pctxt">7.5%</span></td></tr>
+      <tr><td class="name">Tableware</td><td class="n">219</td><td class="n">353</td><td class="n">0</td>
+        <td><span class="bar is-zero"><i style="width:0"></i></span><span class="pctxt is-zero">none yet</span></td></tr>
+      <tr><td class="name">Structures</td><td class="n">143</td><td class="n">250</td><td class="n">1</td>
+        <td><span class="bar"><i style="width:1%"></i></span><span class="pctxt">0.4%</span></td></tr>
+      <tr><td class="name">Tables</td><td class="n">121</td><td class="n">143</td><td class="n">0</td>
+        <td><span class="bar is-zero"><i style="width:0"></i></span><span class="pctxt is-zero">none yet</span></td></tr>
+      <tr><td class="name">Lighting</td><td class="n">35</td><td class="n">93</td><td class="n">2</td>
+        <td><span class="bar"><i style="width:2.2%"></i></span><span class="pctxt">2.2%</span></td></tr>
+      <tr><td class="name">Chairs</td><td class="n">49</td><td class="n">79</td><td class="n">0</td>
+        <td><span class="bar is-zero"><i style="width:0"></i></span><span class="pctxt is-zero">none yet</span></td></tr>
+    </tbody>
+  </table>
+  <p class="sec-note"><strong>1,021 products &middot; 2,313 options &middot; 108 photographed &mdash; 4.7% overall.</strong>
+     Everything photographed so far is essentially Linens. This is the single biggest thing standing between
+     the current site and launch, which is why it leads this plan.</p>
+
+  <h2 class="sec">Recommended order</h2>
+  <p class="sec-note">Sequenced so whole categories finish and go live early, rather than every category
+     sitting half-done until the end.</p>
+
+  <div class="ord">
+    <div class="ord__row"><span class="ord__n">1</span>
+      <div><h3>Chairs</h3><p>The smallest category on the site &mdash; 49 products, 79 options. It is the
+        one category that can realistically be finished to 100% in a single shoot, which puts a complete,
+        fully-photographed category on the live site and proves the whole hand-off process end to end
+        before committing to the bigger categories.</p></div>
+      <span class="ord__tag">79 options &middot; smallest</span></div>
+
+    <div class="ord__row"><span class="ord__n">2</span>
+      <div><h3>Lighting &amp; Tables</h3><p>The next two smallest &mdash; 93 and 143 options. Same approach
+        as Chairs: finish each one completely rather than sampling across both. Together these three
+        categories are under 320 options, and completing them takes the site from one photographed
+        category to four.</p></div>
+      <span class="ord__tag">236 options</span></div>
+
+    <div class="ord__row"><span class="ord__n">3</span>
+      <div><h3>Linens &mdash; the signature families</h3><p>Linens is the largest category by a wide margin
+        (1,395 options) and realistically cannot be shot exhaustively. We recommend treating it as a
+        curated list instead: the families that carry the most color options and the most bookings.
+        Polyester (112 colors), Dupioni (58), Satin (50), Premium Polyester (48), Lamour (42) and
+        Pintuck (41) alone account for roughly a quarter of the category.</p></div>
+      <span class="ord__tag">by family, not all</span></div>
+
+    <div class="ord__row ord__row--later"><span class="ord__n">4</span>
+      <div><h3>Tableware and Structures</h3><p>The two heaviest remaining categories (353 and 250 options).
+        Both are better served by representative photography &mdash; one strong photo per product rather
+        than per color option &mdash; since finish variation matters far less here than it does on linens.</p></div>
+      <span class="ord__tag">representative shots</span></div>
+  </div>
+
+  <h2 class="sec">How to hand photos over</h2>
+  <p class="sec-note">There is now one shared folder that is the source of truth for product photography.
+     A correctly named photo placed there appears on the site &mdash; there is no separate upload step,
+     and nothing needs to be sent to us.</p>
+
+  <div class="how">
+    <div class="how__step">
+      <h3>1. The folder</h3>
+      <p>The shared Drive folder <code>Website 2026 / _MEDIA LIBRARY</code> now holds every product photo
+         we have, already sorted. <code>1-READY</code> contains the photos that are correctly named and
+         live-ready, in a subfolder per website category. The other three folders are the ones that need
+         your input &mdash; see below.</p>
+    </div>
+    <div class="how__step">
+      <h3>2. The file name</h3>
+      <p>Every photo is named <code>{product-id}--{color}--{role}--{number}.jpg</code> &mdash; for example
+         <code>3428--kiwi--lead--01.jpg</code>. The product id is the item&rsquo;s id in the rental system,
+         the color is lowercase with dashes instead of spaces, and the role is <code>lead</code> for a
+         straight product photo or <code>inplace</code> for a styled shot at an event.</p>
+      <p>The double dashes are what let the site read the name automatically, so they matter.</p>
+    </div>
+    <div class="how__step">
+      <h3>3. If you don&rsquo;t know the product id</h3>
+      <p>Put the photo in <code>3-UNMATCHED</code> with a plain descriptive name and we will resolve it.
+         It is much better to leave it for us than to guess an id &mdash; a wrong id puts the photo on
+         the wrong product.</p>
+    </div>
+    <div class="how__step">
+      <h3>4. Shooting guidance</h3>
+      <p>For consistency across the catalog: one photo per color option for linens, since color is what
+         the customer is choosing. For chairs, tables, lighting and tableware, one clean photo per
+         product is enough. Straight-on, even lighting, uncluttered background &mdash; the site crops
+         to a square, so leave a little room around the product.</p>
+    </div>
+  </div>
+
+  <h2 class="sec">Flagged &mdash; needs a decision from you</h2>
+  <p class="sec-note">Photos we could not resolve on our own. Each one is sitting in the media library
+     in the folder named below.</p>
+
+  <div class="flag">
+    <h3>63 photos &mdash; product or color unconfirmed <span class="pill pill--next">2-NEEDS REVIEW</span></h3>
+    <p>We matched these to a product, but the product name or the color was inferred rather than certain.
+       We need a yes/no on each before they go live, so a photo doesn&rsquo;t land on the wrong item.</p>
+  </div>
+  <div class="flag">
+    <h3>66 photos &mdash; no matching product <span class="pill pill--next">3-UNMATCHED</span></h3>
+    <p>These do not correspond to anything we can find in the rental system, usually because the photo
+       filename and the product name in the system differ too much. We need you to tell us what each one is.</p>
+  </div>
+  <div class="flag flag--stop">
+    <h3>2 files are empty <span class="pill pill--next">4-PROBLEM FILES</span></h3>
+    <p><code>Weyman_Plaid_Tan_Navy</code> and <code>York_Linen</code> are zero bytes &mdash; the files
+       exist but contain no image. They need to be re-exported and re-uploaded.</p>
+  </div>
+  <div class="flag flag--stop">
+    <h3>Product grouping needs a decision</h3>
+    <p>Related products are not grouping together on the site &mdash; for example the four Madeline Damask
+       colors each appear as their own separate product instead of one product with four colors to choose
+       from. The rental system has no field that says which products belong to the same family, and the
+       product spreadsheet does not have one either. We can either add that column to the spreadsheet on
+       your side, or build and maintain the grouping ourselves. This is the main thing making the linen
+       listing feel disorganized.</p>
+  </div>
+
+  <div class="bar2" style="margin:1.4rem 0 0"><span class="saved">Figures measured from the live catalog and the media library &mdash; not estimates.</span></div>
+
+  <footer class="deckfoot">Photography plan &middot; DTA / AER &middot; supporting detail for Milestone 2.</footer>
+</div></main>
+
+<script src="assets/js/present.js?v=3"></script>
+<script src="assets/js/deck.js"></script>
+</body>
+</html>

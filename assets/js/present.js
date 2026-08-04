@@ -61,7 +61,7 @@
     // AI recolor brief, the form field-inventory review, the banner-treatment
     // mock board, the Current RMS illustration) belong to the same Commit stop.
     if ( /(^|\/)(photo-naming|ai-color-brief|form-review|banner-treatments|crms-preview)\.html$/.test( path ) ) return 5;
-    if ( /(^|\/)offline-plan\.html$/.test( path ) ) return 6;
+    if ( /(^|\/)(offline-plan|photo-plan)\.html$/.test( path ) ) return 6;
     if ( /(^|\/)milestone2\.html$/.test( path ) )        return 6;
     if ( /(^|\/)path\.html$/.test( path ) )               return 7;
     return -1; // status.html (full report) + index.html (architecture map) — reachable, not deck steps
