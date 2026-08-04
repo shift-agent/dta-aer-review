@@ -103,6 +103,30 @@
         <textarea class="notes" data-persist="n-m2-naming" placeholder="Approved / changes requested&hellip;"></textarea></div></div>
   </div>
 
+  <h2 class="sec">Also found during today&rsquo;s walkthrough</h2>
+  <p class="sec-note">Not decisions yet &mdash; flagged live while walking the inventory just before this call.</p>
+  <div class="locks">
+    <div class="lock"><span class="lock__i">&#9888;</span>
+      <div><h3>Initial inventory load is slow</h3><p>The page pulls a lot of data before it renders anything. Needs
+           performance work &mdash; not fixed today, logged as a real to-do.</p></div></div>
+    <div class="lock"><span class="lock__i">&#9888;</span>
+      <div><h3>Category organization needs a mapping pass</h3><p>Some products are sitting in the wrong category as
+           pulled from Current RMS &mdash; e.g. a Dupioni color option showing outside the Dupioni category. Source
+           of truth will be the client&rsquo;s own product spreadsheet plus the Google Drive folder structure,
+           mapped through a category manifest in Simplitory. Waiting on that spreadsheet before this can be
+           corrected for real.</p></div></div>
+    <div class="lock"><span class="lock__i">&#9888;</span>
+      <div><h3>Color chips are positioned below the photo</h3><p>Approved placement is beside the
+           &ldquo;Color / finish&rdquo; label in the product details, not under the main image. Layout fix, not
+           done yet.</p></div></div>
+    <div class="lock"><span class="lock__i">?</span>
+      <div><h3>Question for today: how many color chips is too many?</h3><p>Some products show 25&ndash;30 color
+           options on one page. Likely needs streamlining &mdash; bringing this to the call as an open question.</p></div></div>
+    <div class="lock"><span class="lock__i">&#9888;</span>
+      <div><h3>Remove the tags row below Add to Quote</h3><p>Flagged as unnecessary on the product page. Small,
+           safe fix &mdash; queued right after this call, not worth a live redeploy mid-review.</p></div></div>
+  </div>
+
   <h2 class="sec">Decided today</h2>
   <p class="sec-note">Accepted calls from above land here, on the record.</p>
   <div class="mlist" data-decide-zone="accepted"></div>
