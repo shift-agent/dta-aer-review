@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How the offline inventory plan works &middot; Decor To Adore</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/deck.css">
+<link rel="stylesheet" href="assets/present.css">
+<style>
+  /* page-local: the process-map flow diagram */
+  .flow { display:grid; gap:0; margin:.2rem 0 1.8rem; }
+  .step { position:relative; display:grid; grid-template-columns:40px 1fr; gap:1rem; }
+  .step__rail { display:flex; flex-direction:column; align-items:center; }
+  .step__dot { width:34px; height:34px; flex:none; background:var(--accent); color:#fff;
+    display:grid; place-items:center; font-family:var(--serif); font-size:1rem; line-height:1; z-index:1; }
+  .step__line { width:2px; flex:1; background:var(--line); min-height:.8rem; }
+  .step:last-child .step__line { display:none; }
+  .step__body { background:var(--white); border:1px solid var(--line); padding:.9rem 1.2rem; margin-bottom:1.05rem; }
+  .step__body h3 { font-family:var(--serif); font-weight:400; font-size:1.12rem; color:var(--ink); margin:0 0 .2rem; }
+  .step__body p { margin:0; font-size:.87rem; color:var(--body); }
+  .step__body code { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.86em;
+    color:var(--ink); background:var(--warm); border:1px solid var(--line); padding:.04rem .3rem; }
+
+  .branch { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; margin:0 0 1.05rem 3rem; }
+  .branch__card { border:1px solid var(--line); border-top:3px solid var(--line); background:var(--white); padding:.9rem 1rem; }
+  .branch__card--go { border-top-color:var(--olive); }
+  .branch__card--stop { border-top-color:var(--amber); background:var(--warm); }
+  .branch__i { font-weight:700; font-size:1.05rem; }
+  .branch__card--go .branch__i { color:var(--olive); }
+  .branch__card--stop .branch__i { color:var(--amber); }
+  .branch__card h4 { font-family:var(--serif); font-weight:400; font-size:1.02rem; color:var(--ink); margin:.3rem 0 .15rem; }
+  .branch__card p { margin:0; font-size:.83rem; color:var(--body); }
+  .branch__card .live { display:inline-block; margin-top:.55rem; font-size:.58rem; letter-spacing:.08em; text-transform:uppercase;
+    font-weight:700; color:#fff; background:var(--amber); padding:.18rem .5rem; }
+  @media (max-width:640px){ .branch { grid-template-columns:1fr; margin-left:0; } }
+
+  .sidecard { background:var(--white); border:1px solid var(--line); border-left:3px solid var(--gold); padding:1rem 1.2rem; margin:0 0 1.8rem; }
+  .sidecard h3 { font-family:var(--serif); font-weight:400; font-size:1.14rem; color:var(--ink); margin:0 0 .25rem; }
+  .sidecard p { margin:0; font-size:.87rem; color:var(--body); }
+
+  .rationale { display:grid; gap:.6rem; margin:.2rem 0 1.6rem; }
+  .rcard { background:var(--white); border:1px solid var(--line); border-left:3px solid var(--accent); padding:.9rem 1.2rem; }
+  .rcard h4 { font-family:var(--serif); font-weight:400; font-size:1.05rem; color:var(--ink); margin:0 0 .15rem; }
+  .rcard p { margin:0; font-size:.87rem; color:var(--body); }
+</style>
+</head>
+<body data-base="" data-deck="offline-plan">
+
+<header class="mast"><div class="wrap">
+  <span class="num">Milestone 2 &middot; item 2 &middot; August 4, 2026</span>
+  <h1>How the offline inventory plan works</h1>
+  <p>Built and proven, not hypothetical &mdash; this is the exact mechanism keeping staging.decortoadore.com
+     up right now, while the Current RMS credential is dead (item 4 today). No visitor-facing downtime, no
+     partial or broken catalog, ever.</p>
+</div></header>
+
+<main><div class="wrap">
+
+  <h2 class="sec">The process, step by step</h2>
+  <p class="sec-note" style="max-width:70ch">Every catalog sync is all-or-nothing. It either finishes
+     completely and becomes the live catalog, or it changes nothing at all &mdash; there is no in-between
+     state a visitor can ever land on.</p>
+
+  <div class="flow">
+    <div class="step">
+      <div class="step__rail"><div class="step__dot">1</div><div class="step__line"></div></div>
+      <div class="step__body">
+        <h3>A live Current RMS sync runs</h3>
+        <p>On its own schedule (hourly) or triggered manually &mdash; it asks Current RMS for the current
+           products, fabrics, catalog and groups.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step__rail"><div class="step__dot">2</div><div class="step__line"></div></div>
+      <div class="step__body">
+        <h3>The result is staged, never written in place</h3>
+        <p>All datasets, plus a manifest, are written as JSON files into a fresh, uniquely-IDed folder under
+           <code>catalog/generations/&lt;uuid&gt;/</code>. Nothing that&rsquo;s currently live is touched
+           while this happens.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step__rail"><div class="step__dot">3</div><div class="step__line"></div></div>
+      <div class="step__body">
+        <h3>Everything must write completely and successfully, or nothing changes</h3>
+        <p>One gate, two outcomes:</p>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch__card branch__card--go">
+        <span class="branch__i">&#10003;</span>
+        <h4>Writes completely &amp; successfully</h4>
+        <p>The new generation is promoted &mdash; atomically marked the one the storefront reads. The last
+           few prior generations are kept, older ones pruned.</p>
+      </div>
+      <div class="branch__card branch__card--stop">
+        <span class="branch__i">&#10007;</span>
+        <h4>Fails, or Current RMS is unreachable</h4>
+        <p>The attempt is simply never promoted. The active generation pointer never moves &mdash; nothing
+           changes for visitors.</p>
+        <span class="live">Today&rsquo;s real state &middot; HTTP 401</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step__rail"><div class="step__dot">4</div><div class="step__line"></div></div>
+      <div class="step__body">
+        <h3>The storefront only ever reads the active generation</h3>
+        <p>Every product and category page is served from whichever generation is currently marked active
+           &mdash; the storefront has no idea whether the last sync attempt succeeded or failed.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step__rail"><div class="step__dot">5</div></div>
+      <div class="step__body">
+        <h3>Result: zero visitor-facing downtime</h3>
+        <p>When a sync fails &mdash; like today&rsquo;s dead credential &mdash; the storefront keeps serving
+           the last generation that <em>did</em> succeed. No error, no blank page, no partial catalog. A
+           visitor browsing the site right now cannot tell the difference.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidecard">
+    <h3>Approved photos ride the same mechanism</h3>
+    <p>As of Simplitory v0.2.3, an approved product photo isn&rsquo;t queued for the next sync &mdash; it&rsquo;s
+       baked directly into the <b style="color:var(--ink)">current active generation&rsquo;s</b> own catalog and
+       product files the moment it&rsquo;s approved. Photo updates are live-safe on their own timeline,
+       independent of whether a live Current RMS sync is currently working at all.</p>
+  </div>
+
+  <h2 class="sec">Why this matters for DTA</h2>
+  <p class="sec-note">The short version: the site doesn&rsquo;t wait on IT.</p>
+
+  <div class="rationale">
+    <div class="rcard">
+      <h4>The site stays live while the credential gets sorted out</h4>
+      <p>Item 4 on today&rsquo;s agenda &mdash; the dead Current RMS key &mdash; is a real, separate problem,
+         but it isn&rsquo;t blocking anything visitor-facing. Staging is up right now, serving the last
+         successful generation, while that credential issue is worked in the background.</p>
+    </div>
+    <div class="rcard">
+      <h4>No single point of failure waiting on someone else&rsquo;s system</h4>
+      <p>Current RMS being unreachable, slow, or mid-maintenance never breaks the storefront. The catalog
+         only ever moves forward from a known-good state.</p>
+    </div>
+    <div class="rcard">
+      <h4>This is the honest &ldquo;crude but real&rdquo; Phase 2</h4>
+      <p>Today the sync and the manual photo drop-zone are operator-driven &mdash; a person or a clock
+         triggers each attempt. Crude, but real: every piece above is built and running, not a plan.</p>
+    </div>
+    <div class="rcard">
+      <h4>A clear, non-disruptive upgrade to Phase 3</h4>
+      <p>Phase 3 swaps the trigger for a fully automated Drive-watching importer &mdash; same generations,
+         same atomic promotion, same safety net. It only makes the front end of the pipeline more automatic;
+         nothing about how the storefront stays safe changes.</p>
+    </div>
+  </div>
+
+  <textarea class="notes" data-persist="n-offline-plan" placeholder="Notes&hellip;"></textarea>
+
+  <div class="bar2" style="margin-top:1.4rem"><span class="saved">Saved locally in your browser &mdash; survives reloads. No database.</span></div>
+
+  <footer class="deckfoot">How the offline inventory plan works &middot; DTA / AER &middot; opened from Milestone 2, item 2.</footer>
+</div></main>
+
+<script src="assets/js/present.js?v=3"></script>
+<script src="assets/js/deck.js"></script>
+</body>
+</html>
