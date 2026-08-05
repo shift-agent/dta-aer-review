@@ -40,6 +40,7 @@
     { id: 'review2',    label: 'Design Review 2',    href: 'review2.html'        },
     { id: 'commit2',    label: 'Commit',             href: 'commit2.html'        },
     { id: 'milestone2', label: 'Milestone 2',        href: 'milestone2.html'     },
+    { id: 'milestone3', label: 'Milestone 3',        href: 'milestone3.html'     },
     { id: 'path',       label: 'Plan to Completion', href: 'path.html'           }
   ];
 
@@ -63,7 +64,8 @@
     if ( /(^|\/)(photo-naming|ai-color-brief|form-review|banner-treatments|crms-preview)\.html$/.test( path ) ) return 5;
     if ( /(^|\/)(offline-plan|photo-plan)\.html$/.test( path ) ) return 6;
     if ( /(^|\/)milestone2\.html$/.test( path ) )        return 6;
-    if ( /(^|\/)path\.html$/.test( path ) )               return 7;
+    if ( /(^|\/)milestone3\.html$/.test( path ) )        return 7;
+    if ( /(^|\/)path\.html$/.test( path ) )               return 8;
     return -1; // status.html (full report) + index.html (architecture map) — reachable, not deck steps
   }
 

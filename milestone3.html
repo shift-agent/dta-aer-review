@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Milestone 3 &middot; Inventory Complete &amp; Site Ready</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/deck.css">
+<style>
+  :root {
+    --navy:#2F4D6A; --navy-dk:#22394F; --ink:#15202B; --body:#4B5E71;
+    --muted:#8A97A5; --paper:#FDF9F5; --warm:#F5EFE7; --white:#fff;
+    --olive:#6F8A5C; --gold:#D9B25F; --line:rgba(21,32,43,.12); --amber:#B8862A;
+    --accent:#1E40AF;
+    --serif:"Playfair Display",Georgia,serif;
+    --sans:"Montserrat",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--body); font-family:var(--sans); font-size:15px; font-weight:500; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .wrap { width:min(920px, calc(100% - 3rem)); margin-inline:auto; }
+  header.mast { background:var(--navy-dk); color:#fff; padding:2.4rem 0 2rem; }
+  header.mast .num { display:block; font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.6); margin-bottom:.5rem; }
+  header.mast h1 { font-family:var(--serif); font-weight:400; font-size:2.3rem; margin:0 0 .5rem; }
+  header.mast p { margin:0; color:rgba(255,255,255,.84); max-width:64ch; }
+  main { padding:2.2rem 0 4rem; }
+  h2.sec { font-family:var(--serif); font-weight:400; font-size:1.5rem; color:var(--ink); margin:2rem 0 .3rem; }
+  h2.sec:first-of-type { margin-top:0; }
+  .sec-note { font-size:.9rem; color:var(--body); margin:0 0 1.3rem; }
+
+  .locks { display:grid; gap:.6rem; margin:.2rem 0 2rem; }
+  .lock { display:grid; grid-template-columns:auto 1fr; gap:.8rem; align-items:start;
+    background:var(--white); border:1px solid var(--line); border-left:3px solid var(--olive); padding:1rem 1.2rem; }
+  .lock__i { color:var(--olive); font-weight:700; font-size:1.1rem; line-height:1.2; }
+  .lock h3 { font-family:var(--serif); font-weight:400; font-size:1.24rem; color:var(--ink); margin:0 0 .1rem; }
+  .lock p { margin:0 0 .45rem; font-size:.9rem; color:var(--body); }
+  .lock p:last-child { margin-bottom:0; }
+  .lock--open { border-left-color:var(--amber); }
+  .lock--open .lock__i { color:var(--amber); }
+
+  .tally { width:100%; border-collapse:collapse; background:var(--white); border:1px solid var(--line); margin:.2rem 0 1.4rem; }
+  .tally th, .tally td { padding:.55rem .8rem; text-align:left; border-bottom:1px solid var(--line); font-size:.87rem; }
+  .tally th { font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+  .tally td.n { text-align:right; font-variant-numeric:tabular-nums; }
+  .tally tr:last-child td { border-bottom:0; }
+  .tally .name { font-weight:700; color:var(--ink); }
+
+  footer { border-top:1px solid var(--line); margin-top:2.4rem; padding-top:1.2rem; font-size:.8rem; color:var(--muted); }
+</style>
+<link rel="stylesheet" href="assets/present.css">
+</head>
+<body data-base="" data-deck="milestone3">
+
+<header class="mast"><div class="wrap">
+  <span class="num">08 &middot; Milestone 3</span>
+  <h1>Inventory Complete &amp; Site Ready</h1>
+  <p>Milestone 2 locked how the site looks and behaves. This one fills it: the whole catalog correctly
+     categorized and photographed, every page and flow tested end to end, and the two content areas still
+     to be built &mdash; the social feed and venue galleries.</p>
+</div></header>
+
+<main><div class="wrap">
+  <div class="ctl"><span class="datefld"><span>Target date</span><input type="date" data-persist="m3-date"></span></div>
+
+  <h2 class="sec">What Milestone 3 covers</h2>
+  <p class="sec-note">Four workstreams. The first two finish what exists; the last two add what is missing.</p>
+
+  <div class="locks">
+    <div class="lock lock--open"><span class="lock__i">1</span>
+      <div><h3>Completed inventory</h3>
+        <p>Every category correctly mapped, confirmed against the client&rsquo;s own product spreadsheet, and
+           photographed to a consistent standard. Today the catalog holds <strong>963 products / 2,223
+           options</strong> across the twelve home page categories, with <strong>93 options</strong> showing
+           real photography.</p>
+        <p>Three things gate &ldquo;complete&rdquo;: the twelve-versus-six category reconciliation (Milestone 2,
+           item 1), the 87 photographs still awaiting identification, and the genuine shooting gap that only
+           becomes visible once those are placed.</p>
+        <textarea class="notes" data-persist="n-m3-inventory" placeholder="Scope / notes&hellip;"></textarea></div></div>
+
+    <div class="lock lock--open"><span class="lock__i">2</span>
+      <div><h3>End-to-end site and content testing</h3>
+        <p>A full pass over every page and every flow with real content in place &mdash; not spot checks.
+           Browse by product and by event, product pages, add to quote, the quote cart, the full quote request,
+           the contact form, and every static page.</p>
+        <p>Two of those do not exist yet: the <strong>contact form</strong>, and the deliberate connection
+           between it and the quote request so the two read as one intentional path rather than two separate
+           tools. Both are Milestone 3 work.</p>
+        <textarea class="notes" data-persist="n-m3-testing" placeholder="Scope / notes&hellip;"></textarea></div></div>
+
+    <div class="lock lock--open"><span class="lock__i">3</span>
+      <div><h3>Social area</h3>
+        <p>The Stories / Journal area is live and now styled to match the home page cards, but it is running on
+           imported historical posts. This workstream covers the social plugin proper &mdash; how posts are
+           published going forward, whether feeds pull from the client&rsquo;s own social accounts, and what the
+           team maintains after launch.</p>
+        <p>Needs a decision on scope before it can be estimated: a maintained on-site journal, a pulled social
+           feed, or both.</p>
+        <textarea class="notes" data-persist="n-m3-social" placeholder="Journal, feed, or both&hellip;"></textarea></div></div>
+
+    <div class="lock lock--open"><span class="lock__i">4</span>
+      <div><h3>Venue galleries</h3>
+        <p>A gallery per venue, so a couple can see the room they have booked already dressed. The photography
+           is largely in hand &mdash; <strong>22 venues, 142 photographs</strong> already sitting in the shared
+           Drive folder.</p>
+        <p>What is undecided is the shape: whether a venue is a page of its own, how a gallery relates to the
+           inventory used in it, and whether venues become a browse axis alongside product and event.</p>
+        <textarea class="notes" data-persist="n-m3-venues" placeholder="Page per venue? Linked to inventory?&hellip;"></textarea></div></div>
+  </div>
+
+  <h2 class="sec">Venue photography already on hand</h2>
+  <p class="sec-note">Counted in the shared Drive folder today &mdash; the largest sets, of 22 venues in total.</p>
+  <table class="tally">
+    <thead><tr><th>Venue</th><th class="n">Photographs</th></tr></thead>
+    <tbody>
+      <tr><td class="name">Birmingham Museum of Art</td><td class="n">15</td></tr>
+      <tr><td class="name">Windwood Equestrian</td><td class="n">14</td></tr>
+      <tr><td class="name">Pursell Farms</td><td class="n">13</td></tr>
+      <tr><td class="name">Anniston Country Club</td><td class="n">13</td></tr>
+      <tr><td class="name">SpringHouse</td><td class="n">10</td></tr>
+      <tr><td class="name">&hellip;and 17 more</td><td class="n">77</td></tr>
+    </tbody>
+  </table>
+  <p class="sec-note">Aldridge Gardens &middot; Avenue&nbsp;D &middot; Barn at Shady Lane &middot; Birmingham
+     Botanical Gardens &middot; Country Club of Birmingham &middot; El Royale &middot; Grand Bohemian &middot;
+     Haven &middot; Hoover Country Club &middot; North River Yacht Club &middot; Regions Field &middot;
+     Rockhurst &middot; Rockhurst Farm &middot; St.&nbsp;Stephens Episcopal Church &middot; Swann Lake Stables
+     &middot; The Barn at Smith Lake &middot; Vestavia Country Club.</p>
+
+  <h2 class="sec">What has to be settled first</h2>
+  <p class="sec-note">Milestone 3 cannot be scoped or dated until these are answered &mdash; each is an open
+     call from Milestone 2.</p>
+  <div class="locks">
+    <div class="lock lock--open"><span class="lock__i">&#9888;</span>
+      <div><h3>The category structure</h3><p>Twelve categories on the home page, six on the inventory page.
+        Until they agree, &ldquo;completed inventory&rdquo; has no fixed target and the home page cards cannot
+        link into the collection.</p></div></div>
+    <div class="lock lock--open"><span class="lock__i">&#9888;</span>
+      <div><h3>The Current RMS key</h3><p>Still returning 401. The catalog runs from the last good snapshot,
+        which is safe, but nothing syncs and no quote can be written back until a fresh key is issued.</p></div></div>
+    <div class="lock lock--open"><span class="lock__i">&#9888;</span>
+      <div><h3>Photography ownership</h3><p>Who shoots the remaining gap, and to what standard. The naming
+        convention and the publishing path are proven &mdash; 163 photographs went live in one pass today &mdash;
+        so this is a question of supply, not of mechanism.</p></div></div>
+  </div>
+
+  <div class="bar2" style="margin:1.4rem 0 0"><span class="saved">Notes saved locally in your browser &mdash; no database.</span></div>
+
+  <footer class="deckfoot">Milestone 3 &middot; DTA / AER &middot; staged for scoping &mdash; not yet dated or approved.</footer>
+</div></main>
+
+<script src="assets/js/present.js?v=3"></script>
+<script src="assets/js/deck.js"></script>
+</body>
+</html>
